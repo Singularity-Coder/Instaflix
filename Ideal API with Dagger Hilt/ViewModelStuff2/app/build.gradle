@@ -1,0 +1,158 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.singularitycoder.viewmodelstuff2"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // This is how you add a field to BuildConfig where ANI_API_AUTH_TOKEN is the field name. Add ani_api_auth_token to gradle.properties and assign it the token value
+        buildConfigField("String", "ANI_API_AUTH_TOKEN", ani_api_auth_token)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    // Hilt - Allow references to generated code
+    kapt {
+        correctErrorTypes = true
+    }
+}
+
+dependencies {
+
+    // Kotlin
+    implementation 'androidx.core:core-ktx:1.7.0'
+
+    // AppCompat
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+
+    // JUnit Tests
+    testImplementation "junit:junit:$junit_tests_version"
+    androidTestImplementation "junit:junit:$junit_tests_version"
+
+    // Coroutine Tests
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
+
+    // Mockito Tests
+    testImplementation "org.mockito:mockito-core:$mockito_tests_version"
+    androidTestImplementation "org.mockito:mockito-core:$mockito_tests_version"
+
+    // Hilt Tests
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_tests_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_tests_version"
+
+    // Arc Core Tests
+    testImplementation "androidx.arch.core:core-testing:$arc_core_tests_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$arc_core_tests_version"
+
+    // TestImplementations
+    implementation "androidx.test:core:1.4.0"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+
+    // Other Tests
+    testImplementation 'io.mockk:mockk:1.12.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+
+    // Google Truth Tests
+    testImplementation "com.google.truth:truth:$truth_version"
+    androidTestImplementation "com.google.truth:truth:$truth_version"
+
+    // Espresso Testing RecyclerView
+    androidTestImplementation "androidx.test.espresso:espresso-core:$recyclerview_test"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$recyclerview_test"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$recyclerview_test"
+    implementation "androidx.test.espresso:espresso-idling-resource:$recyclerview_test"
+
+    // Constraint Layout
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+    // Material Components, Recyclerview, ViewPager, etc
+    implementation 'com.google.android.material:material:1.4.0'
+
+    // Retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+    // Retrofit 2 GSON converter
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Retrofit 2 RxJava 2 Adapter
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // RxJava 2
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // ViewModel, LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+
+    // Room ORM
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Work Manager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+    // Facebook Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Stetho
+    implementation 'com.facebook.stetho:stetho:1.6.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.6.0'
+
+    // Timber Logger
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    // Navigation Components
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+}
