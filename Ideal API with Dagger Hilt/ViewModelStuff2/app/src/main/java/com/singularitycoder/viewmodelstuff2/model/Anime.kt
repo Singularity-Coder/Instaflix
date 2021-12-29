@@ -5,7 +5,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.gson.GsonBuilder
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.singularitycoder.viewmodelstuff2.utils.Avoid
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_DESCRIPTIONS
 
@@ -36,7 +39,10 @@ data class Anime(
 @Entity(tableName = TABLE_ANIME_DATA)
 data class AnimeData(
     @PrimaryKey @SerializedName("anilist_id") var aniListId: Int,
-    @Ignore @SerializedName("mal_id") val malId: Int,
+    // serialize true if we want to send it, deserialize true if we want to receive it. We can ignore this field to begin with. Just for show. This is now a local field. Problem with @Transient is that it ignores serialization and deserialization and we cant do just one of them and it also excludes from Room. so less control. So go with an exclusion strategy
+    /*@Transient*/
+    /*@Avoid(serialize = false, deserialize = true)*/
+    @Ignore @Expose(serialize = false, deserialize = true) @SerializedName("mal_id") val malId: Int,
     var format: Int,
     var status: Int,
 //    var titles: Titles,
@@ -75,6 +81,12 @@ data class AnimeData(
         score = 0,
         id = 0
     )
+
+    override fun equals(other: Any?): Boolean = aniListId == (other as? AnimeData)?.aniListId
+
+    override fun toString(): String = GsonBuilder().setPrettyPrinting().create().toJson(this)
+
+    override fun hashCode(): Int = aniListId.hashCode()
 }
 
 //@kotlinx.parcelize.Parcelize

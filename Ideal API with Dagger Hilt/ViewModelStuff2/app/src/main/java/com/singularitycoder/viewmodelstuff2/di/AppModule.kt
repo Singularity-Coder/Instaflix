@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.repository.FavAnimeRepository
@@ -21,6 +22,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -36,6 +38,16 @@ object AppModule {
     @Provides
     fun injectRetrofitService(): RetrofitService {
 
+        // Problem with this is that you have to set the @Expose annotation to each and every field in model to serialize and deserialize. Painful
+        val gson = GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create()
+        val gsonWithExclusionStrategy = GsonBuilder()
+            .addSerializationExclusionStrategy(SerializationExclusionStrategy())
+            .addDeserializationExclusionStrategy(DeserializationExclusionStrategy())
+            .create()
+
+        // Since this is used only once, no need to inject this
         fun getHttpClientBuilder(): OkHttpClient {
             val okHttpClientBuilder = OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
@@ -60,7 +72,8 @@ object AppModule {
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gsonWithExclusionStrategy))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(getHttpClientBuilder())
             .build()
             .create(RetrofitService::class.java)

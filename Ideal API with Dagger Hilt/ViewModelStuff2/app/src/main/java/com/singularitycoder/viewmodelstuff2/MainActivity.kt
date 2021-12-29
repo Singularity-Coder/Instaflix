@@ -15,6 +15,7 @@ import javax.inject.Inject
 // TODO Sealed Class for data models
 // TODO Migrations
 // TODO Weak Reference context for Sharedprefs
+// TODO create another module for utils
 
 // TODO Groovy to Kotlin DSL version
 // TODO Compose version

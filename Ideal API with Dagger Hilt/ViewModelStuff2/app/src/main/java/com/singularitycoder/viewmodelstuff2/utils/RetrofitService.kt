@@ -2,12 +2,10 @@ package com.singularitycoder.viewmodelstuff2.utils
 
 import com.singularitycoder.viewmodelstuff2.model.Anime
 import com.singularitycoder.viewmodelstuff2.model.AnimeList
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.HTTP
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface RetrofitService {
 
@@ -23,7 +21,27 @@ interface RetrofitService {
     ): Response<AnimeList>
 
     @HTTP(method = "GET", path = "/v1/anime/", hasBody = true)
-    suspend fun getAnime(
+    fun getAnime(
+        /*@Header("Authorization") authToken: String = BuildConfig.ANI_API_AUTH_TOKEN*/   // Another way of adding headers
         @Query("id") id: String
-    ): Call<Anime>
+    ): Single<Response<Anime>>
+
+    @GET("/v1/anime/")
+    suspend fun getFilteredAnimeList(
+        @Query("title") title: String,
+        @Query("anilist_id") aniListId: String,
+        @Query("mal_id") malId: String = "",
+        @Query("formats") formats: String,
+        @Query("status") status: String,
+        @Query("year") year: String,
+        @Query("season") season: String,
+        @Query("genres") genres: String,
+        @Query("nsfw") nsfw: Boolean
+    ): Call<AnimeList>
+
+    @GET("/v1/anime/")
+    suspend fun getRandomAnimeList(
+        @Query(":count") count: Int,
+        @Query("nsfw") nsfw: Boolean
+    ): Call<AnimeList>
 }

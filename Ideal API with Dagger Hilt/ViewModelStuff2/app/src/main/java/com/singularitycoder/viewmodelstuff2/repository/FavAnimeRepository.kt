@@ -29,4 +29,6 @@ class FavAnimeRepository @Inject constructor(
         }
     }
 
+
+
 }

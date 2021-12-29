@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'jacoco'  // Generates Code Coverage Reports: ./gradlew createDebugCoverageReport - Find the report at app/build/reports/coverage - https://docs.gradle.org/current/userguide/jacoco_plugin.html
 }
 
 android {
@@ -18,9 +19,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // This is how you add a field to BuildConfig where ANI_API_AUTH_TOKEN is the field name. Add ani_api_auth_token to gradle.properties and assign it the token value
+        // Add gradle.properties to the .gitignore file to avoid committing this field to avoid key leak
         buildConfigField("String", "ANI_API_AUTH_TOKEN", ani_api_auth_token)
     }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -28,6 +29,7 @@ android {
         }
         debug {
             minifyEnabled false
+            testCoverageEnabled true // Need it for Jacoco
         }
     }
     compileOptions {
@@ -44,23 +46,29 @@ android {
     kapt {
         correctErrorTypes = true
     }
+    // Tests not running on Arctic Fox issue - https://stackoverflow.com/questions/67713500/unit-tests-not-working-on-android-studio-arctic-fox
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
 
-    // Kotlin
-    implementation 'androidx.core:core-ktx:1.7.0'
-
-    // AppCompat
-    implementation 'androidx.appcompat:appcompat:1.4.0'
+    /**
+     * To run Android Tests now in Arctic Fox, create a new Android Instrumented Tests run configuration - choose the module
+     * To run Unit Test now in Arctic Fox, create a new JUnit run configuration - define java 11 version, define test directory name
+     * The above 2 run all tests - Problem is running individual tests. The test button in the gutter is still not working n i dont want to create a run config for every test
+     * **/
 
     // JUnit Tests
     testImplementation "junit:junit:$junit_tests_version"
     androidTestImplementation "junit:junit:$junit_tests_version"
 
-    // Coroutine Tests
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
+    // Coroutine Tests - dup class issue. must exclude some package
+//    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
+//    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
 
     // Mockito Tests
     testImplementation "org.mockito:mockito-core:$mockito_tests_version"
@@ -68,25 +76,13 @@ dependencies {
 
     // Hilt Tests
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_tests_version"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_tests_version"
+//    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_tests_version"
 
     // Arc Core Tests
     testImplementation "androidx.arch.core:core-testing:$arc_core_tests_version"
     androidTestImplementation "androidx.arch.core:core-testing:$arc_core_tests_version"
 
-    // TestImplementations
-    implementation "androidx.test:core:1.4.0"
-    testImplementation "org.hamcrest:hamcrest-all:1.3"
-    testImplementation "org.robolectric:robolectric:4.3.1"
-
-    // Other Tests
-    testImplementation 'io.mockk:mockk:1.12.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
-
-    // Google Truth Tests
+    // Google Truth Tests - dup class issue. must exclude some package
     testImplementation "com.google.truth:truth:$truth_version"
     androidTestImplementation "com.google.truth:truth:$truth_version"
 
@@ -95,6 +91,22 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$recyclerview_test"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$recyclerview_test"
     implementation "androidx.test.espresso:espresso-idling-resource:$recyclerview_test"
+
+    // Other Test Stuff
+    implementation "androidx.test:core:1.4.0"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation 'io.mockk:mockk:1.12.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+
+    // Kotlin
+    implementation 'androidx.core:core-ktx:1.7.0'
+
+    // AppCompat
+    implementation 'androidx.appcompat:appcompat:1.4.0'
 
     // Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
