@@ -12,11 +12,15 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.db.FavAnimeDao
+import com.singularitycoder.viewmodelstuff2.db.FavAnimeDatabase
+import com.singularitycoder.viewmodelstuff2.db.MIGRATION_1_TO_2
 import com.singularitycoder.viewmodelstuff2.repository.FavAnimeRepository
 import com.singularitycoder.viewmodelstuff2.utils.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
@@ -65,7 +69,7 @@ object AppModule {
                 }
 
             // Enable stetho if enabled in settings
-            okHttpClientBuilder.addInterceptor(StethoInterceptor())
+            okHttpClientBuilder.addNetworkInterceptor(StethoInterceptor())
 
             return okHttpClientBuilder.build()
         }
@@ -81,15 +85,19 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun injectRetrofit(): Retrofit = Retrofit.Builder().build()
+
+    @Singleton
+    @Provides
     fun injectRoomDatabase(@ApplicationContext context: Context): FavAnimeDatabase {
-        return Room.databaseBuilder(context, FavAnimeDatabase::class.java, DB_FAV_ANIME).build()
+        return Room.databaseBuilder(context, FavAnimeDatabase::class.java, DB_FAV_ANIME)
+            .addMigrations(MIGRATION_1_TO_2)
+            .build()
     }
 
     @Singleton
     @Provides
-    fun injectRoomDao(db: FavAnimeDatabase): FavAnimeDao {
-        return db.favAnimeDao()
-    }
+    fun injectRoomDao(db: FavAnimeDatabase): FavAnimeDao = db.favAnimeDao()
 
     @Singleton
     @Provides
@@ -107,5 +115,9 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectGson(): Gson = Gson()
+    fun injectGson(): Gson = GsonBuilder().setPrettyPrinting().create()
+
+    @Singleton
+    @Provides
+    fun injectUtils(@ActivityContext context: Context): Utils = Utils(context)
 }

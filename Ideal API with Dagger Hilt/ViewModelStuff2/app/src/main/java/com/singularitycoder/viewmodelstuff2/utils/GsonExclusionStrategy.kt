@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose
 // https://stackoverflow.com/questions/4802887/gson-how-to-exclude-specific-fields-from-serialization-without-annotations
 // https://kotlinlang.org/docs/annotations.html#java-annotations
 
-// Custom Exclude annotation
+// Custom Exclude annotation to avoid serialization and deserialization
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD)
 annotation class Avoid(val serialize: Boolean = true, val deserialize: Boolean = true)

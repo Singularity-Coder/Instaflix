@@ -1,14 +1,11 @@
 package com.singularitycoder.viewmodelstuff2.model
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.singularitycoder.viewmodelstuff2.utils.Avoid
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_DESCRIPTIONS
 
@@ -38,15 +35,15 @@ data class Anime(
 @kotlinx.parcelize.Parcelize
 @Entity(tableName = TABLE_ANIME_DATA)
 data class AnimeData(
-    @PrimaryKey @SerializedName("anilist_id") var aniListId: Int,
+    @PrimaryKey @ColumnInfo(name = "aniListId", index = true) @SerializedName("anilist_id") var aniListId: Long,
     // serialize true if we want to send it, deserialize true if we want to receive it. We can ignore this field to begin with. Just for show. This is now a local field. Problem with @Transient is that it ignores serialization and deserialization and we cant do just one of them and it also excludes from Room. so less control. So go with an exclusion strategy
     /*@Transient*/
     /*@Avoid(serialize = false, deserialize = true)*/
-    @Ignore @Expose(serialize = false, deserialize = true) @SerializedName("mal_id") val malId: Int,
+    @Ignore @Expose(serialize = false, deserialize = true) @SerializedName("mal_id") val malId: Long,
     var format: Int,
     var status: Int,
-//    var titles: Titles,
-//    var descriptions: Descriptions,
+    @Embedded(prefix = "title_") var titles: Titles, // Embedding with a prefix in order to give a unique column name. We can also assign a unique column name in both the data classes but we have to assign it to every field manually. Inestead an embeded prefix is a more easy way to assign a unique prefix to the column name of a table
+    @Embedded(prefix = "desc_") var descriptions: Descriptions,
     @SerializedName("start_date") var startDate: String,
     @SerializedName("end_date") var endDate: String,
     @SerializedName("season_period") var seasonPeriod: Int,
@@ -56,9 +53,11 @@ data class AnimeData(
     @SerializedName("trailer_url") var trailerUrl: String,
     @SerializedName("cover_image") var coverImage: String,
     @SerializedName("banner_image") var bannerImage: String,
-//    var genres: List<String>,
+    var genres: List<String>,   // This must have a type converter
     var score: Int,
-    var id: Int
+    var id: Int,
+    @Expose(serialize = false, deserialize = false) @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String,
+    @Expose(serialize = false, deserialize = false) @ColumnInfo(name = "myFavReasonDate", defaultValue = "") var myFavReasonDate: String
 ) : Parcelable {
 
     constructor() : this(
@@ -66,8 +65,8 @@ data class AnimeData(
         malId = 0,
         format = 0,
         status = 0,
-//        titles = Titles(),
-//        descriptions = Descriptions(),
+        titles = Titles(),
+        descriptions = Descriptions(),
         startDate = "",
         endDate = "",
         seasonPeriod = 0,
@@ -77,9 +76,11 @@ data class AnimeData(
         trailerUrl = "",
         coverImage = "",
         bannerImage = "",
-//        genres = emptyList(),
+        genres = emptyList(),
         score = 0,
-        id = 0
+        id = 0,
+        myFavReason = "",
+        myFavReasonDate = ""
     )
 
     override fun equals(other: Any?): Boolean = aniListId == (other as? AnimeData)?.aniListId
@@ -89,23 +90,36 @@ data class AnimeData(
     override fun hashCode(): Int = aniListId.hashCode()
 }
 
-//@kotlinx.parcelize.Parcelize
-//@Entity(tableName = "table_titles")
-//data class Titles(
-//    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "title_id") val titleId: Int,
-//    var en: String,
-//    var jp: String,
-//    var it: String
-//): Parcelable {
-//    constructor() : this(0, "", "", "")
-//}
-//
-//@kotlinx.parcelize.Parcelize
-//@Entity(tableName = TABLE_DESCRIPTIONS)
-//data class Descriptions(
-//    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "desc_id") var descId: Int,
-//    var en: String,
-//    var it: String
-//): Parcelable {
-//    constructor() : this(descId = 0, en = "", it = "")
-//}
+// When you embedd this, it becomes part of the parent table which in this case is TABLE_ANIME_DATA
+@kotlinx.parcelize.Parcelize
+data class Titles(
+    var en: String,
+    var jp: String,
+    var it: String
+): Parcelable {
+    constructor() : this("", "", "")
+}
+
+@kotlinx.parcelize.Parcelize
+@Entity(
+    tableName = TABLE_DESCRIPTIONS,
+    foreignKeys = [
+        ForeignKey(
+            entity = AnimeData::class,
+            parentColumns = ["aniListId"],
+            childColumns = ["descId"],
+            onDelete = CASCADE,
+            onUpdate = CASCADE
+        )
+    ],
+    indices = [
+        Index(value = ["descId"])
+    ]
+)
+data class Descriptions(
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "descId") var descId: Long = -1,   // etiher add index = true in the ColumnInfo or in the @Entity annotation
+    @ColumnInfo(defaultValue = "") var en: String = "",
+    @ColumnInfo(defaultValue = "") var it: String = ""
+): Parcelable {
+    constructor() : this(descId = -1, en = "", it = "")
+}

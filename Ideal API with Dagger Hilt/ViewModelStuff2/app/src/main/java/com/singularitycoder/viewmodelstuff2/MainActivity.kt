@@ -1,14 +1,17 @@
 package com.singularitycoder.viewmodelstuff2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import com.singularitycoder.viewmodelstuff2.databinding.ActivityMainBinding
+import com.singularitycoder.viewmodelstuff2.model.Anime
 import com.singularitycoder.viewmodelstuff2.model.AnimeList
 import com.singularitycoder.viewmodelstuff2.viewmodel.FavAnimeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+// TODO Add network listeners for API calls
 // TODO Integrate Ktlint
 // TODO Work manager
 // TODO Auth token in Cpp file
@@ -42,19 +45,37 @@ class MainActivity : AppCompatActivity() {
     // Its good to just create a single instance of Gson rather than creating multiple objects. Performance thing.
     @Inject lateinit var gson: Gson
     private lateinit var viewModel: FavAnimeViewModel
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(FavAnimeViewModel::class.java)
-        viewModel.loadAnimeList()
+
+        // Protection from config change
+        if (null == viewModel.getAnimeList().value) viewModel.loadAnimeList()
+        if (null == viewModel.getAnime().value) viewModel.loadAnime("true")
+
+        binding.btnAnimeList.setOnClickListener {
+            viewModel.loadAnimeList()
+        }
+
+        binding.btnAnime.setOnClickListener {
+            viewModel.loadAnime("true")
+        }
+
         setUpObservers()
     }
 
     private fun setUpObservers() {
         viewModel.getAnimeList().observe(this) { it: AnimeList? ->
             println("AnimeList chan: ${gson.toJson(it)}")
+        }
+
+        viewModel.getAnime().observe(this) { it: Anime? ->
+            println("Anime chan: ${gson.toJson(it)}")
         }
     }
 }

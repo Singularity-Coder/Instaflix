@@ -20,7 +20,7 @@ interface RetrofitService {
         @Path("version") version: String = "v1" // Just for show
     ): Response<AnimeList>
 
-    @HTTP(method = "GET", path = "/v1/anime/", hasBody = true)
+    @HTTP(method = "GET", path = "/v1/anime/", hasBody = false)
     fun getAnime(
         /*@Header("Authorization") authToken: String = BuildConfig.ANI_API_AUTH_TOKEN*/   // Another way of adding headers
         @Query("id") id: String
@@ -40,7 +40,7 @@ interface RetrofitService {
     ): Call<AnimeList>
 
     @GET("/v1/anime/")
-    suspend fun getRandomAnimeList(
+    fun getRandomAnimeList(
         @Query(":count") count: Int,
         @Query("nsfw") nsfw: Boolean
     ): Call<AnimeList>

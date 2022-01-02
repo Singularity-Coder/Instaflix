@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fav Anime</string>
+    <string name="something_is_wrong">Something is wrong! Please try again.</string>
 </resources>
