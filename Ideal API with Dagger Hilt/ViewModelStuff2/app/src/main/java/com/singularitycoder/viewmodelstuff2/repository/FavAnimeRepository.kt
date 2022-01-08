@@ -1,12 +1,12 @@
 package com.singularitycoder.viewmodelstuff2.repository
 
+import android.content.Context
 import com.google.gson.Gson
+import com.singularitycoder.viewmodelstuff2.db.FavAnimeDao
 import com.singularitycoder.viewmodelstuff2.model.Anime
 import com.singularitycoder.viewmodelstuff2.model.AnimeList
-import com.singularitycoder.viewmodelstuff2.db.FavAnimeDao
-import com.singularitycoder.viewmodelstuff2.model.AnimeData
-import com.singularitycoder.viewmodelstuff2.utils.RetrofitService
 import com.singularitycoder.viewmodelstuff2.utils.Utils
+import com.singularitycoder.viewmodelstuff2.utils.network.RetrofitService
 import io.reactivex.Single
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -16,13 +16,13 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class FavAnimeRepository @Inject constructor(
     private val dao: FavAnimeDao,
-    private val retrofit: RetrofitService
+    private val retrofit: RetrofitService,
+    private val context: Context
 ) {
 
     @Inject lateinit var utils: Utils
@@ -31,7 +31,6 @@ class FavAnimeRepository @Inject constructor(
     suspend fun getAnimeList(): AnimeList? {
         return try {
             val response = retrofit.getAnimeList()
-
             if (response.isSuccessful && response.code() == HttpURLConnection.HTTP_OK) {
                 response.body() ?: return null
                 response.body()?.data?.documents ?: return null
@@ -43,7 +42,7 @@ class FavAnimeRepository @Inject constructor(
                 null
             }
         } catch (e: Exception) {
-            println(e)
+            println("Something went wrong while fetching anime list: $e")
             null
         }
     }
@@ -57,7 +56,7 @@ class FavAnimeRepository @Inject constructor(
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     if (continuation.isActive) continuation.resume(response.body(), null)
                 } else {
-                    val errorMessage = utils.getErrorMessageWithRetrofit(errorResponseBody = response.errorBody())
+                    val errorMessage = utils.getErrorMessageWithRetrofit(context = context, errorResponseBody = response.errorBody())
                 }
             }
 

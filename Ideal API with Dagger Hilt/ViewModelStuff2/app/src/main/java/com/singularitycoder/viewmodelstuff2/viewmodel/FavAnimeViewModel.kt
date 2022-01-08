@@ -18,7 +18,7 @@ import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
-// Make sure you dont have any activity context passed into ViewModels.
+// Make sure you dont have any activity context passed into ViewModels as ViewModels outlive activities.
 
 @HiltViewModel
 class FavAnimeViewModel @Inject constructor(
@@ -27,9 +27,9 @@ class FavAnimeViewModel @Inject constructor(
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val animeList = MutableLiveData<AnimeList>()
-    private val anime = MutableLiveData<Anime>()
-    private val randomAnimeList = MutableLiveData<AnimeList>()
+    private val animeList = MutableLiveData<AnimeList?>()
+    private val anime = MutableLiveData<Anime?>()
+    private val randomAnimeList = MutableLiveData<AnimeList?>()
 
     // onCleared is called by the Android Activity when the activity is destroyed
     override fun onCleared() {
@@ -40,16 +40,17 @@ class FavAnimeViewModel @Inject constructor(
 
     // Provide access to immutable value only to views. Functions are good as they are temporary in call stack than permanently storing in another variable
 
-    internal fun getAnimeList(): LiveData<AnimeList> = animeList
+    internal fun getAnimeList(): LiveData<AnimeList?> = animeList
 
-    internal fun getAnime(): LiveData<Anime> = anime
+    internal fun getAnime(): LiveData<Anime?> = anime
 
-    internal fun getRandomAnimeList(): LiveData<AnimeList> = randomAnimeList
+    internal fun getRandomAnimeList(): LiveData<AnimeList?> = randomAnimeList
 
     // -------------------------------------------------------------------------------------------------------------------------------------------
 
     internal fun loadAnimeList() = viewModelScope.launch {
-        animeList.postValue(repository.getAnimeList())
+        val aniList = repository.getAnimeList()
+        animeList.postValue(aniList)
     }
 
     internal fun loadAnime(id: String) {

@@ -12,13 +12,12 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
-class Utils @Inject constructor(val context: Context) {
-
-    private val somethingIsWrong = context.getString(R.string.something_is_wrong)
+class Utils {
 
     @Inject lateinit var retrofit: Retrofit
 
-    fun getErrorMessage(error: Any?): String {
+    fun getErrorMessage(context: Context, error: Any?): String {
+        val somethingIsWrong = context.getString(R.string.something_is_wrong)
         try {
             val parentJsonObj = (error as? JSONObject) ?: return somethingIsWrong
             val childJsonObj = parentJsonObj.getJSONObject("error")
@@ -26,34 +25,36 @@ class Utils @Inject constructor(val context: Context) {
             val message = childJsonObj.getString("message") ?: ""
             return if (message.isNullOrBlankOrNaOrNullString()) somethingIsWrong else message
         } catch (e: JsonParseException) {
-            Timber.e(e.localizedMessage)
+            Timber.e("getErrorMessage: ${e.localizedMessage}")
             return somethingIsWrong
         }
     }
 
-    fun getErrorMessageWithGson(error: Any?, gson: Gson): String {
+    fun getErrorMessageWithGson(context: Context, error: Any?, gson: Gson): String {
+        val somethingIsWrong = context.getString(R.string.something_is_wrong)
         try {
             val parentJsonObj = (error as? JSONObject) ?: return somethingIsWrong
             val errorResponse = gson.fromJson(parentJsonObj.toString(), ErrorResponse::class.java)
             val errorCode = errorResponse.error.errorCode
             val message = errorResponse.error.message
             return if (message.isNullOrBlankOrNaOrNullString()) somethingIsWrong else message
-        } catch (e: JsonParseException) {
-            Timber.e(e.localizedMessage)
+        } catch (e: Exception) {
+            Timber.e("getErrorMessageWithGson: ${e.localizedMessage}")
             return somethingIsWrong
         }
     }
 
     // To generate error, change the version of the API to a random number
-    fun getErrorMessageWithRetrofit(errorResponseBody: ResponseBody?): String {
+    fun getErrorMessageWithRetrofit(context: Context, errorResponseBody: ResponseBody?): String {
+        val somethingIsWrong = context.getString(R.string.something_is_wrong)
         try {
             errorResponseBody ?: return somethingIsWrong
             val errorResponse = retrofit.responseBodyConverter<ErrorResponse>(ErrorResponse::class.java, arrayOf()).convert(errorResponseBody) ?: return somethingIsWrong
             val errorCode = errorResponse.error.errorCode
             val message = errorResponse.error.message
             return if (message.isNullOrBlankOrNaOrNullString()) somethingIsWrong else message
-        } catch (e: JsonParseException) {
-            Timber.e(e.localizedMessage)
+        } catch (e: Exception) {
+            Timber.e("getErrorMessageWithRetrofit: ${e.localizedMessage}")
             return somethingIsWrong
         }
     }

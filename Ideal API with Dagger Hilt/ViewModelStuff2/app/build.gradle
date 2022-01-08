@@ -47,6 +47,8 @@ android {
         correctErrorTypes = true
     }
     // Tests not running on Arctic Fox issue - https://stackoverflow.com/questions/67713500/unit-tests-not-working-on-android-studio-arctic-fox
+    // The other option is to test it in the canary build of android studio - currently bumblebee. All tests are working as usual on that. Comment testOptions in that case.
+    // Android Studio Canary builds - https://developer.android.com/studio/preview
     testOptions {
         unitTests.all {
             useJUnitPlatform()
@@ -60,6 +62,8 @@ dependencies {
      * To run Android Tests now in Arctic Fox, create a new Android Instrumented Tests run configuration - choose the module
      * To run Unit Test now in Arctic Fox, create a new JUnit run configuration - define java 11 version, define test directory name
      * The above 2 run all tests - Problem is running individual tests. The test button in the gutter is still not working n i dont want to create a run config for every test
+     * cmd shift . for showing hidden files. Run configs are stored in .idea directory if u save them -> runConfigurations
+     * Install the canary version of android studio - currently bunblebee. All tests are working as usual in that.
      * **/
 
     // JUnit Tests
@@ -73,6 +77,16 @@ dependencies {
     // Mockito Tests
     testImplementation "org.mockito:mockito-core:$mockito_tests_version"
     androidTestImplementation "org.mockito:mockito-core:$mockito_tests_version"
+
+    // Mockito Android
+    testImplementation "org.mockito:mockito-android:$mockito_android_version"
+    androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
+
+    // Retrofit Mocking
+    testImplementation "com.squareup.retrofit2:retrofit-mock:2.0.0"
+
+    // Mock Web Server
+    testImplementation "com.squareup.okhttp:mockwebserver:2.7.0"
 
     // Hilt Tests
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_tests_version"
@@ -122,6 +136,9 @@ dependencies {
 
     // Retrofit 2 RxJava 2 Adapter
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // OkHttp Logging
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
     // RxJava 2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'

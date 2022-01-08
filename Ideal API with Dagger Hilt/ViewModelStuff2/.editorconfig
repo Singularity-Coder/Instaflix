@@ -1,0 +1,18 @@
+# https://github.com/pinterest/ktlint
+# https://stackoverflow.com/questions/44694132/editorconfig-in-android-studio
+# Enable EditorConfig support (Settings → Editor → Code Style → Enable EditorConfig support)
+# indicate this is the root of the project
+root = true
+
+[*.{kt,kts}]
+charset = utf-8
+indent_style = space
+indent_size=unset
+max_line_length=400
+trim_trailing_whitespace = true
+insert_final_newline = true
+disabled_rules = import-ordering
+
+# lf is a line break. Used in Linux. lf means Line Feed. On Windows and old Macs there is CR which is Carriage Return. Both of them indicate line breaks. 
+# https://stackoverflow.com/questions/1552749/difference-between-cr-lf-lf-and-cr-line-break-types
+end_of_line = lf

@@ -10,6 +10,7 @@ import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_DESCRIPTIONS
 
 // https://www.json2kotlin.com/
+// For things to be testable they have to as loosely coupled as possible. So dont introduce context stuff in models.
 
 data class AnimeList(
     @SerializedName("status_code") val statusCode: Int,
@@ -38,7 +39,7 @@ data class AnimeData(
     @PrimaryKey @ColumnInfo(name = "aniListId", index = true) @SerializedName("anilist_id") var aniListId: Long,
     // serialize true if we want to send it, deserialize true if we want to receive it. We can ignore this field to begin with. Just for show. This is now a local field. Problem with @Transient is that it ignores serialization and deserialization and we cant do just one of them and it also excludes from Room. so less control. So go with an exclusion strategy
     /*@Transient*/
-    /*@Avoid(serialize = false, deserialize = true)*/
+    /*@Skip(serialize = false, deserialize = true)*/
     @Ignore @Expose(serialize = false, deserialize = true) @SerializedName("mal_id") val malId: Long,
     var format: Int,
     var status: Int,

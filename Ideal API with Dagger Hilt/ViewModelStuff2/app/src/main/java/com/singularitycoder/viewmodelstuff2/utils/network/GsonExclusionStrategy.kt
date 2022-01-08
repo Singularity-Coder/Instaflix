@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.utils
+package com.singularitycoder.viewmodelstuff2.utils.network
 
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose
 // Custom Exclude annotation to avoid serialization and deserialization
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD)
-annotation class Avoid(val serialize: Boolean = true, val deserialize: Boolean = true)
+annotation class Skip(val serialize: Boolean = false, val deserialize: Boolean = false)
 
 class SerializationExclusionStrategy : ExclusionStrategy {
     override fun shouldSkipField(f: FieldAttributes): Boolean {

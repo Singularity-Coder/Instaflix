@@ -7,6 +7,16 @@
     android:padding="24dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/tv_network_state_strip"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@android:color/holo_green_dark"
+        android:gravity="center"
+        android:text="ONLINE"
+        android:visibility="gone"
+        android:textColor="@color/white" />
+
     <Button
         android:id="@+id/btn_anime_list"
         android:layout_width="match_parent"
