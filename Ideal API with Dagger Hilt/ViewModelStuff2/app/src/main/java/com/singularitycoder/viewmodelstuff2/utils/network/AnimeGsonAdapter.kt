@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.utils
+package com.singularitycoder.viewmodelstuff2.utils.network
 
 import com.google.gson.*
 import com.singularitycoder.viewmodelstuff2.model.AnimeData

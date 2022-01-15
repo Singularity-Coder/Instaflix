@@ -17,7 +17,7 @@ import javax.inject.Inject
 // https://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
 // https://stackoverflow.com/questions/53532406/activenetworkinfo-type-is-deprecated-in-api-level-28
 
-class NetworkStateListener @Inject constructor(val context: Context) {
+class NetworkState @Inject constructor(val context: Context) {
 
     private val conMan = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
 
@@ -34,6 +34,8 @@ class NetworkStateListener @Inject constructor(val context: Context) {
     @RequiresApi(Build.VERSION_CODES.M) private val hasWifi = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
     @RequiresApi(Build.VERSION_CODES.M) private val hasCellular = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
     @RequiresApi(Build.VERSION_CODES.M) private val hasEthernet = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ?: false
+
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
     fun listenToNetworkChangesAndDoWork(
         onlineWork: () -> Unit = {},
@@ -54,7 +56,7 @@ class NetworkStateListener @Inject constructor(val context: Context) {
             }
         }
 
-        val networkCallback: ConnectivityManager.NetworkCallback = object : ConnectivityManager.NetworkCallback() {
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 if (!hasActiveInternet()) {
                     offlineWork.invoke()
@@ -84,14 +86,15 @@ class NetworkStateListener @Inject constructor(val context: Context) {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            conMan?.registerDefaultNetworkCallback(networkCallback)
+            conMan?.registerDefaultNetworkCallback(networkCallback!!)
         } else {
             val request = NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build()
-            conMan?.registerNetworkCallback(request, networkCallback)
+            conMan?.registerNetworkCallback(request, networkCallback!!)
         }
     }
 
     // Referred https://stackoverflow.com/ a long time ago - Checks active internet connection by pinging to Google servers
+    // TODO Do in background
     private fun hasActiveInternet(): Boolean {
         if (!hasInternet()) return false
         try {
@@ -120,5 +123,13 @@ class NetworkStateListener @Inject constructor(val context: Context) {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             hasWifi || hasCellular || hasEthernet
         } else checkOldWay()
+    }
+
+    fun isOnline() = hasInternet()
+
+    fun isOffline() = !hasInternet()
+
+    fun killNetworkCallback() {
+        conMan?.unregisterNetworkCallback(networkCallback!!)
     }
 }

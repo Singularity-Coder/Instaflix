@@ -9,7 +9,7 @@ import java.lang.reflect.Type
 // Type converters must not contain any arguments in the constructor
 class AnimeGeneresListConverter {
     private val type: Type = object : TypeToken<List<String>?>() {}.type
-//    @Inject lateinit var gson: Gson   // Not injecting
+//    @Inject lateinit var gson: Gson   // Not injecting. Do in constructor
     val gson: Gson = Gson()
 
     @TypeConverter

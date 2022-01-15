@@ -57,6 +57,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
 
     /**
      * To run Android Tests now in Arctic Fox, create a new Android Instrumented Tests run configuration - choose the module
@@ -101,10 +103,10 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:$truth_version"
 
     // Espresso Testing RecyclerView
-    androidTestImplementation "androidx.test.espresso:espresso-core:$recyclerview_test"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$recyclerview_test"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:$recyclerview_test"
-    implementation "androidx.test.espresso:espresso-idling-resource:$recyclerview_test"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$recyclerview_test_version"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$recyclerview_test_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$recyclerview_test_version"
+    implementation "androidx.test.espresso:espresso-idling-resource:$recyclerview_test_version"
 
     // Other Test Stuff
     implementation "androidx.test:core:1.4.0"
@@ -184,4 +186,7 @@ dependencies {
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
+
+    // LeakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android-process:2.7'
 }

@@ -14,8 +14,8 @@
         android:background="@android:color/holo_green_dark"
         android:gravity="center"
         android:text="ONLINE"
-        android:visibility="gone"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_anime_list"
@@ -28,5 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Get anime" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
 
 </LinearLayout>

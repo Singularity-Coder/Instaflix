@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Fav Anime</string>
     <string name="something_is_wrong">Something is wrong! Please try again.</string>
-    <string name="online">ONLINE</string>
-    <string name="offline">OFFLINE</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+    <string name="ok">OK</string>
 </resources>

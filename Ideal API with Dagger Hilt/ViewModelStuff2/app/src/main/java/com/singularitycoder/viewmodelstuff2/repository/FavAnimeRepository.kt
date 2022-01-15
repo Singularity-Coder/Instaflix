@@ -1,11 +1,17 @@
 package com.singularitycoder.viewmodelstuff2.repository
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.db.FavAnimeDao
 import com.singularitycoder.viewmodelstuff2.model.Anime
 import com.singularitycoder.viewmodelstuff2.model.AnimeList
+import com.singularitycoder.viewmodelstuff2.model.AnimeListData
 import com.singularitycoder.viewmodelstuff2.utils.Utils
+import com.singularitycoder.viewmodelstuff2.utils.network.ApiState
+import com.singularitycoder.viewmodelstuff2.utils.network.LoadingState
+import com.singularitycoder.viewmodelstuff2.utils.network.NetworkState
 import com.singularitycoder.viewmodelstuff2.utils.network.RetrofitService
 import io.reactivex.Single
 import kotlinx.coroutines.CoroutineScope
@@ -20,30 +26,44 @@ import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class FavAnimeRepository @Inject constructor(
-    private val dao: FavAnimeDao,
-    private val retrofit: RetrofitService,
-    private val context: Context
+    val dao: FavAnimeDao,
+    val retrofit: RetrofitService,
+    val context: Context,
+    val utils: Utils,
+    val gson: Gson,
+    val networkState: NetworkState
 ) {
 
-    @Inject lateinit var utils: Utils
-    @Inject lateinit var gson: Gson
+    val animeList = MutableLiveData<ApiState<AnimeList?>>()
 
-    suspend fun getAnimeList(): AnimeList? {
-        return try {
+    suspend fun getAnimeList() {
+        try {
+            if (networkState.isOffline()) {
+                animeList.postValue(ApiState.Success(
+                    data = AnimeList().apply { data = AnimeListData().apply { documents = dao.getAll().value ?: emptyList() } },
+                    message = context.getString(R.string.offline)
+                ))
+                return
+            }
+
+            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.SHOW))
+
             val response = retrofit.getAnimeList()
             if (response.isSuccessful && response.code() == HttpURLConnection.HTTP_OK) {
-                response.body() ?: return null
-                response.body()?.data?.documents ?: return null
+                response.body() ?: return
+                response.body()?.data?.documents ?: return
                 CoroutineScope(IO).launch {
                     dao.insertAll(response.body()?.data?.documents!!)
                 }
-                response.body()
+                animeList.postValue(ApiState.Success(data = response.body()))
             } else {
-                null
+                animeList.postValue(ApiState.Error(message = context.getString(R.string.something_is_wrong)))
             }
+
+            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
         } catch (e: Exception) {
             println("Something went wrong while fetching anime list: $e")
-            null
+            animeList.postValue(ApiState.Error(message = e.stackTrace.toString()))
         }
     }
 
