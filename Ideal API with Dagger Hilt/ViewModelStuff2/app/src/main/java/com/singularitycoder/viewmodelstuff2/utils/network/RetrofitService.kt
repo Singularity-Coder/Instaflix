@@ -1,11 +1,13 @@
 package com.singularitycoder.viewmodelstuff2.utils.network
 
-import com.singularitycoder.viewmodelstuff2.model.Anime
-import com.singularitycoder.viewmodelstuff2.model.AnimeList
+import com.singularitycoder.viewmodelstuff2.anime.model.*
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.HTTP
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RetrofitService {
 
@@ -29,15 +31,15 @@ interface RetrofitService {
     @GET("/v1/anime/")
     suspend fun getFilteredAnimeList(
         @Query("title") title: String,
-        @Query("anilist_id") aniListId: String,
-        @Query("mal_id") malId: String = "",
-        @Query("formats") formats: String,
-        @Query("status") status: String,
-        @Query("year") year: String,
-        @Query("season") season: String,
-        @Query("genres") genres: String,
+        @Query("anilist_id") aniListId: Int? = -1,
+        @Query("mal_id") malId: Int? = null,
+        @Query("formats") formats: Array<AnimeFormats>? = null,
+        @Query("status") status: AnimeStatus? = null,
+        @Query("year") year: Int? = null,
+        @Query("season") season: AnimeSeason? = null,
+        @Query("genres") genres: Array<String>? = null,
         @Query("nsfw") nsfw: Boolean
-    ): Call<AnimeList>
+    ): Response<AnimeList>
 
     @GET("/v1/anime/")
     fun getRandomAnimeList(

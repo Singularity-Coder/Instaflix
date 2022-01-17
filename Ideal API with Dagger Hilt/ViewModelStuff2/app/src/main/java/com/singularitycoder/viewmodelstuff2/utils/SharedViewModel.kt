@@ -1,7 +1,6 @@
 package com.singularitycoder.viewmodelstuff2.utils
 
 import androidx.lifecycle.ViewModel
-import com.singularitycoder.viewmodelstuff2.model.AnimeData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

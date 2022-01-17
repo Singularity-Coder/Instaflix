@@ -96,13 +96,13 @@ class NetworkState @Inject constructor(val context: Context) {
     // Referred https://stackoverflow.com/ a long time ago - Checks active internet connection by pinging to Google servers
     // TODO Do in background
     private fun hasActiveInternet(): Boolean {
-        if (!hasInternet()) return false
+        if (isOffline()) return false
         try {
             val url = URL("https://clients3.google.com/generate_204")
             val connection = (url.openConnection() as HttpURLConnection).apply {
                 setRequestProperty("User-Agent", "Android")
                 setRequestProperty("Connection", "close")
-                connectTimeout = 5000
+                connectTimeout = 5E3.toInt()
                 connect()
             }
             return connection.responseCode == HttpURLConnection.HTTP_NO_CONTENT && connection.contentLength == 0

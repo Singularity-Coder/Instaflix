@@ -11,6 +11,8 @@
         android:background="@drawable/background_rounded_toast"
         android:padding="12dp"
         android:text="Custom Toast"
+        android:drawableStart="@drawable/ic_android_black_24dp"
+        android:drawablePadding="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/white" />
 

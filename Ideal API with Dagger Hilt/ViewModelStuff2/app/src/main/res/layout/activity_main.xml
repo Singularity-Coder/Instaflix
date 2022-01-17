@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
-    tools:context=".MainActivity">
+    tools:context=".anime.view.MainActivity">
 
     <TextView
         android:id="@+id/tv_network_state_strip"
@@ -18,16 +18,28 @@
         android:visibility="gone" />
 
     <Button
-        android:id="@+id/btn_anime_list"
+        android:id="@+id/btn_get_anime_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get anime list" />
+        android:text="Get Anime List" />
 
     <Button
-        android:id="@+id/btn_anime"
+        android:id="@+id/btn_get_anime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get anime" />
+        android:text="Get Anime" />
+
+    <Button
+        android:id="@+id/btn_get_filtered_anime_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Filtered Anime List" />
+
+    <Button
+        android:id="@+id/btn_get_random_anime_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Random Anime List" />
 
     <ProgressBar
         android:id="@+id/progress_circular"

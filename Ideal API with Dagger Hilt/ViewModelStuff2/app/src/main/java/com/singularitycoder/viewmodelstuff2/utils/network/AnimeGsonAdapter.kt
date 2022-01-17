@@ -1,7 +1,7 @@
 package com.singularitycoder.viewmodelstuff2.utils.network
 
 import com.google.gson.*
-import com.singularitycoder.viewmodelstuff2.model.AnimeData
+import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import java.lang.reflect.Type
 import javax.inject.Inject
 

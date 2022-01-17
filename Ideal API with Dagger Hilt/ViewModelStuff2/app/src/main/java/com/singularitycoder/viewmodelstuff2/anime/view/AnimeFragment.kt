@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2
+package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
+import com.singularitycoder.viewmodelstuff2.R
 
 class AnimeFragment : Fragment() {
 

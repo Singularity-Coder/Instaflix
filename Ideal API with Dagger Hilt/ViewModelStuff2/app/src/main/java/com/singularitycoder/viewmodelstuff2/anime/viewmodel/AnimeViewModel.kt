@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2
+package com.singularitycoder.viewmodelstuff2.anime.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -23,7 +23,7 @@ class AuthAuthenticator @Inject constructor(
     override fun authenticate(route: Route?, response: Response): Request? {
         return try {
             // If last 3 response are a busted then quit asking for new token
-            if (response == response.priorResponse && response.priorResponse == response.priorResponse?.priorResponse) return null
+            if (response == response.priorResponse && response == response.priorResponse?.priorResponse) return null
 
             // Call Auth Token API
             // Update Token in preferences

@@ -4,4 +4,5 @@
     <string name="online">online</string>
     <string name="offline">offline</string>
     <string name="ok">OK</string>
+    <string name="empty_response">Nothing to show</string>
 </resources>

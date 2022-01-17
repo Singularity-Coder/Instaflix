@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.di
+package com.singularitycoder.viewmodelstuff2.utils.di
 
 import android.Manifest
 import android.content.Context
@@ -14,11 +14,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.db.FavAnimeDao
-import com.singularitycoder.viewmodelstuff2.db.FavAnimeDatabase
-import com.singularitycoder.viewmodelstuff2.db.MIGRATION_1_TO_2
-import com.singularitycoder.viewmodelstuff2.db.MIGRATION_2_TO_3
-import com.singularitycoder.viewmodelstuff2.repository.FavAnimeRepository
+import com.singularitycoder.viewmodelstuff2.anime.dao.FavAnimeDao
+import com.singularitycoder.viewmodelstuff2.utils.db.FavAnimeDatabase
+import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_1_TO_2
+import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_2_TO_3
+import com.singularitycoder.viewmodelstuff2.anime.repository.FavAnimeRepository
 import com.singularitycoder.viewmodelstuff2.utils.BASE_URL
 import com.singularitycoder.viewmodelstuff2.utils.DB_FAV_ANIME
 import com.singularitycoder.viewmodelstuff2.utils.Utils
@@ -53,8 +53,9 @@ object AppModule {
     @Provides
     fun injectRetrofit(
         okHttpClient: OkHttpClient,
-        @GsonBuilderForRetrofit gsonBuilder: GsonBuilder
+        gsonBuilder: GsonBuilder
     ): Retrofit {
+        // https://square.github.io/retrofit/
         // Problem with this is that you have to set the @Expose annotation to each and every field in model to serialize and deserialize. Painful. Go with exclusion strategy with a custom annotation
         val gson = gsonBuilder
             .excludeFieldsWithoutExposeAnnotation()
@@ -192,10 +193,11 @@ object AppModule {
     @Singleton
     @Provides
     fun injectGson(
-        @GsonBuilderCore gsonBuilder: GsonBuilder,
+        gsonBuilder: GsonBuilder,
         animeGsonAdapter: AnimeGsonAdapter
     ): Gson {
         return gsonBuilder
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             .setPrettyPrinting()
 //            .registerTypeAdapter(AnimeData::class.java, animeGsonAdapter)
 //            .setLenient() // To handle MalformedJsonException
@@ -204,18 +206,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectAnimeGsonAdapter(@GsonBuilderCore gsonBuilder: GsonBuilder): AnimeGsonAdapter = AnimeGsonAdapter(gsonBuilder)
+    fun injectAnimeGsonAdapter(gsonBuilder: GsonBuilder): AnimeGsonAdapter = AnimeGsonAdapter(gsonBuilder)
 
-    @GsonBuilderCore
     @Singleton
     @Provides
     fun injectGsonBuilderCore(): GsonBuilder = GsonBuilder()
 
-    /** [GsonBuilderForRetrofit] will help hilt differentiate what to send */
-    @GsonBuilderForRetrofit
-    @Singleton
-    @Provides
-    fun injectGsonBuilderForRetrofit(): GsonBuilder = GsonBuilder()
+    /** [GsonBuilderForRetrofit] qualifier will help hilt differentiate what to send */
+//    @Singleton
+//    @Provides
+//    fun injectGsonBuilderForRetrofit(): GsonBuilder = GsonBuilder()
 
     @Singleton
     @Provides

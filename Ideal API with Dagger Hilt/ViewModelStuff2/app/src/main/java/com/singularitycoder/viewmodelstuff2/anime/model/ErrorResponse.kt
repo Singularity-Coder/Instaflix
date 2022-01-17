@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.model
+package com.singularitycoder.viewmodelstuff2.anime.model
 
 import com.google.gson.annotations.SerializedName
 

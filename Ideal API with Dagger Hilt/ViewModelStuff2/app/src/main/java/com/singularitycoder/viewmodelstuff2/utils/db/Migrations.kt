@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.db
+package com.singularitycoder.viewmodelstuff2.utils.db
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -30,10 +30,9 @@ internal val MIGRATION_2_TO_3 = object : Migration(2, 3) {
     private fun migrateIsFavColumnNameOfTableAnimeDataInTheOldWay(database: SupportSQLiteDatabase) {
         val TABLE_ANIME_DATA_TEMPORARY = "table_anime_data_temporary"
 
-        fun setTableAnimeDataColumnNames(columnNameToChange: String): String {
-            return "aniListId, format, status, startDate, endDate, seasonPeriod, seasonYear, episodesCount, episodeDuration, trailerUrl, coverImage, " +
-                    "bannerImage, genres, score, id, myFavReason, myFavReasonDate, $columnNameToChange, title_en, title_jp, title_it, desc_descId, desc_en, desc_it"
-        }
+        fun setTableAnimeDataColumnNames(columnNameToChange: String): String = """aniListId, format, status, startDate, endDate, seasonPeriod,
+            seasonYear, episodesCount, episodeDuration, trailerUrl, coverImage, bannerImage, genres, score, id, myFavReason, myFavReasonDate,
+            $columnNameToChange, title_en, title_jp, title_it, desc_descId, desc_en, desc_it""".trimIndentsAndNewLines()
 
         // If u r adding new tables, then you can directly copy the SQL queries from the generated java dir below the test folder  ->  com.singularitycoder.viewmodelstuff2 -> db -> FavAnimeDatabase_Impl
         // 1. Create the new table with the new column name - `isFavourite` INTEGER DEFAULT 0 NOT NULL
@@ -58,9 +57,9 @@ internal val MIGRATION_2_TO_3 = object : Migration(2, 3) {
                 `myFavReason` TEXT NOT NULL DEFAULT '',
                 `myFavReasonDate` TEXT NOT NULL DEFAULT '',
                 `isFavourite` INTEGER DEFAULT 0 NOT NULL,
-                `title_en` TEXT NOT NULL,
-                `title_jp` TEXT NOT NULL,
-                `title_it` TEXT NOT NULL,
+                `title_en` TEXT,
+                `title_jp` TEXT,
+                `title_it` TEXT,
                 `desc_descId` INTEGER NOT NULL,
                 `desc_en` TEXT NOT NULL DEFAULT '',
                 `desc_it` TEXT NOT NULL DEFAULT '',

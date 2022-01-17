@@ -11,24 +11,27 @@ import androidx.annotation.DrawableRes
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
-import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
-import com.singularitycoder.viewmodelstuff2.MainActivity
+import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutCustomToastBinding
-import com.singularitycoder.viewmodelstuff2.model.ErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.model.ErrorResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
+import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Retrofit
 import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 import javax.inject.Inject
+
+// Easy Memory Leaks
+// Static context
 
 class Utils @Inject constructor(
     val retrofit: Retrofit,
@@ -84,8 +87,6 @@ class Utils @Inject constructor(
         }
     }
 
-    fun dpToPx(dp: Int): Int = (dp * Resources.getSystem().displayMetrics.density).toInt()
-
     fun getDeviceSize(): Point = try {
         val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
         val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
@@ -98,7 +99,7 @@ class Utils @Inject constructor(
     fun <T> asyncLog(message: String?, vararg objs: T) = CoroutineScope(Default).launch {
         message ?: return@launch
         try {
-//            Timber.i(message, objs.map { it: T -> gson.toJson(it) })  // Implement Timber
+//            Timber.i(message, objs.map { it: T -> gson.toJson(it) })  // TODO Implement Timber
             println("$message: ${gson.toJson(objs[0])}")
         } catch (e: Exception) {
             Timber.e("Gson parse error: $e")
@@ -144,6 +145,38 @@ class Utils @Inject constructor(
         string ?: return null
         return gson.fromJson(string, T::class.java)
     }
+
+    private var toast: Toast? = null
+    @ExperimentalCoroutinesApi
+    fun showToast(
+        message: String,
+        context: Context,
+        duration: Int = Toast.LENGTH_LONG,
+        @DrawableRes textImage: Int = R.drawable.ic_android_black_24dp,
+    ) {
+        try {
+            if ((context as? MainActivity)?.isFinishing == true) return
+            if (message.isBlank()) return
+            if (null != toast) toast?.cancel()
+
+            val binding = LayoutCustomToastBinding.inflate(LayoutInflater.from(context)).apply {
+                tvCustomToastText.apply {
+                    text = message
+                    setCompoundDrawablesWithIntrinsicBounds(textImage, 0, 0, 0)
+                    compoundDrawablePadding = 12
+                }
+            }
+
+            toast = Toast(context).apply {
+                view = binding.root
+                this.duration = duration
+                setGravity(Gravity.BOTTOM, 0, 16.dpToPx())
+            }
+            toast?.show()
+        } catch (e: Exception) {
+            Timber.e("Something is wrong with the toast: $e")
+        }
+    }
 }
 
 fun String?.isNullOrBlankOrNaOrNullString(): Boolean = this.isNullOrBlank() || "null" == this.toLowCase().trim() || "na" == this.toLowCase().trim()
@@ -171,37 +204,15 @@ fun View.gone() {
     this.visibility = View.GONE
 }
 
-private var toast: Toast? = null
-fun Context.showToast(
-    message: String,
-    duration: Int = Toast.LENGTH_LONG,
-    @DrawableRes textImage: Int = R.drawable.ic_launcher_foreground,
-) {
-    try {
-        if ((this as? MainActivity)?.isFinishing == true) return
-        if (message.isBlank()) return
-        if (null != toast) toast?.cancel()
+fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-        val binding = LayoutCustomToastBinding.inflate(LayoutInflater.from(this)).apply {
-            tvCustomToastText.apply {
-                text = message
-                setCompoundDrawablesWithIntrinsicBounds(textImage, 0, 0, 0)
-                compoundDrawablePadding = 12
-            }
-        }
-
-        toast = Toast(this).apply {
-            view = binding.root
-            this.duration = duration
-            setGravity(Gravity.BOTTOM, 0, 0)
-        }
-        toast?.show()
-    } catch (e: Exception) {
-        Timber.e("Something is wrong with the toast: $e")
-    }
+fun <T> Gson.toJsonObject(obj: T): JSONObject? = try {
+    JSONObject().get(this.toJson(obj)) as? JSONObject
+} catch (e: JSONException) {
+    Timber.e(e)
+    null
+} catch (e: Exception) {
+    Timber.e(e)
+    null
 }
 
-fun Gson.toJsonObject(obj: Any): JsonObject {
-    val jsonObj = JSONObject().get(this.toJson(obj)) as JSONObject
-    return JsonParser.parseString(this.toJson(obj)) as JsonObject
-}

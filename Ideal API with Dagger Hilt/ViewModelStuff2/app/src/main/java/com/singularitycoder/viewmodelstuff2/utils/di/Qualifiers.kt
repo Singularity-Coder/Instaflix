@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.di
+package com.singularitycoder.viewmodelstuff2.utils.di
 
 import javax.inject.Qualifier
 

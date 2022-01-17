@@ -9,6 +9,7 @@ import android.os.StrictMode.VmPolicy
 import java.lang.RuntimeException
 
 // Initialise objects here if u want those instances to be available always. Mark their contexts with weak refernce if u wnat then Garbage collected
+// Application class is invoked before any app components start
 
 @HiltAndroidApp
 class FavAnimeApplication : Application() {

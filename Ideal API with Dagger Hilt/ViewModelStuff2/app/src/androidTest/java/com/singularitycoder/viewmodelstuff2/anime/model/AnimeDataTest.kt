@@ -1,6 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.model
-
-import org.junit.Assert.*
+package com.singularitycoder.viewmodelstuff2.anime.model
 
 import org.junit.After
 import org.junit.Before
