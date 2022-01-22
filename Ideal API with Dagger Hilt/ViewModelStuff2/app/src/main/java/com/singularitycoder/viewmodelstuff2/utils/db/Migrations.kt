@@ -9,6 +9,8 @@ import com.singularitycoder.viewmodelstuff2.utils.trimIndentsAndNewLines
 // https://stackoverflow.com/questions/805363/how-do-i-rename-a-column-in-a-sqlite-database-table
 // https://developer.android.com/reference/android/database/sqlite/package-summary
 
+// What types of data can each cell of a table hold? - Boolean is Integer, String is Text, Float is Float
+
 internal val MIGRATION_1_TO_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE table_anime_data ADD COLUMN myFavReason TEXT DEFAULT NULL")

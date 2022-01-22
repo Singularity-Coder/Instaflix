@@ -13,13 +13,15 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
-import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.about.model.AboutMeErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.model.FavAnimeErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutCustomToastBinding
-import com.singularitycoder.viewmodelstuff2.anime.model.ErrorResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONException
@@ -29,10 +31,12 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.util.*
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
 // Easy Memory Leaks
-// Static context
+// Static context - fun Context.something() {}
 
+// This Utils class should not be a singleton as it deals with context stuff. Move to Activity Module
 class Utils @Inject constructor(
     val retrofit: Retrofit,
     val gson: Gson
@@ -56,7 +60,7 @@ class Utils @Inject constructor(
         val somethingIsWrong = context.getString(R.string.something_is_wrong)
         try {
             val parentJsonObj = (error as? JSONObject) ?: return somethingIsWrong
-            val errorResponse = gson.fromJson(parentJsonObj.toString(), ErrorResponse::class.java) ?: return somethingIsWrong
+            val errorResponse = gson.fromJson(parentJsonObj.toString(), FavAnimeErrorResponse::class.java) ?: return somethingIsWrong
             val errorCode = errorResponse.error.errorCode
             val message = errorResponse.error.message
             return if (message.isNullOrBlankOrNaOrNullString()) somethingIsWrong else message
@@ -73,13 +77,16 @@ class Utils @Inject constructor(
      * This impacts breakpoint debugging a lot. It gets damn slow
      * TODO Should measure before and after
      * */
-    fun getErrorMessageWithRetrofit(context: Context, errorResponseBody: ResponseBody?): String {
+    fun <T> getErrorMessageWithRetrofit(context: Context, errorResponseBody: ResponseBody?): String {
         fun getDefaultMessage(): String = context.getString(R.string.something_is_wrong)
         try {
             errorResponseBody ?: return getDefaultMessage()
-            fun getErrorResponse(): ErrorResponse? = retrofit.responseBodyConverter<ErrorResponse>(ErrorResponse::class.java, arrayOf()).convert(errorResponseBody)
-            fun getErrorCode(): String = getErrorResponse()?.error?.errorCode ?: ""
-            fun getMessage(): String = getErrorResponse()?.error?.message ?: getDefaultMessage()
+            fun getErrorResponse(): T? = retrofit.responseBodyConverter<T>(KClass::class.java, arrayOf()).convert(errorResponseBody)
+            fun getMessage(): String = when (getErrorResponse()) {
+                is FavAnimeErrorResponse -> (getErrorResponse() as? FavAnimeErrorResponse)?.error?.message ?: getDefaultMessage()
+                is AboutMeErrorResponse -> (getErrorResponse() as? AboutMeErrorResponse)?.message ?: getDefaultMessage()
+                else -> getDefaultMessage()
+            }
             return if (getMessage().isNullOrBlankOrNaOrNullString()) getDefaultMessage() else getMessage()
         } catch (e: Exception) {
             Timber.e("getErrorMessageWithRetrofit: ${e.localizedMessage}")
@@ -147,6 +154,7 @@ class Utils @Inject constructor(
     }
 
     private var toast: Toast? = null
+
     @ExperimentalCoroutinesApi
     fun showToast(
         message: String,
@@ -177,6 +185,13 @@ class Utils @Inject constructor(
             Timber.e("Something is wrong with the toast: $e")
         }
     }
+
+    // https://stackoverflow.com/questions/51299641/difference-of-setvalue-postvalue-in-mutablelivedata
+    // https://kinnrot.github.io/live-data-pitfall-you-should-be-aware-of/
+    // setValue(): Sets the value. If there are active observers, the value will be dispatched to them. This method must be called from the main thread.
+    // postValue(): Posts a task to a main thread to set the given value. If you called this method multiple times before a main thread executed a posted task, only the last value would be dispatched.
+    // Also calling get value too quickly just after postValue might get you old data
+    suspend fun delayUntilNextPostValue() = delay(timeMillis = 500L)
 }
 
 fun String?.isNullOrBlankOrNaOrNullString(): Boolean = this.isNullOrBlank() || "null" == this.toLowCase().trim() || "na" == this.toLowCase().trim()
@@ -206,7 +221,7 @@ fun View.gone() {
 
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-fun <T> Gson.toJsonObject(obj: T): JSONObject? = try {
+fun <T> Gson.toJSONObject(obj: T): JSONObject? = try {
     JSONObject().get(this.toJson(obj)) as? JSONObject
 } catch (e: JSONException) {
     Timber.e(e)

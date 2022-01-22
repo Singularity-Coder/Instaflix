@@ -1,22 +1,22 @@
 package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
+import androidx.fragment.app.viewModels
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.anime.viewmodel.FavAnimeViewModel
 
-class AnimeFragment : Fragment() {
+class FavAnimeFragment : Fragment() {
 
     companion object {
-        fun newInstance() = AnimeFragment()
+        fun newInstance() = FavAnimeFragment()
     }
 
-    private lateinit var viewModel: AnimeViewModel
+    val viewModel: FavAnimeViewModel by viewModels()
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
 
@@ -30,12 +30,11 @@ class AnimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.anime_fragment, container, false)
+        return inflater.inflate(R.layout.fav_anime_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AnimeViewModel::class.java)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

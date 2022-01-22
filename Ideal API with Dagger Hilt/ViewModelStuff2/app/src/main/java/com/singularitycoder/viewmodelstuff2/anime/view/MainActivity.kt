@@ -6,9 +6,12 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.about.model.GitHubProfileQueryModel
+import com.singularitycoder.viewmodelstuff2.about.viewmodel.AboutMeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityMainBinding
 import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeList
@@ -24,18 +27,18 @@ import javax.inject.Inject
 
 // FIXME
 // Choreographer: Skipped 34 frames! The application may be doing too much work on its main thread.
-// For some reason sequential livedata.postValue() is not working. So loading has to be commented out
 
 // TODO
 // 1. Github graph ql api
-// 3. Basic list with custom views and multi views
 // 4. Tests
+// 3. Basic list with custom views and multi views
 // 5. Hilt Android doc
 // 6. ViewModels Android doc
 // 7. LiveData Android doc
-// 8. Work Manager
-// 9. Foreground Service
-// 10. Pagination
+// 8. Room Android doc
+// 9. Work Manager
+// 10. Foreground Service
+// 11. Pagination
 
 // Before u implement API, always create model first before anything else. Then the views. It makes ur job easy and fluent. It sets the flow
 // Hilt constructs classes, provides containers and manages lifecycles automatically
@@ -71,7 +74,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var utils: Utils
 
-    val viewModel: FavAnimeViewModel by viewModels()
+    private val favAnimeViewModel: FavAnimeViewModel by viewModels()
+    private val aboutMeViewModel: AboutMeViewModel by viewModels()
 //    val sharedViewModel: SharedViewModel by activityViewModels()  // Works only in Fragments
 
     private lateinit var binding: ActivityMainBinding
@@ -92,10 +96,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadData() {
         // Protection from config change. If data exists then dont call them. If however done explicitly through a button then obviously call
-        if (null == viewModel.getAnimeList().value) loadAnimeList()
-        if (null == viewModel.getAnime().value) loadAnime()
-        if (null == viewModel.getFilteredAnimeList().value) loadFilteredAnimeList()
-        if (null == viewModel.getRandomAnimeList().value) loadRandomAnimeList()
+//        if (null == favAnimeViewModel.getAnimeList().value) loadAnimeList()
+//        if (null == favAnimeViewModel.getAnime().value) loadAnime()
+//        if (null == favAnimeViewModel.getFilteredAnimeList().value) loadFilteredAnimeList()
+//        if (null == favAnimeViewModel.getRandomAnimeList().value) loadRandomAnimeList()
+//        if (null == aboutMeViewModel.getAboutMe().value) loadAboutMe()
     }
 
     private fun setUpClickListeners() {
@@ -103,6 +108,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnGetAnime.setOnClickListener { loadAnime() }
         binding.btnGetFilteredAnimeList.setOnClickListener { loadFilteredAnimeList() }
         binding.btnGetRandomAnimeList.setOnClickListener { loadRandomAnimeList() }
+        binding.btnAboutMe.setOnClickListener { loadAboutMe() }
     }
 
     private fun loadAnimeList() {
@@ -110,13 +116,13 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    viewModel.loadAnimeList()
+                    favAnimeViewModel.loadAnimeList()
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-                    viewModel.loadAnimeList()
                     showOfflineStrip()
+                    favAnimeViewModel.loadAnimeList()
                 }
             }
         )
@@ -127,13 +133,13 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    viewModel.loadAnime("true")
+                    favAnimeViewModel.loadAnime("true")
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-                    viewModel.loadAnime("true")
                     showOfflineStrip()
+                    favAnimeViewModel.loadAnime("true")
                 }
             }
         )
@@ -144,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    viewModel.loadFilteredAnimeList(
+                    favAnimeViewModel.loadFilteredAnimeList(
                         title = "Code Geass",
                         aniListId = null,
                         malId = null,
@@ -159,7 +165,8 @@ class MainActivity : AppCompatActivity() {
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-                    viewModel.loadFilteredAnimeList(
+                    showOfflineStrip()
+                    favAnimeViewModel.loadFilteredAnimeList(
                         title = "Code Geass",
                         aniListId = null,
                         malId = null,
@@ -170,7 +177,6 @@ class MainActivity : AppCompatActivity() {
                         genres = null,
                         nsfw = false
                     )
-                    showOfflineStrip()
                 }
             }
         )
@@ -181,13 +187,31 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    viewModel.loadRandomAnimeList()
+                    favAnimeViewModel.loadRandomAnimeList()
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-                    viewModel.loadRandomAnimeList()
                     showOfflineStrip()
+                    favAnimeViewModel.loadRandomAnimeList()
+                }
+            }
+        )
+    }
+
+    private fun loadAboutMe() {
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = {
+                CoroutineScope(Main).launch {
+                    showOnlineStrip()
+                    aboutMeViewModel.loadAboutMe()
+
+                }
+            },
+            offlineWork = {
+                CoroutineScope(Main).launch {
+                    showOfflineStrip()
+                    aboutMeViewModel.loadAboutMe()
                 }
             }
         )
@@ -218,10 +242,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeToObservers() {
-        viewModel.getAnimeList().observe(this) { it: ApiState<AnimeList?>? ->
+        favAnimeViewModel.getAnimeList().observe(this) { it: ApiState<AnimeList?>? ->
             when (it) {
                 is ApiState.Success -> {
-                    if (getString(R.string.offline) == it.message) utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_INDEFINITE, actionBtnText = this.getString(R.string.ok))
+                    if (getString(R.string.offline) == it.message) {
+                        utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_INDEFINITE, actionBtnText = this.getString(R.string.ok))
+                    }
                     utils.asyncLog(message = "AnimeList chan: %s", it.data)
                 }
                 is ApiState.Loading -> when (it.loadingState) {
@@ -236,7 +262,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getAnime().observe(this) { it: ApiState<Anime?>? ->
+        favAnimeViewModel.getAnime().observe(this) { it: ApiState<Anime?>? ->
             it ?: return@observe
             when (it) {
                 is ApiState.Success -> {
@@ -259,7 +285,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getFilteredAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
+        favAnimeViewModel.getFilteredAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
             it ?: return@observe
             when (it.status) {
                 Status.SUCCESS -> {
@@ -269,9 +295,9 @@ class MainActivity : AppCompatActivity() {
                         duration = Snackbar.LENGTH_INDEFINITE,
                         actionBtnText = this.getString(R.string.ok)
                     )
-                    if ("na" == it.message?.toLowCase() || getString(R.string.empty_response) == it.message) utils.showSnackBar(
+                    if ("na" == it.message?.toLowCase() || getString(R.string.nothing_to_show) == it.message) utils.showSnackBar(
                         view = binding.root,
-                        message = getString(R.string.empty_response),
+                        message = getString(R.string.nothing_to_show),
                         duration = Snackbar.LENGTH_INDEFINITE,
                         actionBtnText = this.getString(R.string.ok)
                     )
@@ -289,7 +315,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getRandomAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
+        favAnimeViewModel.getRandomAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
             when (it?.status) {
                 Status.SUCCESS -> {
                     if (getString(R.string.offline) == it.message) utils.showSnackBar(
@@ -300,12 +326,32 @@ class MainActivity : AppCompatActivity() {
                     )
                     utils.asyncLog(message = "Random Anime chan: %s", it.data)
                 }
-                Status.LOADING -> Unit
-                Status.ERROR -> {
-                    binding.progressCircular.gone()
-                    utils.showToast(message = it.message ?: getString(R.string.something_is_wrong), context = this)
+                Status.LOADING -> when (it.loadingState) {
+                    LoadingState.SHOW -> binding.progressCircular.visible()
+                    LoadingState.HIDE -> binding.progressCircular.gone()
                 }
+                Status.ERROR -> utils.showToast(message = it.message ?: getString(R.string.something_is_wrong), context = this)
                 else -> Unit
+            }
+        }
+
+        aboutMeViewModel.getAboutMe().observe(this) { it: ApiState<GitHubProfileQueryModel?>? ->
+            when (it) {
+                is ApiState.Success -> {
+                    if (getString(R.string.offline) == it.message) {
+                        utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_INDEFINITE, actionBtnText = this.getString(R.string.ok))
+                    }
+                    utils.asyncLog(message = "Github chan: %s", it.data)
+                }
+                is ApiState.Loading -> when (it.loadingState) {
+                    LoadingState.SHOW -> binding.progressCircular.visible()
+                    LoadingState.HIDE -> binding.progressCircular.gone()
+                }
+                is ApiState.Error -> {
+                    binding.progressCircular.gone()
+                    utils.showToast(message = it.message, context = this)
+                }
+                null -> Unit
             }
         }
     }

@@ -2,7 +2,7 @@ package com.singularitycoder.viewmodelstuff2.utils.network
 
 import android.content.Context
 import com.singularitycoder.viewmodelstuff2.BuildConfig
-import com.singularitycoder.viewmodelstuff2.utils.BASE_URL
+import com.singularitycoder.viewmodelstuff2.utils.BASE_URL_ANI_API
 import okhttp3.Interceptor
 import okhttp3.Protocol
 import okhttp3.Response
@@ -36,7 +36,7 @@ class AuthInterceptor @Inject constructor(val context: Context) : Interceptor {
         if (null != request.header("Authorization")) return response
 
         // When your redirect url is messed up send this response instead.
-        if (BASE_URL !in request.url.toString()) {
+        if (BASE_URL_ANI_API !in request.url.toString()) {
             return Response.Builder()
                 .code(HttpURLConnection.HTTP_NOT_FOUND)
                 .body(response.body)

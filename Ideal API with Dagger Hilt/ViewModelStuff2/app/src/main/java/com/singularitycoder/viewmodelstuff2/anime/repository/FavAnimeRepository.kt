@@ -11,6 +11,7 @@ import com.singularitycoder.viewmodelstuff2.utils.Utils
 import com.singularitycoder.viewmodelstuff2.utils.network.*
 import io.reactivex.Single
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,15 +20,15 @@ import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class FavAnimeRepository @Inject constructor(
-    val dao: FavAnimeDao,
-    val retrofit: RetrofitService,
-    val context: Context,
-    val utils: Utils,
-    val gson: Gson,
-    val networkState: NetworkState
+    private val dao: FavAnimeDao,
+    private val retrofit: RetrofitService,
+    private val context: Context,
+    private val utils: Utils,
+    private val gson: Gson,
+    private val networkState: NetworkState
 ) {
-
     val animeList = MutableLiveData<ApiState<AnimeList?>>()
+    val randomAnimeList = MutableLiveData<NetRes<AnimeList?>>()
 
     suspend fun getAnimeList() {
         try {
@@ -41,12 +42,13 @@ class FavAnimeRepository @Inject constructor(
                 return
             }
 
-//            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.SHOW))
+            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.SHOW))
 
             val response = retrofit.getAnimeList()
             if (response.isSuccessful && response.code() == HttpURLConnection.HTTP_OK) {
                 if (null == response.body() || null == response.body()?.data || response.body()?.data?.documents.isNullOrEmpty()) {
-                    animeList.postValue(ApiState.Success(data = response.body(), message = context.getString(R.string.empty_response)))
+                    animeList.postValue(ApiState.Success(data = response.body(), message = context.getString(R.string.nothing_to_show)))
+                    utils.delayUntilNextPostValue()
                     animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
                     return
                 }
@@ -56,14 +58,17 @@ class FavAnimeRepository @Inject constructor(
                 dao.insertAll(response.body()?.data?.documents!!)
                 animeList.postValue(ApiState.Success(data = response.body()))
             } else {
-                animeList.postValue(ApiState.Error(message = context.getString(R.string.something_is_wrong)))
+                val errorMessage = utils.getErrorMessageWithRetrofit<FavAnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
+                animeList.postValue(ApiState.Error(message = errorMessage))
             }
 
-//            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
+            utils.delayUntilNextPostValue()
+            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
         } catch (e: Exception) {
             Timber.e("Something went wrong while fetching anime list: $e")
             animeList.postValue(ApiState.Error(message = e.message ?: context.getString(R.string.something_is_wrong)))
-//            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
+            utils.delayUntilNextPostValue()
+            animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
         }
     }
 
@@ -96,8 +101,6 @@ class FavAnimeRepository @Inject constructor(
     /** Will be used in Work Manager. Polls this every 15 min. So loading is unnecessary */
     @ExperimentalCoroutinesApi
     suspend fun getRandomAnimeList(): LiveData<NetRes<AnimeList?>> = suspendCancellableCoroutine<LiveData<NetRes<AnimeList?>>> { continuation ->
-        val randomAnimeList = MutableLiveData<NetRes<AnimeList?>>()
-
         if (networkState.isOffline()) {
             randomAnimeList.postValue(
                 NetRes(
@@ -110,13 +113,18 @@ class FavAnimeRepository @Inject constructor(
             return@suspendCancellableCoroutine
         }
 
+        randomAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.SHOW))
+        if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
+
         retrofit.getRandomAnimeList(0, true).enqueue(object : Callback<AnimeList> {
             override fun onResponse(call: Call<AnimeList>, response: Response<AnimeList>) {
                 Timber.i("Current Thread Name: ${Thread.currentThread().name}")
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(IO).launch {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         if (null == response.body() || null == response.body()?.data || response.body()?.data?.documents.isNullOrEmpty()) {
-                            randomAnimeList.postValue(NetRes(status = Status.ERROR, message = context.getString(R.string.empty_response)))
+                            randomAnimeList.postValue(NetRes(status = Status.SUCCESS, message = context.getString(R.string.nothing_to_show)))
+                            if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
+                            utils.delayUntilNextPostValue()
                             randomAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
                             if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                             return@launch
@@ -125,11 +133,15 @@ class FavAnimeRepository @Inject constructor(
                         dao.insertAll(response.body()?.data?.documents!!)
 
                         randomAnimeList.postValue(NetRes(status = Status.SUCCESS, data = response.body()))
+                        if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                     } else {
-                        val errorMessage = utils.getErrorMessageWithRetrofit(context = context, errorResponseBody = response.errorBody())
+                        val errorMessage = utils.getErrorMessageWithRetrofit<FavAnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
                         randomAnimeList.postValue(NetRes(status = Status.ERROR, message = errorMessage))
+                        if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                     }
 
+                    utils.delayUntilNextPostValue()
+                    randomAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
                     if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                 }
             }
@@ -137,9 +149,7 @@ class FavAnimeRepository @Inject constructor(
             override fun onFailure(call: Call<AnimeList>, t: Throwable) {
                 Timber.i("Current Thread Name: ${Thread.currentThread().name}")
                 Timber.e("Something went wrong while fetching anime list: ${t.message}")
-
                 randomAnimeList.value = NetRes(status = Status.ERROR, message = t.message)
-
                 if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
             }
         })

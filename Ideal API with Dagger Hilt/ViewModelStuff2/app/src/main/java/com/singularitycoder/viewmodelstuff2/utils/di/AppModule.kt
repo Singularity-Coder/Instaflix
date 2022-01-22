@@ -14,14 +14,16 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.about.repository.AboutMeRepository
 import com.singularitycoder.viewmodelstuff2.anime.dao.FavAnimeDao
+import com.singularitycoder.viewmodelstuff2.anime.repository.FavAnimeRepository
+import com.singularitycoder.viewmodelstuff2.utils.BASE_URL_ANI_API
+import com.singularitycoder.viewmodelstuff2.utils.BASE_URL_GITHUB
+import com.singularitycoder.viewmodelstuff2.utils.DB_FAV_ANIME
+import com.singularitycoder.viewmodelstuff2.utils.Utils
 import com.singularitycoder.viewmodelstuff2.utils.db.FavAnimeDatabase
 import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_1_TO_2
 import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_2_TO_3
-import com.singularitycoder.viewmodelstuff2.anime.repository.FavAnimeRepository
-import com.singularitycoder.viewmodelstuff2.utils.BASE_URL
-import com.singularitycoder.viewmodelstuff2.utils.DB_FAV_ANIME
-import com.singularitycoder.viewmodelstuff2.utils.Utils
 import com.singularitycoder.viewmodelstuff2.utils.network.*
 import dagger.Module
 import dagger.Provides
@@ -68,7 +70,7 @@ object AppModule {
 
         // Based on the type, Hilt will automatically provide the built object wherever @Inject annotation is added
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_ANI_API)
             .addConverterFactory(GsonConverterFactory.create(gsonWithExclusionStrategy))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
@@ -80,6 +82,35 @@ object AppModule {
     @Singleton
     @Provides
     fun injectRetrofitService(retrofit: Retrofit): RetrofitService = retrofit.create(RetrofitService::class.java)
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    @Singleton
+    @Provides
+    fun injectRetrofitServiceForGraphQl(): RetrofitGraphQlService {
+        val okHttpClientBuilder = OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
+            .addInterceptor { chain: Interceptor.Chain ->
+                // Adding interceptor directly on the singleton. You can add headers and Auth token directly here or u can pass them through the retrofit service interface where u define the endpoint. But not in both places
+                val requestBuilder = chain.request().newBuilder()
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Accept", "application/json")
+                    .addHeader("Authorization", BuildConfig.GITHUB_GRAPH_QL_API_AUTH_TOKEN)
+                chain.proceed(requestBuilder.build())
+            }
+
+        okHttpClientBuilder.addNetworkInterceptor(StethoInterceptor())
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL_GITHUB)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClientBuilder.build())
+            .build()
+        return retrofit.create(RetrofitGraphQlService::class.java)
+    }
 
     @Singleton
     @Provides
@@ -129,7 +160,7 @@ object AppModule {
 //        retrofitService: RetrofitService, // Cyclic dependency BS
 //        gson: Gson,
 //        utils: Utils
-    ): AuthAuthenticator = AuthAuthenticator(context = context, /*retrofitService = retrofitService, gson = gson, utils = utils*/)
+    ): AuthAuthenticator = AuthAuthenticator(context = context /*retrofitService = retrofitService, gson = gson, utils = utils*/)
 
     @Singleton
     @Provides
@@ -164,7 +195,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectRepository(
+    fun injectFavAnimeRepository(
         favAnimeDao: FavAnimeDao,
         retrofitService: RetrofitService,
         @ApplicationContext context: Context,
@@ -174,6 +205,25 @@ object AppModule {
     ): FavAnimeRepository {
         return FavAnimeRepository(
             dao = favAnimeDao,
+            retrofit = retrofitService,
+            context = context,
+            utils = utils,
+            gson = gson,
+            networkState = networkState
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun injectAboutMeRepository(
+        favAnimeDao: FavAnimeDao,
+        retrofitService: RetrofitGraphQlService,
+        @ApplicationContext context: Context,
+        utils: Utils,
+        gson: Gson,
+        networkState: NetworkState
+    ): AboutMeRepository {
+        return AboutMeRepository(
             retrofit = retrofitService,
             context = context,
             utils = utils,

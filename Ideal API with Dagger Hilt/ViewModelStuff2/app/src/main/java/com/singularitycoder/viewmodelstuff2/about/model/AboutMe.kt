@@ -1,8 +1,12 @@
 package com.singularitycoder.viewmodelstuff2.about.model
 
+// https://krishanmadushankadev.medium.com/how-to-make-graphql-request-in-android-5a42c91acf7
 // Generate new token - https://github.com/settings/tokens/new
 // Test the amount of data you want to receive and prepare the query to get that data here - https://docs.github.com/en/graphql/overview/explorer
 // Format query here - https://jsonformatter.org/graphql-formatter
+
+// Graph QL
+//
 
 data class GitHubProfileQueryModel(val data: Data)
 
@@ -26,6 +30,12 @@ data class Following(val totalCount: Int)
 
 data class PinnedItems(val nodes: List<Node>)
 
+data class StarredRepositories(val totalCount: Int)
+
+data class TopRepositories(val edges: List<Edge>)
+
+data class Edge(val node: NodeX)
+
 data class Node(
     val description: String,
     val name: String,
@@ -37,12 +47,6 @@ data class Node(
 data class Owner(val avatarUrl: String, val login: String)
 
 data class PrimaryLanguage(val name: String)
-
-data class StarredRepositories(val totalCount: Int)
-
-data class TopRepositories(val edges: List<Edge>)
-
-data class Edge(val node: NodeX)
 
 data class NodeX(
     val description: String,
