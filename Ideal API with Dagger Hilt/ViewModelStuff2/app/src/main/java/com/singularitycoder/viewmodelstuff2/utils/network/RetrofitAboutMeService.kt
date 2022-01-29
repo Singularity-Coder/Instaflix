@@ -1,11 +1,7 @@
 package com.singularitycoder.viewmodelstuff2.utils.network
 
-import com.singularitycoder.viewmodelstuff2.about.model.GitHubProfileQueryModel
-import retrofit2.Call
-import retrofit2.Response
+import com.singularitycoder.viewmodelstuff2.aboutme.model.GitHubProfileQueryModel
 import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 // https://stackoverflow.com/questions/58429501/unable-to-invoke-no-args-constructor-for-retrofit2-call
@@ -13,7 +9,7 @@ import retrofit2.http.POST
 // So either remove suspend to use Call<Type> or remove Call wrapping to handle with the type directly. Error handling will be done with exceptions
 // You can also use Response class with suspend funcs
 
-interface RetrofitGraphQlService {
+interface RetrofitAboutMeService {
 
     @POST("graphql")
     suspend fun getGithubProfileData(@Body body: Map<String, String>): GitHubProfileQueryModel

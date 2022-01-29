@@ -2,21 +2,25 @@ package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.about.model.GitHubProfileQueryModel
-import com.singularitycoder.viewmodelstuff2.about.viewmodel.AboutMeViewModel
-import com.singularitycoder.viewmodelstuff2.databinding.ActivityMainBinding
+import com.singularitycoder.viewmodelstuff2.aboutme.model.GitHubProfileQueryModel
+import com.singularitycoder.viewmodelstuff2.aboutme.viewmodel.AboutMeViewModel
 import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeList
+import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
+import com.singularitycoder.viewmodelstuff2.databinding.ActivityMainBinding
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesFragment
+import com.singularitycoder.viewmodelstuff2.more.MoreFragment
+import com.singularitycoder.viewmodelstuff2.notifications.NotificationsFragment
 import com.singularitycoder.viewmodelstuff2.utils.*
-import com.singularitycoder.viewmodelstuff2.anime.viewmodel.FavAnimeViewModel
 import com.singularitycoder.viewmodelstuff2.utils.network.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -29,16 +33,18 @@ import javax.inject.Inject
 // Choreographer: Skipped 34 frames! The application may be doing too much work on its main thread.
 
 // TODO
-// 1. Github graph ql api
+// 1. Github graph ql api views
 // 4. Tests
 // 3. Basic list with custom views and multi views
-// 5. Hilt Android doc
+// 5. Hilt Android doc - DI Activity Module & Qualifiers
 // 6. ViewModels Android doc
-// 7. LiveData Android doc
-// 8. Room Android doc
+// 7. LiveData Android doc - Mediator LiveData
+// 8. Room Android doc - Room Foreign Key and Reationships
 // 9. Work Manager
 // 10. Foreground Service
 // 11. Pagination
+// Implement Timber
+// Custom Views
 
 // Before u implement API, always create model first before anything else. Then the views. It makes ur job easy and fluent. It sets the flow
 // Hilt constructs classes, provides containers and manages lifecycles automatically
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var utils: Utils
 
-    private val favAnimeViewModel: FavAnimeViewModel by viewModels()
+    private val animeViewModel: AnimeViewModel by viewModels()
     private val aboutMeViewModel: AboutMeViewModel by viewModels()
 //    val sharedViewModel: SharedViewModel by activityViewModels()  // Works only in Fragments
 
@@ -84,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setUpBottomNav()
         loadData()
         setUpClickListeners()
         subscribeToObservers()
@@ -92,6 +99,24 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         networkState.killNetworkCallback()
+    }
+
+    private fun setUpBottomNav() {
+        fun show(fragment: Fragment): Boolean {
+            // Home or Base fragments should not contain addToBackStack. But if u want to navigate to home frag then add HomeFrag
+            supportFragmentManager.beginTransaction().replace(binding.bottomNavViewContainer.id, fragment).commit()
+            return true
+        }
+
+        binding.bottomNav.setOnItemSelectedListener { it: MenuItem ->
+            return@setOnItemSelectedListener when (it.itemId) {
+                R.id.nav_home -> show(AnimeFragment())
+                R.id.nav_favorites -> show(FavoritesFragment())
+                R.id.nav_notifications -> show(NotificationsFragment())
+                R.id.nav_more -> show(MoreFragment())
+                else -> false
+            }
+        }
     }
 
     private fun loadData() {
@@ -104,11 +129,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpClickListeners() {
-        binding.btnGetAnimeList.setOnClickListener { loadAnimeList() }
-        binding.btnGetAnime.setOnClickListener { loadAnime() }
-        binding.btnGetFilteredAnimeList.setOnClickListener { loadFilteredAnimeList() }
-        binding.btnGetRandomAnimeList.setOnClickListener { loadRandomAnimeList() }
-        binding.btnAboutMe.setOnClickListener { loadAboutMe() }
+        binding.apply {
+            btnGetAnimeList.setOnClickListener { loadAnimeList() }
+            btnGetAnime.setOnClickListener { loadAnime() }
+            btnGetFilteredAnimeList.setOnClickListener { loadFilteredAnimeList() }
+            btnGetRandomAnimeList.setOnClickListener { loadRandomAnimeList() }
+            btnAboutMe.setOnClickListener { loadAboutMe() }
+        }
     }
 
     private fun loadAnimeList() {
@@ -116,13 +143,13 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    favAnimeViewModel.loadAnimeList()
+                    animeViewModel.loadAnimeList()
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
                     showOfflineStrip()
-                    favAnimeViewModel.loadAnimeList()
+                    animeViewModel.loadAnimeList()
                 }
             }
         )
@@ -133,13 +160,13 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    favAnimeViewModel.loadAnime("true")
+                    animeViewModel.loadAnime("true")
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
                     showOfflineStrip()
-                    favAnimeViewModel.loadAnime("true")
+                    animeViewModel.loadAnime("true")
                 }
             }
         )
@@ -150,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    favAnimeViewModel.loadFilteredAnimeList(
+                    animeViewModel.loadFilteredAnimeList(
                         title = "Code Geass",
                         aniListId = null,
                         malId = null,
@@ -166,7 +193,7 @@ class MainActivity : AppCompatActivity() {
             offlineWork = {
                 CoroutineScope(Main).launch {
                     showOfflineStrip()
-                    favAnimeViewModel.loadFilteredAnimeList(
+                    animeViewModel.loadFilteredAnimeList(
                         title = "Code Geass",
                         aniListId = null,
                         malId = null,
@@ -187,13 +214,13 @@ class MainActivity : AppCompatActivity() {
             onlineWork = {
                 CoroutineScope(Main).launch {
                     showOnlineStrip()
-                    favAnimeViewModel.loadRandomAnimeList()
+                    animeViewModel.loadRandomAnimeList()
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
                     showOfflineStrip()
-                    favAnimeViewModel.loadRandomAnimeList()
+                    animeViewModel.loadRandomAnimeList()
                 }
             }
         )
@@ -242,7 +269,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeToObservers() {
-        favAnimeViewModel.getAnimeList().observe(this) { it: ApiState<AnimeList?>? ->
+        animeViewModel.getAnimeList().observe(this) { it: ApiState<AnimeList?>? ->
             when (it) {
                 is ApiState.Success -> {
                     if (getString(R.string.offline) == it.message) {
@@ -262,7 +289,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        favAnimeViewModel.getAnime().observe(this) { it: ApiState<Anime?>? ->
+        animeViewModel.getAnime().observe(this) { it: ApiState<Anime?>? ->
             it ?: return@observe
             when (it) {
                 is ApiState.Success -> {
@@ -285,7 +312,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        favAnimeViewModel.getFilteredAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
+        animeViewModel.getFilteredAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
             it ?: return@observe
             when (it.status) {
                 Status.SUCCESS -> {
@@ -315,7 +342,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        favAnimeViewModel.getRandomAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
+        animeViewModel.getRandomAnimeList().observe(this) { it: NetRes<AnimeList?>? ->
             when (it?.status) {
                 Status.SUCCESS -> {
                     if (getString(R.string.offline) == it.message) utils.showSnackBar(

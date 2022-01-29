@@ -1,12 +1,11 @@
-package com.singularitycoder.viewmodelstuff2.about.viewmodel
+package com.singularitycoder.viewmodelstuff2.aboutme.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.singularitycoder.viewmodelstuff2.about.model.GitHubProfileQueryModel
-import com.singularitycoder.viewmodelstuff2.about.repository.AboutMeRepository
+import com.singularitycoder.viewmodelstuff2.aboutme.model.GitHubProfileQueryModel
+import com.singularitycoder.viewmodelstuff2.aboutme.repository.AboutMeRepository
 import com.singularitycoder.viewmodelstuff2.utils.network.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

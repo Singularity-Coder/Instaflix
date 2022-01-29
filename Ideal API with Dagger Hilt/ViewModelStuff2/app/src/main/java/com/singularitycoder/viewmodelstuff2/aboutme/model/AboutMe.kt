@@ -1,14 +1,38 @@
-package com.singularitycoder.viewmodelstuff2.about.model
+package com.singularitycoder.viewmodelstuff2.aboutme.model
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.singularitycoder.viewmodelstuff2.utils.TABLE_ABOUT_ME
+import com.singularitycoder.viewmodelstuff2.utils.network.Skip
 
 // https://krishanmadushankadev.medium.com/how-to-make-graphql-request-in-android-5a42c91acf7
 // Generate new token - https://github.com/settings/tokens/new
 // Test the amount of data you want to receive and prepare the query to get that data here - https://docs.github.com/en/graphql/overview/explorer
 // Format query here - https://jsonformatter.org/graphql-formatter
 
-// Graph QL
-//
+// Disadvantages of REST
+// 1. Over-fetching
+// 2. Multiple requests for multiple resources
+// 3. Waterfall network requests on nested data
+// 4. Each client need to know the location of each service
+// 5. API versioning becomes a hassle sometimes
 
-data class GitHubProfileQueryModel(val data: Data)
+// Graph QL
+// Query Language and server-side runtime for APIs that prioritizes giving clients exactly the data they request and no more - Red Hat
+
+// When to use graph-ql
+// 1. While building apps where band-width usage matters
+// 2. Apps where nested data needs to be fetched in a single call - like how facebook fetches posts along with their comments data
+// 3. Where Apps retrieve data from multiple storage APIs - Like a dashboard that fetches data from multiple sources such as logging services, backend for consumption stats, 3rd party analytics tools to capture end user interactions, etc
+
+// This query fetches user information (image, name, login, email, followers, following), 3 first of pinned repositories and 10 first of top repositories of a selected user in github.
+
+// Provide a fixed primary key instead of auto generate
+@Entity(tableName = TABLE_ABOUT_ME)
+data class GitHubProfileQueryModel(
+    @PrimaryKey @Skip val id: Long,
+    val data: Data
+)
 
 data class Data(val repositoryOwner: RepositoryOwner)
 

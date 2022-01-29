@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.utils.db
+package com.singularitycoder.viewmodelstuff2.utils.favanimedb
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

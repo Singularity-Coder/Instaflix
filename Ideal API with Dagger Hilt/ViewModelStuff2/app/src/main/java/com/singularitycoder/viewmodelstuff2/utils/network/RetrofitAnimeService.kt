@@ -9,7 +9,7 @@ import retrofit2.http.HTTP
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface RetrofitService {
+interface RetrofitAnimeService {
 
     // You can add headers and Auth token directly here or u can pass them through okHttpClient interceptor. But not in both places
     /*@Headers(

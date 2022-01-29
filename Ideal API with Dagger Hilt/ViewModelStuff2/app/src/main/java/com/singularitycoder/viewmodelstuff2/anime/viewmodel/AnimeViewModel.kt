@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.singularitycoder.viewmodelstuff2.about.model.AboutMeErrorResponse
-import com.singularitycoder.viewmodelstuff2.anime.dao.FavAnimeDao
+import com.singularitycoder.viewmodelstuff2.aboutme.model.AboutMeErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
-import com.singularitycoder.viewmodelstuff2.anime.repository.FavAnimeRepository
+import com.singularitycoder.viewmodelstuff2.anime.repository.AnimeRepository
 import com.singularitycoder.viewmodelstuff2.utils.Utils
 import com.singularitycoder.viewmodelstuff2.utils.network.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import timber.log.Timber
@@ -35,11 +34,11 @@ import javax.inject.Inject
 // Why is it ok for viewmodel constructor params to be private? I thought Hilt needed public fields to inject. This is working in normal classes as well
 
 @HiltViewModel
-class FavAnimeViewModel @Inject constructor(
+class AnimeViewModel @Inject constructor(
     application: Application,
-    private val repository: FavAnimeRepository,
-    private val dao: FavAnimeDao,
-    private val retrofit: RetrofitService,
+    private val repository: AnimeRepository,
+    private val dao: AnimeDao,
+    private val retrofit: RetrofitAnimeService,
     private val utils: Utils,
     private val gson: Gson,
     private val networkState: NetworkState,

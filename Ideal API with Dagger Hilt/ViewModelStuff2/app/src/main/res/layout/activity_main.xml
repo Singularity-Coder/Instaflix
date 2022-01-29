@@ -1,57 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".anime.view.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_network_state_strip"
+    <FrameLayout
+        android:id="@+id/bottom_nav_view_container"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@android:color/holo_green_dark"
-        android:gravity="center"
-        android:text="ONLINE"
-        android:textColor="@color/white"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_get_anime_list"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Anime List" />
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_get_anime"
+        <TextView
+            android:id="@+id/tv_network_state_strip"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@android:color/holo_green_dark"
+            android:gravity="center"
+            android:text="ONLINE"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_get_anime_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Anime List" />
+
+        <Button
+            android:id="@+id/btn_get_anime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Anime" />
+
+        <Button
+            android:id="@+id/btn_get_filtered_anime_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Filtered Anime List" />
+
+        <Button
+            android:id="@+id/btn_get_random_anime_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Random Anime List" />
+
+        <Button
+            android:id="@+id/btn_about_me"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="About Me" />
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Anime" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/btn_get_filtered_anime_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Filtered Anime List" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="1dp"
+            app:itemBackground="@color/white"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@drawable/bottom_nav_color_states"
+            app:itemTextColor="@drawable/bottom_nav_color_states"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/menu_bottom_navigation" />
+    </com.google.android.material.card.MaterialCardView>
 
-    <Button
-        android:id="@+id/btn_get_random_anime_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Random Anime List" />
-
-    <Button
-        android:id="@+id/btn_about_me"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="About Me" />
-
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@ package com.singularitycoder.viewmodelstuff2.anime.model
 
 import com.google.gson.annotations.SerializedName
 
-data class FavAnimeErrorResponse(
+data class AnimeErrorResponse(
     val error: Error
 )
 

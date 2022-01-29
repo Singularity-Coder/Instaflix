@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.utils.db
+package com.singularitycoder.viewmodelstuff2.utils.favanimedb
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -41,38 +41,5 @@ class AnimeTitleConverter {
     fun stringToObject(string: String?): Titles? {
         string ?: return null
         return gson.fromJson(string, Titles::class.java)
-    }
-}
-
-class AboutMeConverter {
-    val gson: Gson = Gson()
-
-    @TypeConverter
-    fun objectToString(obj: Titles?): String? {
-        obj ?: return null
-        return gson.toJson(obj)
-    }
-
-    @TypeConverter
-    fun stringToObject(string: String?): Titles? {
-        string ?: return null
-        return gson.fromJson(string, Titles::class.java)
-    }
-}
-
-// https://stackoverflow.com/questions/46585075/android-how-to-make-type-converters-for-room-generic-for-all-list-of-objects
-abstract class Converters<T> {
-    val gson: Gson = Gson()
-
-    @TypeConverter
-    fun mapListToString(value: List<T>): String {
-        val type = object : TypeToken<List<T>>() {}.type
-        return gson.toJson(value, type)
-    }
-
-    @TypeConverter
-    fun mapStringToList(value: String): List<T> {
-        val type = object : TypeToken<List<T>>() {}.type
-        return gson.fromJson(value, type)
     }
 }

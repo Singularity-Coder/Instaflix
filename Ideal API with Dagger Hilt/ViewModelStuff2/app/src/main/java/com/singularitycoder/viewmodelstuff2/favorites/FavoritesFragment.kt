@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.anime.view
+package com.singularitycoder.viewmodelstuff2.favorites
 
 import android.content.Context
 import android.os.Bundle
@@ -8,15 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.anime.viewmodel.FavAnimeViewModel
+import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
+import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 
-class FavAnimeFragment : Fragment() {
+class FavoritesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavAnimeFragment()
+        fun newInstance() = FavoritesFragment()
     }
 
-    val viewModel: FavAnimeViewModel by viewModels()
+    val viewModel: AnimeViewModel by viewModels()
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
 
@@ -26,10 +27,7 @@ class FavAnimeFragment : Fragment() {
         nnActivity = context as MainActivity
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fav_anime_fragment, container, false)
     }
 
@@ -39,6 +37,8 @@ class FavAnimeFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        // This is still useful in some cases over onResume. Basically called when this fragment is visible to user or user can see this
+        // This is still useful in some cases over onResume.
+        // Basically called when this fragment is visible to user or user can see this only when this fragment is in background and comes to foreground.
+        // So this wont get triggered when you launch it. Only when you come back from another fragment.
     }
 }

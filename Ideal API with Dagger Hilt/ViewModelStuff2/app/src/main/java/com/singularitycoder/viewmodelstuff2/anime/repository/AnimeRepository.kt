@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.anime.dao.FavAnimeDao
+import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
 import com.singularitycoder.viewmodelstuff2.utils.Utils
 import com.singularitycoder.viewmodelstuff2.utils.network.*
@@ -19,9 +19,9 @@ import timber.log.Timber
 import java.net.HttpURLConnection
 import javax.inject.Inject
 
-class FavAnimeRepository @Inject constructor(
-    private val dao: FavAnimeDao,
-    private val retrofit: RetrofitService,
+class AnimeRepository @Inject constructor(
+    private val dao: AnimeDao,
+    private val retrofit: RetrofitAnimeService,
     private val context: Context,
     private val utils: Utils,
     private val gson: Gson,
@@ -53,12 +53,11 @@ class FavAnimeRepository @Inject constructor(
                     return
                 }
 
-                if (response.body()?.data?.documents.isNullOrEmpty()) return
                 dao.deleteAll()
                 dao.insertAll(response.body()?.data?.documents!!)
                 animeList.postValue(ApiState.Success(data = response.body()))
             } else {
-                val errorMessage = utils.getErrorMessageWithRetrofit<FavAnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
+                val errorMessage = utils.getErrorMessageWithRetrofit<AnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
                 animeList.postValue(ApiState.Error(message = errorMessage))
             }
 
@@ -135,7 +134,7 @@ class FavAnimeRepository @Inject constructor(
                         randomAnimeList.postValue(NetRes(status = Status.SUCCESS, data = response.body()))
                         if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                     } else {
-                        val errorMessage = utils.getErrorMessageWithRetrofit<FavAnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
+                        val errorMessage = utils.getErrorMessageWithRetrofit<AnimeErrorResponse>(context = context, errorResponseBody = response.errorBody())
                         randomAnimeList.postValue(NetRes(status = Status.ERROR, message = errorMessage))
                         if (continuation.isActive) continuation.resume(value = randomAnimeList, onCancellation = null)
                     }

@@ -6,7 +6,7 @@ import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
 
 @Dao
-interface FavAnimeDao {
+interface AnimeDao {
 
     // Single Item CRUD ops ------------------------------------------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)

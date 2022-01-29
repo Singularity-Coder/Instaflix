@@ -1,21 +1,22 @@
 package com.singularitycoder.viewmodelstuff2.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.graphics.Point
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.about.model.AboutMeErrorResponse
-import com.singularitycoder.viewmodelstuff2.anime.model.FavAnimeErrorResponse
+import com.singularitycoder.viewmodelstuff2.aboutme.model.AboutMeErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.model.AnimeErrorResponse
 import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutCustomToastBinding
 import kotlinx.coroutines.CoroutineScope
@@ -60,7 +61,7 @@ class Utils @Inject constructor(
         val somethingIsWrong = context.getString(R.string.something_is_wrong)
         try {
             val parentJsonObj = (error as? JSONObject) ?: return somethingIsWrong
-            val errorResponse = gson.fromJson(parentJsonObj.toString(), FavAnimeErrorResponse::class.java) ?: return somethingIsWrong
+            val errorResponse = gson.fromJson(parentJsonObj.toString(), AnimeErrorResponse::class.java) ?: return somethingIsWrong
             val errorCode = errorResponse.error.errorCode
             val message = errorResponse.error.message
             return if (message.isNullOrBlankOrNaOrNullString()) somethingIsWrong else message
@@ -83,7 +84,7 @@ class Utils @Inject constructor(
             errorResponseBody ?: return getDefaultMessage()
             fun getErrorResponse(): T? = retrofit.responseBodyConverter<T>(KClass::class.java, arrayOf()).convert(errorResponseBody)
             fun getMessage(): String = when (getErrorResponse()) {
-                is FavAnimeErrorResponse -> (getErrorResponse() as? FavAnimeErrorResponse)?.error?.message ?: getDefaultMessage()
+                is AnimeErrorResponse -> (getErrorResponse() as? AnimeErrorResponse)?.error?.message ?: getDefaultMessage()
                 is AboutMeErrorResponse -> (getErrorResponse() as? AboutMeErrorResponse)?.message ?: getDefaultMessage()
                 else -> getDefaultMessage()
             }
@@ -192,6 +193,17 @@ class Utils @Inject constructor(
     // postValue(): Posts a task to a main thread to set the given value. If you called this method multiple times before a main thread executed a posted task, only the last value would be dispatched.
     // Also calling get value too quickly just after postValue might get you old data
     suspend fun delayUntilNextPostValue() = delay(timeMillis = 500L)
+
+    private fun setUpStatusBar(activity: Activity) {
+        activity.window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS) // clear FLAG_TRANSLUCENT_STATUS flag:
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+            statusBarColor = ContextCompat.getColor(activity, R.color.purple_700) // change the color
+            activity.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        }
+        activity.window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
 }
 
 fun String?.isNullOrBlankOrNaOrNullString(): Boolean = this.isNullOrBlank() || "null" == this.toLowCase().trim() || "na" == this.toLowCase().trim()

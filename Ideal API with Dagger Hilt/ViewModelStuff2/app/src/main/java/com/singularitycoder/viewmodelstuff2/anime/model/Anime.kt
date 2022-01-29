@@ -11,6 +11,12 @@ import com.singularitycoder.viewmodelstuff2.utils.network.Skip
 
 // https://www.json2kotlin.com/
 // For things to be testable they have to as loosely coupled as possible. So dont introduce context stuff in models.
+// A class annotated with @Entity must always have a primary key
+
+// @Relation - Relationships btw tables - So Anime and Genre are 2 tables
+// 1. One-to-One - One Anime falls under One Genre
+// 2. One-to-Many - One Anime falls under Many Genres
+// 3. Many-to-Many - Many Anime fall under One Genre
 
 data class AnimeList(
     @SerializedName("status_code") val statusCode: Int = -1,
@@ -102,24 +108,25 @@ data class Titles(
     constructor() : this(en = "", jp = "", it = "")
 }
 
+// Descriptions is in a one to one relationship with Anime. Each anime has a description obj
 @kotlinx.parcelize.Parcelize
 @Entity(
     tableName = TABLE_DESCRIPTIONS,
-    foreignKeys = [
+/*    foreignKeys = [
         ForeignKey(
             entity = AnimeData::class,
             parentColumns = ["aniListId"],
             childColumns = ["descId"],
             onDelete = CASCADE,
-            onUpdate = CASCADE
+            onUpdate = CASCADE // CASCADE means each action impacts both the child and the parent tables
         )
     ],
     indices = [
         Index(value = ["descId"])
-    ]
+    ]*/
 )
 data class Descriptions(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "descId") var descId: Long = -1,   // etiher add index = true in the ColumnInfo or in the @Entity annotation. Also avoid autoGenerate primary key as much as possible. What if int overflows? Since it belongs to Anime Table use aniListId as primary key
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "descId") var descId: Long = -1,   // either add index = true in the ColumnInfo or in the @Entity annotation. Also avoid autoGenerate primary key as much as possible. What if int overflows? Since it belongs to Anime Table use aniListId as primary key
     @ColumnInfo(defaultValue = "") var en: String? = "",
     @ColumnInfo(defaultValue = "") var it: String? = ""
 ) : Parcelable {

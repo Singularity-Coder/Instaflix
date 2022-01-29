@@ -14,16 +14,16 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.about.repository.AboutMeRepository
-import com.singularitycoder.viewmodelstuff2.anime.dao.FavAnimeDao
-import com.singularitycoder.viewmodelstuff2.anime.repository.FavAnimeRepository
-import com.singularitycoder.viewmodelstuff2.utils.BASE_URL_ANI_API
-import com.singularitycoder.viewmodelstuff2.utils.BASE_URL_GITHUB
-import com.singularitycoder.viewmodelstuff2.utils.DB_FAV_ANIME
-import com.singularitycoder.viewmodelstuff2.utils.Utils
-import com.singularitycoder.viewmodelstuff2.utils.db.FavAnimeDatabase
-import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_1_TO_2
-import com.singularitycoder.viewmodelstuff2.utils.db.MIGRATION_2_TO_3
+import com.singularitycoder.viewmodelstuff2.aboutme.dao.AboutMeDao
+import com.singularitycoder.viewmodelstuff2.aboutme.repository.AboutMeRepository
+import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
+import com.singularitycoder.viewmodelstuff2.anime.repository.AnimeRepository
+import com.singularitycoder.viewmodelstuff2.utils.*
+import com.singularitycoder.viewmodelstuff2.utils.DB_ANIME
+import com.singularitycoder.viewmodelstuff2.utils.aboutmedb.AboutMeDatabase
+import com.singularitycoder.viewmodelstuff2.utils.favanimedb.AnimeDatabase
+import com.singularitycoder.viewmodelstuff2.utils.favanimedb.MIGRATION_1_TO_2
+import com.singularitycoder.viewmodelstuff2.utils.favanimedb.MIGRATION_2_TO_3
 import com.singularitycoder.viewmodelstuff2.utils.network.*
 import dagger.Module
 import dagger.Provides
@@ -81,12 +81,12 @@ object AppModule {
     @RequiresPermission(Manifest.permission.INTERNET)
     @Singleton
     @Provides
-    fun injectRetrofitService(retrofit: Retrofit): RetrofitService = retrofit.create(RetrofitService::class.java)
+    fun injectRetrofitAnimeService(retrofit: Retrofit): RetrofitAnimeService = retrofit.create(RetrofitAnimeService::class.java)
 
     @RequiresPermission(Manifest.permission.INTERNET)
     @Singleton
     @Provides
-    fun injectRetrofitServiceForGraphQl(): RetrofitGraphQlService {
+    fun injectRetrofitAboutMeService(): RetrofitAboutMeService {
         val okHttpClientBuilder = OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(20, TimeUnit.SECONDS)
@@ -109,7 +109,7 @@ object AppModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClientBuilder.build())
             .build()
-        return retrofit.create(RetrofitGraphQlService::class.java)
+        return retrofit.create(RetrofitAboutMeService::class.java)
     }
 
     @Singleton
@@ -135,6 +135,7 @@ object AppModule {
             }
 
         // Enable stetho if enabled in settings
+        // addNetworkInterceptor() deals with interceptors that observe a single network request and response
         okHttpClientBuilder.addNetworkInterceptor(StethoInterceptor())
 
         // Another way to create interceptors
@@ -144,6 +145,7 @@ object AppModule {
         okHttpClientBuilder.authenticator(authAuthenticator)
 
         // Make sure this is the last interceptor. That way this logs info associated with previous interceptors as well.
+        // addInterceptor() adds interceptor that observes the full span of each call: from the connection is established (if any) until after the response source is selected (either the origin server, cache, or both).
         if (BuildConfig.DEBUG) okHttpClientBuilder.addInterceptor(httpLoggingInterceptor)
 
         return okHttpClientBuilder.build()
@@ -166,7 +168,6 @@ object AppModule {
     @Provides
     fun injectLoggingInterceptor(): HttpLoggingInterceptor {
         // https://howtodoinjava.com/retrofit2/logging-with-retrofit2/
-        // Not working
         return HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message: String ->
             Timber.tag("OKHTTP LOG").d(message) // Custom Log Tag
         }).apply {
@@ -180,8 +181,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectRoomDatabase(@ApplicationContext context: Context): FavAnimeDatabase {
-        return Room.databaseBuilder(context, FavAnimeDatabase::class.java, DB_FAV_ANIME)
+    fun injectAnimeRoomDatabase(@ApplicationContext context: Context): AnimeDatabase {
+        return Room.databaseBuilder(context, AnimeDatabase::class.java, DB_ANIME)
             .addMigrations(
                 MIGRATION_1_TO_2,
                 MIGRATION_2_TO_3
@@ -191,20 +192,30 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectRoomDao(db: FavAnimeDatabase): FavAnimeDao = db.favAnimeDao()
+    fun injectAboutMeRoomDatabase(@ApplicationContext context: Context): AboutMeDatabase {
+        return Room.databaseBuilder(context, AboutMeDatabase::class.java, DB_ABOUT_ME).build()
+    }
 
     @Singleton
     @Provides
-    fun injectFavAnimeRepository(
-        favAnimeDao: FavAnimeDao,
-        retrofitService: RetrofitService,
+    fun injectAnimeDao(db: AnimeDatabase): AnimeDao = db.favAnimeDao()
+
+    @Singleton
+    @Provides
+    fun injectAboutMeDao(db: AboutMeDatabase): AboutMeDao = db.aboutMeDao()
+
+    @Singleton
+    @Provides
+    fun injectAnimeRepository(
+        animeDao: AnimeDao,
+        retrofitService: RetrofitAnimeService,
         @ApplicationContext context: Context,
         utils: Utils,
         gson: Gson,
         networkState: NetworkState
-    ): FavAnimeRepository {
-        return FavAnimeRepository(
-            dao = favAnimeDao,
+    ): AnimeRepository {
+        return AnimeRepository(
+            dao = animeDao,
             retrofit = retrofitService,
             context = context,
             utils = utils,
@@ -216,14 +227,15 @@ object AppModule {
     @Singleton
     @Provides
     fun injectAboutMeRepository(
-        favAnimeDao: FavAnimeDao,
-        retrofitService: RetrofitGraphQlService,
+        aboutMeDao: AboutMeDao,
+        retrofitService: RetrofitAboutMeService,
         @ApplicationContext context: Context,
         utils: Utils,
         gson: Gson,
         networkState: NetworkState
     ): AboutMeRepository {
         return AboutMeRepository(
+            dao = aboutMeDao,
             retrofit = retrofitService,
             context = context,
             utils = utils,
