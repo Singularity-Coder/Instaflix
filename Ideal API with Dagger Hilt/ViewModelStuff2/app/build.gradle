@@ -215,8 +215,11 @@ dependencies {
     implementation 'com.scottyab:rootbeer-lib:0.1.0'
 
     // Exo Player
-    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.17.0'
 
     // JSoup
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:3.4.0"
 }

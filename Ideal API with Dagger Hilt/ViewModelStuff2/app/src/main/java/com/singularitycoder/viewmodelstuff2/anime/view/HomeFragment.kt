@@ -236,5 +236,6 @@ class HomeFragment : BaseFragment() {
             homeList = list
             notifyDataSetChanged()
         }
+        if (list.isEmpty()) binding.lottieEmpty.visible() else binding.lottieEmpty.gone()
     }
 }

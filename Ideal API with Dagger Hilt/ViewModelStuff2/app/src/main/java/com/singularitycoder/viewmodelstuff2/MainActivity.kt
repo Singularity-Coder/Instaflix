@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideNetworkStripAfter5Sec() {
-        doAfter(5_000L) { binding.tvNetworkState.visibility = View.GONE }
+        doAfter(5.seconds()) { binding.tvNetworkState.visibility = View.GONE }
     }
 
     private fun subscribeToObservers() {

@@ -88,11 +88,11 @@ fun View.setMargins(
     this.requestLayout()
 }
 
-fun Int.seconds(): Long = TimeUnit.SECONDS.toSeconds(this.toLong())
+fun Int.seconds(): Long = TimeUnit.SECONDS.toMillis(this.toLong())
 
-fun Int.minutes(): Long = TimeUnit.MINUTES.toMinutes(this.toLong())
+fun Int.minutes(): Long = TimeUnit.MINUTES.toMillis(this.toLong())
 
-fun Int.hours(): Long = TimeUnit.HOURS.toHours(this.toLong())
+fun Int.hours(): Long = TimeUnit.HOURS.toMillis(this.toLong())
 
 // https://stackoverflow.com/questions/5608720/android-preventing-double-click-on-a-button
 fun View.onSafeClick(

@@ -7,7 +7,9 @@ import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.helpers.NotificationUtils
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Notif
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.minutes
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.pollEvery
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.seconds
 import com.singularitycoder.viewmodelstuff2.notifications.repository.NotificationsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,8 +37,8 @@ class AnimeForegroundService : Service() {
         super.onCreate()
         timer = Timer()
         timer.pollEvery(
-            duration = TimeUnit.MINUTES.toMillis(5L),
-            withInitialDelay = TimeUnit.SECONDS.toMillis(2L),
+            duration = 5.minutes(),
+            withInitialDelay = 2.seconds(),
         ) {
             notificationRepository.getRandomAnimeListFromApi(shouldStartForegroundService = true)
         }
