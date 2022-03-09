@@ -2,16 +2,21 @@ package com.singularitycoder.viewmodelstuff2.favorites
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.anime.view.MainActivity
+import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class FavoritesFragment : Fragment() {
+// Voice Search
+// Search Filters
+
+@AndroidEntryPoint
+class FavoritesFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = FavoritesFragment()
@@ -28,7 +33,7 @@ class FavoritesFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fav_anime_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

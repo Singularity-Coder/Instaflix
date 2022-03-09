@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".anime.view.MainActivity">
-
-    <FrameLayout
-        android:id="@+id/bottom_nav_view_container"
-        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_network_state_strip"
+            android:id="@+id/tv_network_state"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:background="@android:color/holo_green_dark"
@@ -51,12 +44,6 @@
             android:text="Get Filtered Anime List" />
 
         <Button
-            android:id="@+id/btn_get_random_anime_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Random Anime List" />
-
-        <Button
             android:id="@+id/btn_about_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,6 +57,15 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/bottom_nav_view_container"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--https://www.youtube.com/watch?v=DoA_D6tmo6o-->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_bottom_nav"
         android:layout_width="match_parent"
@@ -86,11 +82,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="1dp"
-            app:itemBackground="@color/white"
+            app:itemBackground="@android:color/transparent"
             app:itemHorizontalTranslationEnabled="true"
             app:itemIconTint="@drawable/bottom_nav_color_states"
             app:itemTextColor="@drawable/bottom_nav_color_states"
             app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_bottom_navigation" />
     </com.google.android.material.card.MaterialCardView>
 

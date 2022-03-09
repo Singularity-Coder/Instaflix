@@ -1,23 +1,23 @@
 package com.singularitycoder.viewmodelstuff2.anime.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.singularitycoder.viewmodelstuff2.aboutme.model.AboutMeErrorResponse
+import com.singularitycoder.viewmodelstuff2.BaseViewModel
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
-import com.singularitycoder.viewmodelstuff2.anime.repository.AnimeRepository
-import com.singularitycoder.viewmodelstuff2.utils.Utils
-import com.singularitycoder.viewmodelstuff2.utils.network.*
+import com.singularitycoder.viewmodelstuff2.anime.repository.HomeRepository
+import com.singularitycoder.viewmodelstuff2.more.model.AboutMeErrorResponse
+import com.singularitycoder.viewmodelstuff2.helpers.network.*
+import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
+import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import timber.log.Timber
@@ -36,19 +36,18 @@ import javax.inject.Inject
 @HiltViewModel
 class AnimeViewModel @Inject constructor(
     application: Application,
-    private val repository: AnimeRepository,
+    private val repository: HomeRepository,
     private val dao: AnimeDao,
     private val retrofit: RetrofitAnimeService,
-    private val utils: Utils,
+    private val utils: GeneralUtils,
     private val gson: Gson,
     private val networkState: NetworkState,
-) : AndroidViewModel(application) {
+) : BaseViewModel<HomeRepository>(application, repository) {
 
     private val compositeDisposable = CompositeDisposable()
 
     private val anime = MutableLiveData<ApiState<Anime?>>()
     private val filteredAnimeList = MutableLiveData<NetRes<AnimeList?>>()
-    private val randomAnimeList = MutableLiveData<NetRes<AnimeList?>>()
 
     // onCleared is called by the Android Activity when the activity is destroyed
     override fun onCleared() {
@@ -64,8 +63,6 @@ class AnimeViewModel @Inject constructor(
     internal fun getAnime(): LiveData<ApiState<Anime?>> = anime
 
     internal fun getFilteredAnimeList(): LiveData<NetRes<AnimeList?>> = filteredAnimeList
-
-    internal fun getRandomAnimeList(): LiveData<NetRes<AnimeList?>> = repository.randomAnimeList
 
     // -------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -148,7 +145,7 @@ class AnimeViewModel @Inject constructor(
             if (response.code() == HttpURLConnection.HTTP_OK) {
                 if (null == response.body() || null == response.body()?.data || response.body()?.data?.documents.isNullOrEmpty()) {
                     filteredAnimeList.postValue(NetRes(status = Status.SUCCESS, data = response.body(), message = "NA"))
-                    utils.delayUntilNextPostValue()
+                    wait()
                     filteredAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
                     return@launch
                 }
@@ -161,18 +158,13 @@ class AnimeViewModel @Inject constructor(
                 filteredAnimeList.postValue(NetRes(status = Status.ERROR, message = errorMessage))
             }
 
-            utils.delayUntilNextPostValue()
+            wait()
             filteredAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
         } catch (e: Exception) {
             Timber.e("Something went wrong while fetching anime list: $e")
             filteredAnimeList.postValue(NetRes(status = Status.ERROR, message = e.message))
-            utils.delayUntilNextPostValue()
+            wait()
             filteredAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
         }
-    }
-
-    @ExperimentalCoroutinesApi
-    internal fun loadRandomAnimeList() = viewModelScope.launch {
-        repository.getRandomAnimeList()
     }
 }

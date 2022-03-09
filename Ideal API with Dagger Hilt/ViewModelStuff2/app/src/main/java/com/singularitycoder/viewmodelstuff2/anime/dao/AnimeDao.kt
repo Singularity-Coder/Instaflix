@@ -3,7 +3,7 @@ package com.singularitycoder.viewmodelstuff2.anime.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
-import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
+import com.singularitycoder.viewmodelstuff2.helpers.constants.Table
 
 @Dao
 interface AnimeDao {
@@ -13,7 +13,7 @@ interface AnimeDao {
     suspend fun insert(anime: AnimeData)
 
     @Transaction
-    @Query("SELECT * FROM $TABLE_ANIME_DATA WHERE aniListId LIKE :aniListId LIMIT 1")
+    @Query("SELECT * FROM ${Table.ANIME_DATA} WHERE aniListId LIKE :aniListId LIMIT 1")
     suspend fun getAnimeByAniListId(aniListId: String): AnimeData?
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
@@ -23,7 +23,7 @@ interface AnimeDao {
     suspend fun delete(anime: AnimeData)
 
     @Transaction
-    @Query("SELECT * FROM $TABLE_ANIME_DATA  WHERE seasonYear LIKE :year LIMIT 1")
+    @Query("SELECT * FROM ${Table.ANIME_DATA}  WHERE seasonYear LIKE :year LIMIT 1")
     suspend fun getAnimeByYear(year: String): AnimeData
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -31,9 +31,9 @@ interface AnimeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(animeList: List<AnimeData>)
 
-    @Query("SELECT * FROM $TABLE_ANIME_DATA")
+    @Query("SELECT * FROM ${Table.ANIME_DATA}")
     fun getAll(): LiveData<List<AnimeData>>
 
-    @Query("DELETE FROM $TABLE_ANIME_DATA")
+    @Query("DELETE FROM ${Table.ANIME_DATA}")
     suspend fun deleteAll()
 }

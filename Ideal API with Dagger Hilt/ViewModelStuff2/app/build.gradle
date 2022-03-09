@@ -17,6 +17,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // JNI Stuff
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
 
         // This is how you add a field to BuildConfig where ANI_API_AUTH_TOKEN is the field name. Add ani_api_auth_token to gradle.properties and assign it the token value
         // Add gradle.properties to the .gitignore file to avoid committing this field to avoid key leak
@@ -26,11 +32,26 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
+            multiDexEnabled true
+            crunchPngs true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
+            shrinkResources false
+            multiDexEnabled true
+            debuggable true
+            crunchPngs false
             testCoverageEnabled true // Need it for Jacoco
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    // JNI Stuff
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.18.1"
         }
     }
     compileOptions {
@@ -58,14 +79,12 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
     /**
      * To run Android Tests now in Arctic Fox, create a new Android Instrumented Tests run configuration - choose the module
      * To run Unit Test now in Arctic Fox, create a new JUnit run configuration - define java 11 version, define test directory name
      * The above 2 run all tests - Problem is running individual tests. The test button in the gutter is still not working n i dont want to create a run config for every test
      * cmd shift . for showing hidden files. Run configs are stored in .idea directory if u save them -> runConfigurations
-     * Install the canary version of android studio - currently bunblebee. All tests are working as usual in that.
+     * Install the canary version of android studio - currently bumblebee. All tests are working as usual in that.
      * **/
 
     // JUnit Tests
@@ -113,10 +132,13 @@ dependencies {
     testImplementation "org.hamcrest:hamcrest-all:1.3"
     testImplementation "org.robolectric:robolectric:4.3.1"
     testImplementation 'io.mockk:mockk:1.12.0'
-    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:2.12.1"
+
+    // Support
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Kotlin
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -183,10 +205,18 @@ dependencies {
     // Timber Logger
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
-    // Navigation Components
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
-
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android-process:2.7'
+
+    // Blur
+    implementation 'jp.wasabeef:blurry:4.0.1'
+
+    // Root Check
+    implementation 'com.scottyab:rootbeer-lib:0.1.0'
+
+    // Exo Player
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+
+    // JSoup
+    implementation 'org.jsoup:jsoup:1.13.1'
 }

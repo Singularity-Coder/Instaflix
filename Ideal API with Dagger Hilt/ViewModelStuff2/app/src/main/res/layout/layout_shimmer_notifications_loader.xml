@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/shimmer_loader"
+    android:background="@android:color/transparent">
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_auto_start="true"
+        app:shimmer_clip_to_children="true"
+        app:shimmer_duration="1500">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+            <include layout="@layout/layout_shimmer_notification_content_item" />
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

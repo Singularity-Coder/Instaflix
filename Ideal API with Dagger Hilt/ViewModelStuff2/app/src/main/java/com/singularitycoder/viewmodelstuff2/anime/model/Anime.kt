@@ -2,16 +2,16 @@ package com.singularitycoder.viewmodelstuff2.anime.model
 
 import android.os.Parcelable
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import com.singularitycoder.viewmodelstuff2.utils.TABLE_ANIME_DATA
-import com.singularitycoder.viewmodelstuff2.utils.TABLE_DESCRIPTIONS
-import com.singularitycoder.viewmodelstuff2.utils.network.Skip
+import com.singularitycoder.viewmodelstuff2.helpers.constants.Table
+import com.singularitycoder.viewmodelstuff2.helpers.network.Skip
 
 // https://www.json2kotlin.com/
 // For things to be testable they have to as loosely coupled as possible. So dont introduce context stuff in models.
 // A class annotated with @Entity must always have a primary key
+
+// Before u implement API, always create model first before anything else. Then the views. It makes ur job easy and fluent. It sets the flow
 
 // @Relation - Relationships btw tables - So Anime and Genre are 2 tables
 // 1. One-to-One - One Anime falls under One Genre
@@ -42,7 +42,7 @@ data class Anime(
 )
 
 @kotlinx.parcelize.Parcelize
-@Entity(tableName = TABLE_ANIME_DATA)
+@Entity(tableName = Table.ANIME_DATA)
 data class AnimeData(
     @PrimaryKey @ColumnInfo(name = "aniListId", index = true) @SerializedName("anilist_id") var aniListId: Long,
     // serialize true if we want to send it, deserialize true if we want to receive it. We can ignore this field to begin with. Just for show. This is now a local field. Problem with @Transient is that it ignores serialization and deserialization and we cant do just one of them and it also excludes from Room. so less control. So go with an exclusion strategy
@@ -111,7 +111,7 @@ data class Titles(
 // Descriptions is in a one to one relationship with Anime. Each anime has a description obj
 @kotlinx.parcelize.Parcelize
 @Entity(
-    tableName = TABLE_DESCRIPTIONS,
+    tableName = Table.DESCRIPTIONS,
 /*    foreignKeys = [
         ForeignKey(
             entity = AnimeData::class,
@@ -132,6 +132,13 @@ data class Descriptions(
 ) : Parcelable {
     constructor() : this(descId = -1, en = "", it = "")
 }
+
+data class RandomAnimeListData(
+    @SerializedName("status_code") val statusCode: Int = -1,
+    val message: String = "",
+    var data: List<AnimeData> = emptyList(),
+    val version: Int = -1
+)
 
 enum class AnimeFormats
 enum class AnimeStatus

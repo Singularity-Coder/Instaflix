@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--These are the attributes that you can set directly in the xml-->
+    <!--FORMATS: enum, string, color, boolean, dimension, reference, integer, float-->
+    <declare-styleable name="CustomRating">
+        <attr name="rating" format="integer"/>
+    </declare-styleable>
+</resources>

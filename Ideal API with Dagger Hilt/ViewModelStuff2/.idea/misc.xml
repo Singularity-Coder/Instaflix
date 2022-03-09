@@ -3,17 +3,24 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.2101851851851852" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.3125411987304687" />
         <entry key="app/src/main/res/drawable-v24/background_rounded_bottom_nav.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable-v24/bottom_nav_color_states.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3509259259259259" />
-        <entry key="app/src/main/res/drawable/background_rounded_toast.xml" value="0.3509259259259259" />
+        <entry key="app/src/main/res/drawable/background_rounded_shimmer_view.xml" value="0.2075" />
+        <entry key="app/src/main/res/drawable/background_rounded_toast.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/background_spotlight_fade.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/bottom_nav_favorites_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/bottom_nav_home_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/bottom_nav_more_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/bottom_nav_notifications_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/drawable/ic_back_blur.xml" value="0.16593017578125002" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.24375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1235" />
+        <entry key="app/src/main/res/drawable/ic_launcher.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_menu_selected.xml" value="0.24375" />
@@ -22,14 +29,39 @@
         <entry key="app/src/main/res/drawable/ic_round_home_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_round_menu_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_round_notifications_24.xml" value="0.24375" />
+        <entry key="app/src/main/res/drawable/ic_round_search_24.xml" value="0.1355" />
+        <entry key="app/src/main/res/drawable/saitama.xml" value="0.1235" />
+        <entry key="app/src/main/res/drawable/splash_image.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
+        <entry key="app/src/main/res/layout/fav_anime_fragment.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
+        <entry key="app/src/main/res/layout/fragment_fav_anime.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_anime_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_custom_search.xml" value="0.375" />
         <entry key="app/src/main/res/layout/layout_custom_toast.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_favorite_anime_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/layout_home_anime_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_home_anime_item_small.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/layout_home_anime_item_spotlight.xml" value="0.18796296296296297" />
+        <entry key="app/src/main/res/layout/layout_home_anime_item_standard.xml" value="0.19074074074074074" />
+        <entry key="app/src/main/res/layout/layout_home_anime_item_top_margin.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/layout/layout_my_custom_rating.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/layout_notification_anime_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_shimmer_notification_content.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/layout_shimmer_notification_content_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_shimmer_notifications_loader.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/layout_shimmer_notifications_loading.xml" value="0.375" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.22760416666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1235" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1235" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

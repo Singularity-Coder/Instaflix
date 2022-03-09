@@ -1,27 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.singularitycoder.viewmodelstuff2">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.PREVENT_POWER_KEY" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" /> <!-- For uninstalling Apps -->
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
-        android:name=".FavAnimeApplication"
-        android:allowBackup="true"
+        android:name=".AnimeApplication"
+        android:allowBackup="false"
+        android:configChanges="fontScale"
+        android:fullBackupOnly="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
+        android:installLocation="internalOnly"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ViewModelStuff2">
+        android:theme="@style/Theme.ViewModelStuff2"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
+        tools:replace="allowBackup">
         <activity
-            android:name=".anime.view.MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+        Launch Modes
+        https://medium.com/mindorks/android-launch-mode-787d28952959
+        https://stackoverflow.com/questions/3219726/android-singletask-or-singleinstance-launch-mode/29741591#29741591
+        1. standard - default - creates new instance - A, B, C, D -> launch B then u have A, B, C, D, B
+        2. single top - if activity on top then no new instance. U get the passed info in override onNewIntent() callback.
+        3. single task (Log out use case) - Singleton - single instance across system, if not there then new instance. If already exists 4 activities down then call sam with override onNewIntent() callback and clear all activities above it. So A, B, C and D has single task and launched new then -> A, B, C, D. Now B also has single task then -> A, B only. C and D in stack are cleared
+        4. single instance - creates new task or new stack for the activity with this launch mode. A, B, C then D. If you call E from C then u have A, B, C, E and a diff stack with D. If u call D again then same instance with override onNewIntent() callback. U cant launch any other tasks
+        5. Single instance per task
+        -->
+        <!-- Using singleInstance to enforce single activity. This might mess up libs -->
+        <activity
+            android:name=".MainActivity"
+            android:autoRemoveFromRecents="false"
+            android:colorMode="default"
+            android:documentLaunchMode="none"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:lockTaskMode="normal"
+            android:persistableMode="persistAcrossReboots"
+            android:windowSoftInputMode="adjustNothing" />
+        <service
+            android:name=".helpers.service.AnimeForegroundService"
+            android:exported="false" />
+        <receiver
+            android:name=".helpers.AnimeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

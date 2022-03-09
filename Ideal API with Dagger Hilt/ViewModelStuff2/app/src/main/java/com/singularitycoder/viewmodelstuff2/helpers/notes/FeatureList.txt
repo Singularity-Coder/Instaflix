@@ -1,0 +1,147 @@
+Fav Anime App Features
+
+// TODO
+Create Custom Notification View
+Fix rating
+Double tap to favorite
+On fav click show a drop animation to the fav tab. Also drag and drop the aniem item to the fav tab using drag listeners
+Blur, widget, long press zoom
+0. Search with filters, favorites, Glassmorphic effect, Detail View
+1. Github graph ql api views
+4. Tests
+5. Hilt Android doc - DI Activity Module & Qualifiers
+6. ViewModels Android doc
+7. LiveData Android doc - Mediator LiveData
+8. Room Android doc - Room Foreign Key and Reationships
+11. Pagination
+12. Implement Timber
+13. Custom Views - heart icon, 5 stars
+14. File I/O - local storage, external storage - CRUD
+
+// TODO OPTIMISATIONS - https://developer.android.com/topic/performance/reduce-apk-size
+// Plugins -> MAD Scorecard
+// Plugins -> Duplicate Detector
+// Use as less enums as possible. They are twice as heavy as static constants. Enums are heavy. use @IntDef. But it seems R8 optimises enums. So no need to use these.
+// Check class size
+// Check Library size
+// Build -> Analyze APK
+// The price of ENUMs (100 Days of Google Dev) - https://www.youtube.com/watch?v=Hzs6OBcvNQE
+
+// FIXME
+// Choreographer: Skipped 34 frames! The application may be doing too much work on its main thread.
+
+1. Anime Wallpapers
+3. Anime Music
+
+- Retrofit test
+- ViewModel test
+- Repository test
+- Room Test
+- Hilt Test
+- Model Tests
+
+- ViewModels
+- LiveData, mutable live data, mediator live data, live data transformations, live data extensions
+- Room - Migrations, Relationships, Foreign Key, Type Converter with Date conversion
+- Hilt - Types of Dependency Injection, Types of Annotations for different classes and interfaces
+
+
+- Integrate Lint
+- Integrate Timber - keep logs in firebase Firestore
+- Custom Views
+- Recycler View
+    - List View
+    - Grid View
+    - Staggered Grid View
+    - MultiView
+    - Draggable
+    - Swipeable
+    - Sticky headers like contacts
+    - Expandable
+    - Recycler View inside Recycler View
+
+Tabs
+1. Home - Anime discovery, streaming & syncing with trackers
+2. Fav Anime - normal rearrangable recycler view list with numbers on arraning your fav first
+3. Notifications
+4. More - about me, color themes, recommendation timing settings, list themes (default which is fancy, comfortable, compact, vertical slide, horizontal slide), list animations, turn on/off animations
+
+Use tick mark for selections
+Invite/share/send friends - contacts list with sticky headers and a letter strip with btn to send whatsapp invites or an expandable view holder like google contacts to share on phone, whatsapp etc.
+On view holder u have a heart icon and send and share btns - all should animate
+Shake to open random anime detail view
+
+// TODO Tests - Single and Mutliple API calls with return value, Room, ViewModel, Repository
+// TODO Work manager that polls every 15 mins
+// TODO Foreground Service that shows random anime suggestions
+// TODO Custom Views
+// TODO Generics
+// TODO RegEx
+// TODO Bit ops
+
+// TODO Basic Animations - screen transitions, shared element transitions, scroll animation, view size changes on user action
+// TODO Retrofit Multipart
+// TODO Coroutines - sequential, parallel, return value
+// TODO Room - single table, foreign keys, multiple table relationships, migrations
+// TODO Hilt - Inject in service, content porvider, receivers, Activities, Fragments
+// TODO ViewModels - Full from Android page
+// TODO LiveData - Full from Android page - LiveData, MutableLiveData, MediatorLiveData, Transformations
+// TODO RecyclerView - Click, MultiViews, Draggable, StickyViews, Expandable
+// TODO View - ConstraintLayout, CoordinatorLayout, ViewPager
+// TODO RxJava - Call API, sequential, parallel calls, basic transformations
+// TODO Profiling
+// TODO Common Memory Leaks
+// TODO Singleton
+// TODO File I/O - CRUD operations, CRUD assets, CRUD external storage, CRUD internal storage
+// TODO Common Git commands
+// TODO Broadcast Receivers
+// TODO Common Intents
+// TODO OOPs concepts
+// TODO Basic DS - Arrays, ArrayLists, LinkedLists, HasMap, HashSet, Stack, Queue, Heap
+// TODO Basic Algos - BFS, DFS, Recursion,
+// TODO Common Problems - Djkstra,
+// TODO Static Analysis and security review
+// Animated bottom navigation icons
+
+Perf Stuff
+- Use functions instead of variables to allocate temp space in call stack
+- Use lazy and lateinit variables for lazy inits to speed up screen launch speeds
+- Use bit ops
+- R8 Shrinking - APK size
+- Crunch PNGs - Reducing image size
+- Import count per file also matters i think. Like when i started injecting Gson almost 60mb reduced
+- Use inheritance to reduce build size. The less objects u create the less the build size
+
+TODO
+Online Offline ribbon with fade animation
+Retrofit - Interceptors
+Throw Exceptions
+Migrations - Auto Migrations
+Fix Foreign Key Issue
+API call with Flow
+Localisation
+Tooltips
+Multi pane view on screen rotation
+Localisation
+
+Synchronized block
+@Synchronized annotation
+@Volatile
+WeakReference
+Identity equality ===
+
+// TODO create another module for utils. Above package level
+// TODO Weak Reference context for Sharedprefs
+// TODO lottie placeholder
+// TODO In-App rating
+// TODO In-App Update
+// TODO Ads - After adding an anime
+// TODO Night mode
+// TODO Integrate Ktlint
+// TODO Generate PDF report abt the history of anime viewed
+
+// TODO POST request stuff in new project
+// TODO Groovy to Kotlin DSL version
+// TODO Compose version
+// TODO paging version
+// TODO without Hilt version

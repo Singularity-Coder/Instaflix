@@ -1,0 +1,14 @@
+Hilt
+
+Hilt constructs classes, provides containers and manages lifecycles automatically
+Hilt has compile-time correctness, runtime performance, scalabitliy,
+Hilt auto generates containers
+
+1. Activities and Fragments must have @AndroidEntryPoint
+2. Must have Application class annotated with @HiltAndroidApp
+@Module provides the dependency for us
+Hilt provides dependencies through the constructor - ex; ViewModels get repository from its constructor
+Dagger cannot inject dependency into a private or local field
+For application context use the predefined qualifier @ApplicationContext and for activity context use @ActivityContext
+
+Field injection is allowed in Activities and Fragments but in normal classes only constructor injection is allowed
