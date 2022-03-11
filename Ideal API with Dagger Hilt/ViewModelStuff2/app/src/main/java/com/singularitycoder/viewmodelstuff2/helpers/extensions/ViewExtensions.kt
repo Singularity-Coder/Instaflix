@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,13 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.Fragment
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import java.net.URL
-import java.util.concurrent.TimeUnit
 
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
@@ -88,11 +90,23 @@ fun View.setMargins(
     this.requestLayout()
 }
 
-fun Int.seconds(): Long = TimeUnit.SECONDS.toMillis(this.toLong())
-
-fun Int.minutes(): Long = TimeUnit.MINUTES.toMillis(this.toLong())
-
-fun Int.hours(): Long = TimeUnit.HOURS.toMillis(this.toLong())
+fun AppCompatActivity.showScreen(
+    fragment: Fragment,
+    tag: String,
+    isAdd: Boolean = false
+) {
+    if (isAdd) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_to_left, R.anim.slide_to_right, R.anim.slide_to_left, R.anim.slide_to_right)
+            .add(R.id.bottom_nav_view_container, fragment, tag)
+            .addToBackStack(null)
+            .commit()
+    } else {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.bottom_nav_view_container, fragment, tag)
+            .commit()
+    }
+}
 
 // https://stackoverflow.com/questions/5608720/android-preventing-double-click-on-a-button
 fun View.onSafeClick(

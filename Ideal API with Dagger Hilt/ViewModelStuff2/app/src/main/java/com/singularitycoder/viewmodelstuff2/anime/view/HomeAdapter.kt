@@ -10,10 +10,7 @@ import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemSpotlightBinding
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemStandardBinding
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemTopMarginBinding
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.setMargins
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.trimJunk
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -31,6 +28,9 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
     var homeList: List<AnimeData>
         get() = homeListDiffer.currentList
         set(value) = homeListDiffer.submitList(value)
+
+    private var spotlightViewClickListener: (animeId: String) -> Unit = {}
+    private var standardViewClickListener: (animeId: String) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val topMarginItemBinding = LayoutHomeAnimeItemTopMarginBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -61,6 +61,14 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
         else -> HomeItemType.STANDARD.ordinal
     }
 
+    fun setSpotlightViewClickListener(listener: (animeId: String) -> Unit) {
+        spotlightViewClickListener = listener
+    }
+
+    fun setStandardViewClickListener(listener: (animeId: String) -> Unit) {
+        standardViewClickListener = listener
+    }
+
     inner class HomeTopMarginViewHolder(val itemBinding: LayoutHomeAnimeItemTopMarginBinding) : RecyclerView.ViewHolder(itemBinding.root)
 
     inner class HomeSpotLightViewHolder(val itemBinding: LayoutHomeAnimeItemSpotlightBinding) : RecyclerView.ViewHolder(itemBinding.root) {
@@ -71,6 +79,8 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
 
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
                 if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
+
+                root.onSafeClick { spotlightViewClickListener.invoke(anime.aniListId.toString()) }
             }
         }
     }
@@ -88,6 +98,8 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
 
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
 //                if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
+
+                root.onSafeClick { standardViewClickListener.invoke(anime.aniListId.toString()) }
             }
         }
     }

@@ -43,6 +43,7 @@ import com.singularitycoder.viewmodelstuff2.notifications.view.NotificationsFrag
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import timber.log.Timber
@@ -217,98 +218,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpClickListeners() {
         binding.apply {
-            btnGetAnime.onSafeClick { loadAnime() }
+            btnGetAnime.onSafeClick { }
             btnAboutMe.onSafeClick { loadAboutMe() }
         }
     }
-
-    private fun loadAnime() {
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                CoroutineScope(Main).launch {
-                    showOnlineStrip()
-                    animeViewModel.loadAnime("true")
-                }
-            },
-            offlineWork = {
-                CoroutineScope(Main).launch {
-                    showOfflineStrip()
-                    animeViewModel.loadAnime("true")
-                }
-            }
-        )
-    }
-
 
     private fun loadAboutMe() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
                 CoroutineScope(Main).launch {
-                    showOnlineStrip()
+//                    showOnlineStrip()
                     moreViewModel.loadAboutMe()
 
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-                    showOfflineStrip()
+//                    showOfflineStrip()
                     moreViewModel.loadAboutMe()
                 }
             }
         )
     }
 
-    private fun showOfflineStrip() {
-        binding.tvNetworkState.apply {
-            text = context.getString(R.string.offline).toUpCase()
-            visibility = View.VISIBLE
-            setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_red_dark))
-            setTextColor(ContextCompat.getColor(this@MainActivity, R.color.white))
-        }
-    }
-
-    private fun showOnlineStrip() {
-        binding.tvNetworkState.apply {
-            if (text == context.getString(R.string.online).toUpCase()) return@apply
-            text = context.getString(R.string.online).toUpCase()
-            visibility = View.VISIBLE
-            setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.holo_green_dark))
-            setTextColor(ContextCompat.getColor(this@MainActivity, R.color.white))
-        }
-        hideNetworkStripAfter5Sec()
-    }
-
-    private fun hideNetworkStripAfter5Sec() {
-        doAfter(5.seconds()) { binding.tvNetworkState.visibility = View.GONE }
-    }
-
     private fun subscribeToObservers() {
-        animeViewModel.getAnime().observe(this) { it: ApiState<Anime?>? ->
-            it ?: return@observe
-
-            it succeeded { data: Anime?, message: String ->
-                if ("offline" == message) utils.showSnackBar(
-                    view = binding.root,
-                    message = getString(R.string.offline),
-                    duration = Snackbar.LENGTH_INDEFINITE,
-                    actionBtnText = this.getString(R.string.ok)
-                )
-                utils.asyncLog(message = "Anime chan: %s", data)
-            }
-
-            it failed { data: Anime?, message: String ->
-                binding.progressCircular.gone()
-                utils.showToast(message = if ("NA" == message) getString(R.string.something_is_wrong) else message, context = this)
-            }
-
-            it isLoading { loadingState: LoadingState ->
-                when (loadingState) {
-                    LoadingState.SHOW -> binding.progressCircular.visible()
-                    LoadingState.HIDE -> binding.progressCircular.gone()
-                }
-            }
-        }
-
         moreViewModel.getAboutMe().observe(this) { it: ApiState<GitHubProfileQueryModel?>? ->
             when (it) {
                 is ApiState.Success -> {
@@ -360,7 +293,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // https://stackoverflow.com/questions/42682855/display-badge-on-top-of-bottom-navigation-bars-icon
-    private fun setUpNotificationsCountBadge() = CoroutineScope(IO).launch {
+    private fun setUpNotificationsCountBadge() = CoroutineScope(Default).launch {
         binding.bottomNav.apply {
             val notificationsCount = getOrCreateBadge(R.id.nav_notifications).number
             removeBadge(R.id.nav_notifications) // to avoid adding duplicate views

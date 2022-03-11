@@ -11,12 +11,12 @@ sealed class ApiState<out T> {
     data class Error<out T>(val data: T? = null, val message: String = "") : ApiState<T>()
 }
 
-inline infix fun <T> ApiState<T>.succeeded(action: TwoArgMethod<T, String>): ApiState<T> {
+inline infix fun <T> ApiState<T>.isSuccessful(action: TwoArgMethod<T, String>): ApiState<T> {
     if (this is ApiState.Success) action.invoke(this.data, this.message)
     return this
 }
 
-inline infix fun <T> ApiState<T>.failed(action: TwoArgMethod<T, String>): ApiState<T> {
+inline infix fun <T> ApiState<T>.isFailure(action: TwoArgMethod<T, String>): ApiState<T> {
     if (this is ApiState.Error) action.invoke(this.data, this.message)
     return this
 }

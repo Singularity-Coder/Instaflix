@@ -2,6 +2,7 @@ package com.singularitycoder.viewmodelstuff2.helpers.constants
 
 import android.Manifest
 import com.singularitycoder.viewmodelstuff2.BuildConfig
+import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
 import com.singularitycoder.viewmodelstuff2.helpers.ApIAuthToken
 import com.singularitycoder.viewmodelstuff2.helpers.JniDefinitions
 
@@ -32,6 +33,7 @@ object IntentKey {
     const val ACTION_NOTIFICATION_BADGE = "INTENT_ACTION_NOTIFICATION_BADGE"
     const val DATA_LOAD_RANDOM_ANIME = "INTENT_DATA_LOAD_RANDOM_ANIME"
     const val DATA_SHOW_NOTIFICATION_BADGE = "INTENT_DATA_SHOW_NOTIFICATION_BADGE"
+    const val ANIME_ID = "INTENT_ANIME_ID"
     const val NOTIF_WORKER_RANDOM_ANIME = "INTENT_NOTIF_WORKER_RANDOM_ANIME"
     const val NOTIF_FOREGROUND_SERVICE_RANDOM_ANIME = "INTENT_NOTIF_FOREGROUND_SERVICE_RANDOM_ANIME"
 }
@@ -65,6 +67,10 @@ enum class Tab(val tag: String) {
     FAVORITES(tag = "FavoritesFragment"),
     NOTIFICATIONS(tag = "NotificationsFragment"),
     MORE(tag = "MoreFragment")
+}
+
+enum class FragmentsTags(val value: String) {
+    ANIME_DETAIL(AnimeDetailFragment::class.java.simpleName),
 }
 
 enum class Language(value: String) {

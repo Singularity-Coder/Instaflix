@@ -174,7 +174,7 @@ fun Long.toIntuitiveDateTime(): String {
 
 fun Timer.pollEvery(
     duration: Long,
-    withInitialDelay: Long = TimeUnit.SECONDS.toMillis(2L),
+    withInitialDelay: Long = 2.seconds(),
     task: suspend () -> Unit
 ) = scheduleAtFixedRate(
     object : TimerTask() {
@@ -185,3 +185,9 @@ fun Timer.pollEvery(
     withInitialDelay,
     duration
 )
+
+fun Int.seconds(): Long = TimeUnit.SECONDS.toMillis(this.toLong())
+
+fun Int.minutes(): Long = TimeUnit.MINUTES.toMillis(this.toLong())
+
+fun Int.hours(): Long = TimeUnit.HOURS.toMillis(this.toLong())
