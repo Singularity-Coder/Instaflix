@@ -11,7 +11,8 @@ data class Notification(
     var title: String? = "",
     var score: Int,
     var coverImage: String? = "",
-    var date: Long = 0L
+    var date: Long = 0L,
+    var id: Long = 0L
 ) {
 
     override fun equals(other: Any?): Boolean {

@@ -206,7 +206,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:5.0.1'
 
     // LeakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android-process:2.7'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android-process:2.7'
 
     // Blur
     implementation 'jp.wasabeef:blurry:4.0.1'

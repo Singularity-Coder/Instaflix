@@ -130,12 +130,12 @@ class MainActivity : AppCompatActivity() {
         grantPermissions()
         checkIfDeviceIsRooted()
         setUpBottomNav()
+        showScreen(HomeFragment(), Tab.HOME.tag)
         getIntentDataAndNavigateAccordingly()
         loadData()
         setUpClickListeners()
         subscribeToObservers()
         setUpShakeDetectionSensor()
-        showScreen(HomeFragment(), Tab.HOME.tag)
         startAnimeForegroundService()
         setUpBlurEffect()
     }
@@ -203,7 +203,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getIntentDataAndNavigateAccordingly() {
-        val animeDataFromWorkerNotif = intent.getParcelableArrayListExtra<AnimeData>(IntentKey.NOTIF_WORKER_RANDOM_ANIME)?.firstOrNull()
+        val animeDataFromWorkerNotif = intent.getParcelableArrayListExtra<AnimeData>(IntentKey.NOTIF_WORKER_RANDOM_ANIME)?.firstOrNull() ?: return
+        showAnimeDetailsOfThis(animeId = animeDataFromWorkerNotif.id.toString())
     }
 
     private fun showScreen(fragment: Fragment, tag: String) {
@@ -212,13 +213,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-//        if (null == favAnimeViewModel.getAnime().value) loadAnime()
 //        if (null == aboutMeViewModel.getAboutMe().value) loadAboutMe()
     }
 
     private fun setUpClickListeners() {
         binding.apply {
-            btnGetAnime.onSafeClick { }
             btnAboutMe.onSafeClick { loadAboutMe() }
         }
     }

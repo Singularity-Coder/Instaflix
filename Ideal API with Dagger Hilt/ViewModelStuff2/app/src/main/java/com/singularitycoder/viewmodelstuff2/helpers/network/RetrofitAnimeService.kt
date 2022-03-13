@@ -22,10 +22,10 @@ interface RetrofitAnimeService {
         @Path("version") version: String = "v1" // Just for show
     ): Response<AnimeList>
 
-    @HTTP(method = "GET", path = "/v1/anime/", hasBody = false)
+    @HTTP(method = "GET", path = "/v1/anime/{id}", hasBody = false)
     fun getAnime(
         /*@Header("Authorization") authToken: String = BuildConfig.ANI_API_AUTH_TOKEN*/   // Another way of adding headers
-        @Query("id") id: String
+        @Path("id") id: String
     ): Single<Response<Anime>>
 
     @GET("/v1/anime/")

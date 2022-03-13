@@ -19,8 +19,6 @@ import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeList
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentHomeBinding
-import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
-import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
@@ -232,15 +230,11 @@ class HomeFragment : BaseFragment() {
         }
 
         homeAdapter.setSpotlightViewClickListener { animeId: String ->
-            val bundle = Bundle().apply { putString(IntentKey.ANIME_ID, animeId) }
-            val fragment = AnimeDetailFragment().apply { arguments = bundle }
-            nnActivity.showScreen(fragment = fragment, tag = FragmentsTags.ANIME_DETAIL.value, isAdd = true)
+            nnActivity.showAnimeDetailsOfThis(animeId)
         }
 
         homeAdapter.setStandardViewClickListener { animeId: String ->
-            val bundle = Bundle().apply { putString(IntentKey.ANIME_ID, animeId) }
-            val fragment = AnimeDetailFragment().apply { arguments = bundle }
-            nnActivity.showScreen(fragment = fragment, tag = FragmentsTags.ANIME_DETAIL.value, isAdd = true)
+            nnActivity.showAnimeDetailsOfThis(animeId)
         }
     }
 

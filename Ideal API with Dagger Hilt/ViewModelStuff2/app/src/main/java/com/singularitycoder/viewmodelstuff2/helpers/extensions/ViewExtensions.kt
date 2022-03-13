@@ -17,6 +17,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
+import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
+import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import java.net.URL
 
@@ -106,6 +109,13 @@ fun AppCompatActivity.showScreen(
             .replace(R.id.bottom_nav_view_container, fragment, tag)
             .commit()
     }
+}
+
+fun AppCompatActivity.showAnimeDetailsOfThis(animeId: String) {
+    println("Anime Id: $animeId")
+    val bundle = Bundle().apply { putString(IntentKey.ANIME_ID, animeId) }
+    val fragment = AnimeDetailFragment().apply { arguments = bundle }
+    showScreen(fragment = fragment, tag = FragmentsTags.ANIME_DETAIL.value, isAdd = true)
 }
 
 // https://stackoverflow.com/questions/5608720/android-preventing-double-click-on-a-button

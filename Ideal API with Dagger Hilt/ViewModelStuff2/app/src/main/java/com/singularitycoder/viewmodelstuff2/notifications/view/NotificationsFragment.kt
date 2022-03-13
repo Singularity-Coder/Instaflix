@@ -105,6 +105,7 @@ class NotificationsFragment : BaseFragment() {
         subscribeToObservers()
         loadRandomAnimeList()
         nnContext.startAnimeRecommendationWorker()
+        setUpUserActionListeners()
     }
 
     override fun onResume() {
@@ -130,7 +131,7 @@ class NotificationsFragment : BaseFragment() {
     private fun setUpRecyclerView() {
         binding.rvNotifications.apply {
             layoutManager = LinearLayoutManager(nnContext).apply {
-                reverseLayout = true
+//                reverseLayout = true
                 stackFromEnd = true // Latest items at the top
             }
             adapter = notificationsAdapter
@@ -211,6 +212,12 @@ class NotificationsFragment : BaseFragment() {
                 }
                 else -> Unit
             }
+        }
+    }
+
+    private fun setUpUserActionListeners() {
+        notificationsAdapter.setNotificationViewClickListener { animeId: String ->
+            nnActivity.showAnimeDetailsOfThis(animeId)
         }
     }
 }

@@ -9,6 +9,7 @@ import com.bumptech.glide.RequestManager
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutNotificationAnimeItemBinding
 import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.onSafeClick
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.setMargins
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.toIntuitiveDateTime
 import javax.inject.Inject
@@ -24,10 +25,13 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
             return oldItem == newItem
         }
     }
+
     private val notificationsListDiffer = AsyncListDiffer(this, diffUtil)
     var notificationsList: List<Notification>
         get() = notificationsListDiffer.currentList
         set(value) = notificationsListDiffer.submitList(value)
+
+    private var notificationClickListener: (animeId: String) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = LayoutNotificationAnimeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -44,12 +48,18 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
     // https://stackoverflow.com/questions/44932450/wrong-order-of-restored-items-in-recyclerview
     override fun getItemViewType(position: Int): Int = position
 
+    fun setNotificationViewClickListener(listener: (animeId: String) -> Unit) {
+        notificationClickListener = listener
+    }
+
     inner class NotificationViewHolder(val itemBinding: LayoutNotificationAnimeItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(notification: Notification) {
             itemBinding.apply {
                 tvCheckThisOut.text = notification.checkThisOut
                 tvTitle.text = notification.title ?: "Title Not Available"
-                viewCustomRating.rating = notification.score
+                val rating = (notification.score.div(10F)).div(2F)
+                println("Converted Rating: $rating vs Actual Rating: ${notification.score}")
+                ratingNotifAnime.rating = rating
                 glide.load(notification.coverImage).into(ivCoverImage)
                 tvDateTime.text = notification.date.toIntuitiveDateTime()
 //                ivCoverImage.setOnClickListener {
@@ -65,6 +75,8 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
 //                }
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
                 if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+
+                root.onSafeClick { notificationClickListener.invoke(notification.id.toString()) }
             }
         }
     }

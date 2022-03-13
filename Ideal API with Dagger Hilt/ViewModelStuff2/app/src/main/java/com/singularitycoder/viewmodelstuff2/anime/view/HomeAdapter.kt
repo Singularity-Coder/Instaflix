@@ -24,6 +24,7 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
             return oldItem == newItem
         }
     }
+
     private val homeListDiffer = AsyncListDiffer(this, diffUtil)
     var homeList: List<AnimeData>
         get() = homeListDiffer.currentList
@@ -80,7 +81,7 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
                 if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
 
-                root.onSafeClick { spotlightViewClickListener.invoke(anime.aniListId.toString()) }
+                root.onSafeClick { spotlightViewClickListener.invoke(anime.id.toString()) }
             }
         }
     }
@@ -89,9 +90,11 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
         fun setData(anime: AnimeData) {
             val description = if (anime.descriptions.en.isNullOrBlankOrNaOrNullString()) anime.descriptions.it?.trimJunk() else anime.descriptions.en?.trimJunk()
             itemBinding.apply {
-                tvTitle.text = anime.titles.en
+                tvTitle.text = if (anime.titles.en.isNullOrBlankOrNaOrNullString()) "No Title Available" else anime.titles.en
                 tvDesc.text = if (description.isNullOrBlankOrNaOrNullString()) "No Description Available" else description
-                viewCustomRating.rating = anime.score
+                val rating = (anime.score.div(10F)).div(2F)
+                println("Converted Rating: $rating vs Actual Rating: ${anime.score}")
+                ratingAnime.rating = rating
 
                 // TODO long press to get enlarged imaged
                 glide.load(anime.coverImage).into(ivCoverImage)
@@ -99,7 +102,7 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
 //                if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
 
-                root.onSafeClick { standardViewClickListener.invoke(anime.aniListId.toString()) }
+                root.onSafeClick { standardViewClickListener.invoke(anime.id.toString()) }
             }
         }
     }

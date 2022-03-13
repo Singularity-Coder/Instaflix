@@ -51,7 +51,7 @@
         <entry key="app/src/main/res/layout/layout_home_anime_item_standard.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/layout_home_anime_item_top_margin.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/layout/layout_my_custom_rating.xml" value="0.19300911854103345" />
-        <entry key="app/src/main/res/layout/layout_notification_anime_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_notification_anime_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_shimmer_notification_content.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_shimmer_notification_content_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loader.xml" value="0.19300911854103345" />

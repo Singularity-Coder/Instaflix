@@ -63,15 +63,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-    <com.singularitycoder.viewmodelstuff2.helpers.customviews.CustomRating
-        android:id="@+id/view_custom_rating"
-        android:layout_width="100dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
+    <!--    <com.singularitycoder.viewmodelstuff2.helpers.customviews.CustomRating-->
+    <!--        android:id="@+id/view_custom_rating"-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="24dp"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/tv_desc"-->
+    <!--        app:rating="4" />-->
+
+    <RatingBar
+        android:id="@+id/rating_anime"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-        app:rating="4" />
+        android:layout_marginEnd="16dp"
+        android:numStars="5"
+        android:rating="3.5"
+        app:layout_constraintStart_toStartOf="@+id/tv_desc"
+        app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

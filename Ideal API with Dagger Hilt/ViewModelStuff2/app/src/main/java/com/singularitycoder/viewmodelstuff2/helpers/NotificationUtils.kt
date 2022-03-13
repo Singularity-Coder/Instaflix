@@ -147,16 +147,13 @@ class NotificationUtils(context: Context?) : ContextWrapper(context) {
             .bigLargeIcon(drawable(R.drawable.ic_launcher)?.toBitmap())
         if (null != coverImage) largeNotifStyle.bigPicture(coverImage)
 
-        val notification = NotificationCompat.Builder(this, Notif.ANIME_FOREGROUND_SERVICE.channelId)
+        return NotificationCompat.Builder(this, Notif.ANIME_FOREGROUND_SERVICE.channelId)
             .setContentTitle(title)
             .setContentText(desc)
             .setSmallIcon(R.drawable.ic_baseline_favorite_border_24)
             .setPriority(NotificationCompat.PRIORITY_HIGH) // For < API 26 this is a must
             .setStyle(largeNotifStyle)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true) // When u click on notif it removes itself from the notif drawer
             .build()
-
-        return notification
     }
 }
