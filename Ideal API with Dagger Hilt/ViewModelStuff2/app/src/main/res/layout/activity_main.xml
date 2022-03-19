@@ -15,34 +15,6 @@
         android:padding="24dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_network_state"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:background="@android:color/holo_green_dark"
-            android:gravity="center"
-            android:text="ONLINE"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btn_get_anime_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Anime List" />
-
-        <Button
-            android:id="@+id/btn_get_anime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Anime" />
-
-        <Button
-            android:id="@+id/btn_get_filtered_anime_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Get Filtered Anime List" />
-
         <Button
             android:id="@+id/btn_about_me"
             android:layout_width="match_parent"
@@ -57,13 +29,26 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_network_state"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@android:color/holo_green_dark"
+        android:gravity="center"
+        android:text="ONLINE"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <FrameLayout
         android:id="@+id/bottom_nav_view_container"
         style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_network_state" />
 
     <!--https://www.youtube.com/watch?v=DoA_D6tmo6o-->
     <com.google.android.material.card.MaterialCardView

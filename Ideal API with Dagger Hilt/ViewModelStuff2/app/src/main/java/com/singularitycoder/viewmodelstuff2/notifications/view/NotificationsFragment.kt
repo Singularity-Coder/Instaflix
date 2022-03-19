@@ -111,11 +111,6 @@ class NotificationsFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
-        if (networkState.isOnline()) {
-            binding.tvNetworkState.showOnlineStrip()
-        } else {
-            binding.tvNetworkState.showOfflineStrip()
-        }
         doWhenListIsEmpty()
     }
 
@@ -157,10 +152,10 @@ class NotificationsFragment : BaseFragment() {
     private fun loadRandomAnimeList() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Main).launch { notificationsViewModel.loadRandomAnimeListFromDb() }
+                notificationsViewModel.loadRandomAnimeListFromDb()
             },
             offlineWork = {
-                CoroutineScope(Main).launch { notificationsViewModel.loadRandomAnimeListFromDb() }
+                notificationsViewModel.loadRandomAnimeListFromDb()
             }
         )
     }
@@ -207,6 +202,7 @@ class NotificationsFragment : BaseFragment() {
                     utils.asyncLog(message = "Random Anime chan: %s", it.data)
                     notificationsAdapter.notificationsList = it.data ?: emptyList()
                     notificationsAdapter.notifyDataSetChanged()
+                    doWhenListIsEmpty()
                 }
                 Status.LOADING -> when (it.loadingState) {
                     LoadingState.SHOW -> binding.layoutShimmerNotificationsLoader.shimmerLoader.visible()

@@ -9,19 +9,17 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.scottyab.rootbeer.RootBeer
-import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.anime.view.HomeFragment
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
@@ -141,22 +139,17 @@ class MainActivity : AppCompatActivity() {
         setUpBlurEffect()
     }
 
-    private fun grantPermissions() {
-        // https://stackoverflow.com/questions/62202471/how-to-get-a-permission-request-in-new-activityresult-api-1-3-0-alpha05
-        // https://stackoverflow.com/questions/29657948/get-the-current-location-fast-and-once-in-android/66051728#66051728
-        mainActivityPermissionsResult.launch(mainActivityPermissions)
-    }
-
     override fun onResume() {
         super.onResume()
-        // Add the following line to register the Session Manager Listener onResume
+        // Register the Session Manager Listener onResume
         sensorManager!!.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI)
         // Register local broadcast
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter(IntentKey.ACTION_NOTIFICATION_BADGE))
+        showNetworkStateWhenNecessary()
     }
 
     override fun onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
+        // Unregister the Sensor Manager onPause
         sensorManager!!.unregisterListener(shakeDetector)
         // Unregister local broadcast
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
@@ -223,15 +216,10 @@ class MainActivity : AppCompatActivity() {
     private fun loadAboutMe() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Main).launch {
-                    moreViewModel.loadAboutMe()
-
-                }
+                moreViewModel.loadAboutMe()
             },
             offlineWork = {
-                CoroutineScope(Main).launch {
-                    moreViewModel.loadAboutMe()
-                }
+                moreViewModel.loadAboutMe()
             }
         )
     }
@@ -295,4 +283,43 @@ class MainActivity : AppCompatActivity() {
             getOrCreateBadge(R.id.nav_notifications).number = notificationsCount + 1
         }
     }
+
+    private fun showNetworkStateWhenNecessary() {
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = {
+                binding.tvNetworkState.showOnlineStrip()
+            },
+            offlineWork = {
+                binding.tvNetworkState.showOfflineStrip()
+            }
+        )
+    }
+
+    private fun grantPermissions() {
+        // https://stackoverflow.com/questions/62202471/how-to-get-a-permission-request-in-new-activityresult-api-1-3-0-alpha05
+        // https://stackoverflow.com/questions/29657948/get-the-current-location-fast-and-once-in-android/66051728#66051728
+        mainActivityPermissionsResult.launch(mainActivityPermissions)
+    }
+
+    private fun TextView.showOfflineStrip() {
+        this.apply {
+            text = getString(R.string.offline).toUpCase()
+            visible()
+            setBackgroundColor(color(android.R.color.holo_red_dark))
+            setTextColor(color(R.color.white))
+        }
+    }
+
+    private fun TextView.showOnlineStrip() {
+        this.apply {
+            if (text == getString(R.string.online).toUpCase()) return@apply
+            text = getString(R.string.online).toUpCase()
+            visible()
+            setBackgroundColor(color(android.R.color.holo_green_dark))
+            setTextColor(color(R.color.white))
+        }
+        this.hideNetworkStripAfter5Sec()
+    }
+
+    private fun TextView.hideNetworkStripAfter5Sec() = doAfter(5.seconds()) { this.gone() }
 }

@@ -23,7 +23,7 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_network_state">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_home"
@@ -33,23 +33,11 @@
             tools:listitem="@layout/layout_home_anime_item_spotlight" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/tv_network_state"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@android:color/holo_green_dark"
-        android:gravity="center"
-        android:text="ONLINE"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
     <com.singularitycoder.viewmodelstuff2.helpers.customviews.CustomSearch
         android:id="@+id/custom_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_network_state" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_empty_list"

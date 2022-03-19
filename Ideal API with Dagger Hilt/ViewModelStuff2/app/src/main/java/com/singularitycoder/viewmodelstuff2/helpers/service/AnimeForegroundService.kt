@@ -10,7 +10,6 @@ import com.singularitycoder.viewmodelstuff2.helpers.constants.Notif
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.minutes
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.doEvery
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.seconds
-import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
 import com.singularitycoder.viewmodelstuff2.notifications.repository.NotificationsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,9 +31,6 @@ class AnimeForegroundService : Service() {
     @Inject
     lateinit var notificationUtils: NotificationUtils
 
-    @Inject
-    lateinit var networkState: NetworkState
-
     // onCreate will be called the first time when we call our service. This gets called only once in the lifecycle of the service. When we create a new new service this gets called again
     override fun onCreate() {
         super.onCreate()
@@ -52,8 +48,6 @@ class AnimeForegroundService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (null != intent) {
             val animeData = intent.getParcelableArrayListExtra<AnimeData>(IntentKey.NOTIF_FOREGROUND_SERVICE_RANDOM_ANIME)?.first()
-
-            if (networkState.isOffline()) return START_NOT_STICKY
 
             // Without startForeground() android OS will treat this as a normal service and kill it in 1 min
             // Also when you start the service with startForegroundService, within 5 sec if startForeground is not called, system will kill this service

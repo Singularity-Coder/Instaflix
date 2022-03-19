@@ -5,6 +5,12 @@ import android.net.*
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.annotation.RequiresPermission
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -55,26 +61,29 @@ class NetworkState @Inject constructor(val context: Context) {
 
         networkCallback = object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
-                if (!hasActiveInternet()) {
-                    offlineWork.invoke()
-                    return
-                }
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    when {
-                        hasWifi -> onlineWifiWork.invoke()
-                        hasCellular -> onlineCellularWork.invoke()
-                        hasEthernet -> onlineEthernetWork.invoke()
+                CoroutineScope(IO).launch {
+                    if (!hasActiveInternet()) {
+                        withContext(Main) { offlineWork.invoke() }
+                        return@launch
                     }
-                } else {
-                    when {
-                        hasOldWifi -> onlineWifiWork.invoke()
-                        hasOldCellular -> onlineCellularWork.invoke()
-                        hasOldEthernet -> onlineEthernetWork.invoke()
+
+                    withContext(Main) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            when {
+                                hasWifi -> onlineWifiWork.invoke()
+                                hasCellular -> onlineCellularWork.invoke()
+                                hasEthernet -> onlineEthernetWork.invoke()
+                            }
+                        } else {
+                            when {
+                                hasOldWifi -> onlineWifiWork.invoke()
+                                hasOldCellular -> onlineCellularWork.invoke()
+                                hasOldEthernet -> onlineEthernetWork.invoke()
+                            }
+                        }
+                        onlineWork.invoke()
                     }
                 }
-
-                onlineWork.invoke()
             }
 
             override fun onLosing(network: Network, maxMsToLive: Int) {
@@ -113,19 +122,19 @@ class NetworkState @Inject constructor(val context: Context) {
     // Referred https://stackoverflow.com/ a long time ago - Checks active internet connection by pinging to Google servers
     // TODO Do in background
     private fun hasActiveInternet(): Boolean {
-        if (isOffline()) return false
-        try {
-            val url = URL("https://clients3.google.com/generate_204")
-            val connection = (url.openConnection() as HttpURLConnection).apply {
-                setRequestProperty("User-Agent", "Android")
-                setRequestProperty("Connection", "close")
-                connectTimeout = 5E3.toInt()
-                connect()
+            if (isOffline()) return false
+            try {
+                val url = URL("https://clients3.google.com/generate_204")
+                val connection = (url.openConnection() as HttpURLConnection).apply {
+                    setRequestProperty("User-Agent", "Android")
+                    setRequestProperty("Connection", "close")
+                    connectTimeout = 5E3.toInt()
+                    connect()
+                }
+                return connection.responseCode == HttpURLConnection.HTTP_NO_CONTENT && connection.contentLength == 0
+            } catch (e: IOException) {
+                Timber.e(e, "Error checking internet connection")
             }
-            return connection.responseCode == HttpURLConnection.HTTP_NO_CONTENT && connection.contentLength == 0
-        } catch (e: IOException) {
-            Timber.e(e, "Error checking internet connection")
-        }
         return false
     }
 

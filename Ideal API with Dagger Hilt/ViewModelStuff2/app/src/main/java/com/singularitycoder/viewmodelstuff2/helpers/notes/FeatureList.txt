@@ -29,6 +29,7 @@ Glassmorphic effect
 5. Hilt Android doc - DI Activity Module & Qualifiers
 6. ViewModels Android doc
 7. LiveData Android doc - Mediator LiveData
+Full screen image views using fresco
 
 
 // TODO OPTIMISATIONS - https://developer.android.com/topic/performance/reduce-apk-size

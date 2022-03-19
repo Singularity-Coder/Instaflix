@@ -110,16 +110,4 @@
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/tv_network_state"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@android:color/holo_green_dark"
-        android:gravity="center"
-        android:text="ONLINE"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

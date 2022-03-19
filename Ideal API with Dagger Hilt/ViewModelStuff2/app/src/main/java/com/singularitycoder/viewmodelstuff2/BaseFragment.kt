@@ -2,13 +2,10 @@ package com.singularitycoder.viewmodelstuff2
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
-import com.singularitycoder.viewmodelstuff2.helpers.utils.doAfter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
@@ -63,29 +60,5 @@ open class BaseFragment : Fragment() {
                 super.onScrolled(recyclerView, dx, dy)
             }
         })
-    }
-
-    fun TextView.showOfflineStrip() {
-        this.apply {
-            text = context.getString(R.string.offline).toUpCase()
-            visibility = View.VISIBLE
-            setBackgroundColor(context.color(android.R.color.holo_red_dark))
-            setTextColor(context.color(R.color.white))
-        }
-    }
-
-    fun TextView.showOnlineStrip() {
-        this.apply {
-            if (text == context.getString(R.string.online).toUpCase()) return@apply
-            text = context.getString(R.string.online).toUpCase()
-            visibility = View.VISIBLE
-            setBackgroundColor(context.color(android.R.color.holo_green_dark))
-            setTextColor(context.color(R.color.white))
-        }
-        this.hideNetworkStripAfter5Sec()
-    }
-
-    private fun TextView.hideNetworkStripAfter5Sec() {
-        doAfter(5.seconds()) { this.visibility = View.GONE }
     }
 }

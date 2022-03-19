@@ -17,7 +17,6 @@ import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.disable
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.trimJunk
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
@@ -27,7 +26,6 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -70,37 +68,13 @@ class AnimeDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getIntentData()
-        setUpDefaults()
-        loadData()
         subscribeToObservers()
+        loadAnime()
     }
 
     private fun getIntentData() {
         animeId = arguments?.getString(IntentKey.ANIME_ID, "") ?: ""
         println("Anime Id received: $animeId")
-    }
-
-    private fun setUpDefaults() {
-        if (networkState.isOnline()) {
-            binding.tvNetworkState.showOnlineStrip()
-        } else {
-            binding.tvNetworkState.showOfflineStrip()
-        }
-    }
-
-    private fun loadData() {
-        if (null == animeViewModel.getAnime().value) loadAnime()
-    }
-
-    private fun loadAnime() {
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                CoroutineScope(Main).launch { animeViewModel.loadAnime(animeId) }
-            },
-            offlineWork = {
-                CoroutineScope(Main).launch { animeViewModel.loadAnime(animeId) }
-            }
-        )
     }
 
     private fun subscribeToObservers() {
@@ -130,6 +104,18 @@ class AnimeDetailFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private fun loadAnime() {
+        if (null != animeViewModel.getAnime().value) return
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = {
+                animeViewModel.loadAnime(animeId)
+            },
+            offlineWork = {
+                animeViewModel.loadAnime(animeId)
+            }
+        )
     }
 
     private fun updateUI(anime: Anime?) {

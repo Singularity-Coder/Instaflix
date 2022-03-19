@@ -76,18 +76,13 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpDefaults()
         setUpRecyclerView()
-        loadData()
         subscribeToObservers()
         setUpUserActionListeners()
+        loadData()
     }
 
     private fun setUpDefaults() {
         binding.customSearch.getSearchView().disable()
-        if (networkState.isOnline()) {
-            binding.tvNetworkState.showOnlineStrip()
-        } else {
-            binding.tvNetworkState.showOfflineStrip()
-        }
     }
 
     private fun setUpRecyclerView() {
@@ -99,47 +94,6 @@ class HomeFragment : BaseFragment() {
                 if (dy > 0) binding.customSearch.gone() else binding.customSearch.visible()
             }
         }
-    }
-
-    private fun loadData() {
-        // Protection from config change. If data exists then dont call them. If however done explicitly through a button then obviously call
-        if (null == animeViewModel.getAnimeList().value) loadAnimeList()
-    }
-
-    private fun loadAnimeList() {
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                CoroutineScope(Main).launch { animeViewModel.loadAnimeList() }
-            },
-            offlineWork = {
-                CoroutineScope(Main).launch { animeViewModel.loadAnimeList() }
-            }
-        )
-    }
-
-    private fun loadFilteredAnimeList(title: String) {
-        fun loadData() {
-            animeViewModel.loadFilteredAnimeList(
-                title = title,
-                aniListId = null,
-                malId = null,
-                formats = null,
-                status = null,
-                year = null,
-                season = null,
-                genres = null,
-                nsfw = false
-            )
-        }
-
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                CoroutineScope(Main).launch { loadData() }
-            },
-            offlineWork = {
-                CoroutineScope(Main).launch { loadData() }
-            }
-        )
     }
 
     private fun subscribeToObservers() {
@@ -241,6 +195,44 @@ class HomeFragment : BaseFragment() {
         }
 
         binding.swipeRefreshHome.setOnRefreshListener { loadAnimeList() }
+    }
+
+    private fun loadData() {
+        // Protection from config change. If data exists then dont call them. If however done explicitly through a button then obviously call
+        if (null == animeViewModel.getAnimeList().value) loadAnimeList()
+    }
+
+    private fun loadAnimeList() {
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = {
+                println("Class Name: ${this.javaClass.simpleName}, Thread Name: ${Thread.currentThread().name}")
+                animeViewModel.loadAnimeList()
+            },
+            offlineWork = {
+                animeViewModel.loadAnimeList()
+            }
+        )
+    }
+
+    private fun loadFilteredAnimeList(title: String) {
+        fun loadData() {
+            animeViewModel.loadFilteredAnimeList(
+                title = title,
+                aniListId = null,
+                malId = null,
+                formats = null,
+                status = null,
+                year = null,
+                season = null,
+                genres = null,
+                nsfw = false
+            )
+        }
+
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = { loadData() },
+            offlineWork = { loadData() }
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")
