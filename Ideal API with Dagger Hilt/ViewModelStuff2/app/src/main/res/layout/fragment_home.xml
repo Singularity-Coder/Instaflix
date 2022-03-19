@@ -52,9 +52,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_network_state" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/lottie_empty_list"
+        android:layout_width="208dp"
+        android:layout_height="208dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +62,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_empty"
+        app:lottie_rawRes="@raw/lottie_empty_list"
         tools:visibility="visible" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_search_empty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/lottie_empty_search"
+        android:layout_width="208dp"
+        android:layout_height="208dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +76,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/lottie_empty2"
+        app:lottie_rawRes="@raw/lottie_empty_search"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

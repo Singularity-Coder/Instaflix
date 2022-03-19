@@ -116,6 +116,7 @@ class NotificationsFragment : BaseFragment() {
         } else {
             binding.tvNetworkState.showOfflineStrip()
         }
+        doWhenListIsEmpty()
     }
 
     override fun onResume() {
@@ -185,6 +186,7 @@ class NotificationsFragment : BaseFragment() {
                             coverImage = animeData.coverImage
                         )
                     } ?: emptyList()
+                    doWhenListIsEmpty()
                     notificationsAdapter.notifyDataSetChanged()
                 }
                 Status.LOADING -> when (it.loadingState) {
@@ -216,6 +218,14 @@ class NotificationsFragment : BaseFragment() {
                 }
                 else -> Unit
             }
+        }
+    }
+
+    private fun doWhenListIsEmpty() {
+        if (notificationsAdapter.notificationsList.isEmpty()) {
+            binding.lottieEmptyNotif.visible()
+        } else {
+            binding.lottieEmptyNotif.gone()
         }
     }
 

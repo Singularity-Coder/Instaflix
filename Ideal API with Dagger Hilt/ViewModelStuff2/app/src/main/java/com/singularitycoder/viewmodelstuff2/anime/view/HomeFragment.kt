@@ -251,17 +251,17 @@ class HomeFragment : BaseFragment() {
         }
         if (type == "search") {
             if (list.isEmpty()) {
-                binding.lottieEmpty.gone()
-                binding.lottieSearchEmpty.visible()
+                binding.lottieEmptyList.gone()
+                binding.lottieEmptySearch.visible()
             } else {
-                binding.lottieSearchEmpty.gone()
+                binding.lottieEmptySearch.gone()
             }
         } else {
             if (list.isEmpty()) {
-                binding.lottieSearchEmpty.gone()
-                binding.lottieEmpty.visible()
+                binding.lottieEmptySearch.gone()
+                binding.lottieEmptyList.visible()
             } else {
-                binding.lottieEmpty.gone()
+                binding.lottieEmptyList.gone()
             }
         }
     }
