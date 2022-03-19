@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.BaseFragment
@@ -83,6 +84,8 @@ class HomeFragment : BaseFragment() {
 
     private fun setUpDefaults() {
         binding.customSearch.getSearchView().disable()
+//        binding.customSearch.getSearchView().revealBottomToTop()
+//        nnActivity.findViewById<BottomNavigationView>(R.id.bottom_nav).revealTopToBottom()
     }
 
     private fun setUpRecyclerView() {
