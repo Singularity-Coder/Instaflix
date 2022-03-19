@@ -50,9 +50,7 @@ class HomeRepository @Inject constructor(
             if (networkState.isOffline()) {
                 animeList.postValue(
                     ApiState.Success(
-                        data = if (null == dao.getAll().value) null else AnimeList().apply {
-                            data = AnimeListData().apply { documents = dao.getAll().value ?: emptyList() }
-                        },
+                        data = AnimeList().apply { data = AnimeListData().apply { documents = dao.getAll() } },
                         message = context.getString(R.string.offline)
                     )
                 )

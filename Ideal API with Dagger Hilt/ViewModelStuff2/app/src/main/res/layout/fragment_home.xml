@@ -49,7 +49,7 @@
         android:id="@+id/custom_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_network_state_strip" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_empty"

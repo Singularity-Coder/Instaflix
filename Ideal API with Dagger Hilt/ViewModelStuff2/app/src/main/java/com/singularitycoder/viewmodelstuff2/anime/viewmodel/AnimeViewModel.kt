@@ -122,7 +122,7 @@ class AnimeViewModel @Inject constructor(
                 filteredAnimeList.postValue(
                     NetRes(
                         status = Status.SUCCESS,
-                        data = AnimeList().apply { data = AnimeListData().apply { documents = dao.getAll().value ?: emptyList() } },
+                        data = AnimeList().apply { data = AnimeListData().apply { documents = dao.getAllAnimeListLiveData().value ?: emptyList() } },
                         message = "offline"
                     )
                 )

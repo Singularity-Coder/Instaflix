@@ -32,7 +32,10 @@ interface AnimeDao {
     suspend fun insertAll(animeList: List<AnimeData>)
 
     @Query("SELECT * FROM ${Table.ANIME_DATA}")
-    fun getAll(): LiveData<List<AnimeData>>
+    fun getAllAnimeListLiveData(): LiveData<List<AnimeData>>
+
+    @Query("SELECT * FROM ${Table.ANIME_DATA}")
+    fun getAll(): List<AnimeData>
 
     @Query("DELETE FROM ${Table.ANIME_DATA}")
     suspend fun deleteAll()
