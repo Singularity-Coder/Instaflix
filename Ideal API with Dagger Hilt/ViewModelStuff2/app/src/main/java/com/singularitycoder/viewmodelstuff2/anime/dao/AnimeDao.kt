@@ -13,8 +13,8 @@ interface AnimeDao {
     suspend fun insert(anime: AnimeData)
 
     @Transaction
-    @Query("SELECT * FROM ${Table.ANIME_DATA} WHERE aniListId LIKE :aniListId LIMIT 1")
-    suspend fun getAnimeByAniListId(aniListId: String): AnimeData?
+    @Query("SELECT * FROM ${Table.ANIME_DATA} WHERE aniListId LIKE :id LIMIT 1")
+    suspend fun getAnimeById(id: String): AnimeData?
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(anime: AnimeData)
@@ -35,7 +35,7 @@ interface AnimeDao {
     fun getAllAnimeListLiveData(): LiveData<List<AnimeData>>
 
     @Query("SELECT * FROM ${Table.ANIME_DATA}")
-    fun getAll(): List<AnimeData>
+    suspend fun getAll(): List<AnimeData>
 
     @Query("DELETE FROM ${Table.ANIME_DATA}")
     suspend fun deleteAll()

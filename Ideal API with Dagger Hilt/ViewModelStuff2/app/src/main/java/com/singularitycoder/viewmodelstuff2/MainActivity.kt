@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -163,12 +164,6 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
-    // https://www.youtube.com/watch?v=0s6x3Sn4eYo
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(R.anim.fade_out, R.anim.fade_out)
-    }
-
     private fun checkIfDeviceIsRooted() = CoroutineScope(IO).launch {
         // https://github.com/scottyab/rootbeer
         val isRooted = RootBeer(this@MainActivity).isRooted
@@ -209,7 +204,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showScreen(fragment: Fragment, tag: String) {
         // Home or Base fragments should not contain addToBackStack. But if u want to navigate to home frag then add HomeFrag
-        supportFragmentManager.beginTransaction().replace(binding.bottomNavViewContainer.id, fragment, tag).commit()
+        supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .replace(binding.bottomNavViewContainer.id, fragment, tag)
+            .commit()
     }
 
     private fun loadData() {
@@ -226,14 +224,12 @@ class MainActivity : AppCompatActivity() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
                 CoroutineScope(Main).launch {
-//                    showOnlineStrip()
                     moreViewModel.loadAboutMe()
 
                 }
             },
             offlineWork = {
                 CoroutineScope(Main).launch {
-//                    showOfflineStrip()
                     moreViewModel.loadAboutMe()
                 }
             }

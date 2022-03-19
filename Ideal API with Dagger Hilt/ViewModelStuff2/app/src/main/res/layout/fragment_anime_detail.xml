@@ -69,7 +69,7 @@
                 android:layout_marginEnd="16dp"
                 android:numStars="5"
                 android:paddingStart="16dp"
-                android:rating="3.5"
+                android:rating="0"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 app:layout_constraintStart_toEndOf="@+id/card_cover_image"

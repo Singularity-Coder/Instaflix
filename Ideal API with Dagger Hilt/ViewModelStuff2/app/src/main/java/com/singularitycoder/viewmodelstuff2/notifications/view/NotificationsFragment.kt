@@ -38,6 +38,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.security.SecureRandom
@@ -101,11 +102,20 @@ class NotificationsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpDefaults()
         setUpRecyclerView()
         subscribeToObservers()
         loadRandomAnimeList()
         nnContext.startAnimeRecommendationWorker()
         setUpUserActionListeners()
+    }
+
+    private fun setUpDefaults() {
+        if (networkState.isOnline()) {
+            binding.tvNetworkState.showOnlineStrip()
+        } else {
+            binding.tvNetworkState.showOfflineStrip()
+        }
     }
 
     override fun onResume() {
@@ -131,7 +141,7 @@ class NotificationsFragment : BaseFragment() {
     private fun setUpRecyclerView() {
         binding.rvNotifications.apply {
             layoutManager = LinearLayoutManager(nnContext).apply {
-//                reverseLayout = true
+                reverseLayout = true
                 stackFromEnd = true // Latest items at the top
             }
             adapter = notificationsAdapter
@@ -146,16 +156,10 @@ class NotificationsFragment : BaseFragment() {
     private fun loadRandomAnimeList() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOnlineStrip()
-                    notificationsViewModel.loadRandomAnimeListFromDb()
-                }
+                CoroutineScope(Main).launch { notificationsViewModel.loadRandomAnimeListFromDb() }
             },
             offlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOfflineStrip()
-                    notificationsViewModel.loadRandomAnimeListFromDb()
-                }
+                CoroutineScope(Main).launch { notificationsViewModel.loadRandomAnimeListFromDb() }
             }
         )
     }
@@ -167,8 +171,8 @@ class NotificationsFragment : BaseFragment() {
                 Status.SUCCESS -> {
                     if (getString(R.string.offline) == it.message) utils.showSnackBar(
                         view = binding.root,
-                        message = getString(R.string.offline),
-                        duration = Snackbar.LENGTH_INDEFINITE,
+                        message = getString(R.string.offline_try_again),
+                        duration = Snackbar.LENGTH_LONG,
                         actionBtnText = this.getString(R.string.ok)
                     )
                     utils.asyncLog(message = "Random Anime chan: %s", it.data)

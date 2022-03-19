@@ -73,7 +73,7 @@ class AnimeViewModel @Inject constructor(
     internal fun loadAnime(id: String) {
         if (networkState.isOffline()) {
             viewModelScope.launch {
-                anime.postValue(ApiState.Success(Anime(data = dao.getAnimeByAniListId(id) ?: AnimeData()), "offline"))
+                anime.postValue(ApiState.Success(Anime(data = dao.getAnimeById(id) ?: AnimeData()), "offline"))
             }
             return
         }

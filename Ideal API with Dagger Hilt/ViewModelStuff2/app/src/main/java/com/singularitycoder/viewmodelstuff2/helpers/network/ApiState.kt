@@ -11,17 +11,17 @@ sealed class ApiState<out T> {
     data class Error<out T>(val data: T? = null, val message: String = "") : ApiState<T>()
 }
 
-inline infix fun <T> ApiState<T>.isSuccessful(action: TwoArgMethod<T, String>): ApiState<T> {
+inline infix fun <T> ApiState<T>.onSuccess(action: TwoArgMethod<T, String>): ApiState<T> {
     if (this is ApiState.Success) action.invoke(this.data, this.message)
     return this
 }
 
-inline infix fun <T> ApiState<T>.isFailure(action: TwoArgMethod<T, String>): ApiState<T> {
+inline infix fun <T> ApiState<T>.onFailure(action: TwoArgMethod<T, String>): ApiState<T> {
     if (this is ApiState.Error) action.invoke(this.data, this.message)
     return this
 }
 
-inline infix fun <T> ApiState<T>.isLoading(action: ShowLoader): ApiState<T> {
+inline infix fun <T> ApiState<T>.onLoading(action: ShowLoader): ApiState<T> {
     if (this is ApiState.Loading) action.invoke(loadingState)
     return this
 }

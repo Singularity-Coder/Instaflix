@@ -84,9 +84,9 @@ class HomeFragment : BaseFragment() {
     private fun setUpDefaults() {
         binding.customSearch.getSearchView().disable()
         if (networkState.isOnline()) {
-            binding.tvNetworkStateStrip.showOnlineStrip()
+            binding.tvNetworkState.showOnlineStrip()
         } else {
-            binding.tvNetworkStateStrip.showOfflineStrip()
+            binding.tvNetworkState.showOfflineStrip()
         }
     }
 
@@ -186,14 +186,14 @@ class HomeFragment : BaseFragment() {
                     if ("offline" == it.message) utils.showSnackBar(
                         view = binding.root,
                         message = getString(R.string.offline_try_again),
-                        duration = Snackbar.LENGTH_INDEFINITE,
+                        duration = Snackbar.LENGTH_LONG,
                         anchorView = activity?.findViewById(R.id.bottom_nav),
                         actionBtnText = this.getString(R.string.ok)
                     )
                     if ("na" == it.message?.toLowCase() || getString(R.string.nothing_to_show) == it.message) utils.showSnackBar(
                         view = binding.root,
                         message = getString(R.string.nothing_to_show),
-                        duration = Snackbar.LENGTH_INDEFINITE,
+                        duration = Snackbar.LENGTH_LONG,
                         anchorView = activity?.findViewById(R.id.bottom_nav),
                         actionBtnText = this.getString(R.string.ok)
                     )

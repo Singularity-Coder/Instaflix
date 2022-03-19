@@ -17,6 +17,7 @@ import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.disable
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.trimJunk
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
@@ -69,6 +70,7 @@ class AnimeDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getIntentData()
+        setUpDefaults()
         loadData()
         subscribeToObservers()
     }
@@ -78,6 +80,14 @@ class AnimeDetailFragment : BaseFragment() {
         println("Anime Id received: $animeId")
     }
 
+    private fun setUpDefaults() {
+        if (networkState.isOnline()) {
+            binding.tvNetworkState.showOnlineStrip()
+        } else {
+            binding.tvNetworkState.showOfflineStrip()
+        }
+    }
+
     private fun loadData() {
         if (null == animeViewModel.getAnime().value) loadAnime()
     }
@@ -85,16 +95,10 @@ class AnimeDetailFragment : BaseFragment() {
     private fun loadAnime() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Main).launch {
-                    binding.tvNetworkState.showOnlineStrip()
-                    animeViewModel.loadAnime(animeId)
-                }
+                CoroutineScope(Main).launch { animeViewModel.loadAnime(animeId) }
             },
             offlineWork = {
-                CoroutineScope(Main).launch {
-                    binding.tvNetworkState.showOfflineStrip()
-                    animeViewModel.loadAnime(animeId)
-                }
+                CoroutineScope(Main).launch { animeViewModel.loadAnime(animeId) }
             }
         )
     }
@@ -103,22 +107,23 @@ class AnimeDetailFragment : BaseFragment() {
         animeViewModel.getAnime().observe(viewLifecycleOwner) { it: ApiState<Anime?>? ->
             it ?: return@observe
 
-            it isSuccessful { data: Anime?, message: String ->
+            it onSuccess { data: Anime?, message: String ->
                 if ("offline" == message) utils.showSnackBar(
                     view = binding.root,
-                    message = getString(R.string.offline),
-                    duration = Snackbar.LENGTH_INDEFINITE,
-                    actionBtnText = this.getString(R.string.ok)
+                    message = getString(R.string.offline_try_again),
+                    duration = Snackbar.LENGTH_LONG,
+                    anchorView = activity?.findViewById(R.id.bottom_nav),
+                    actionBtnText = this.getString(R.string.try_again)
                 )
                 utils.asyncLog(message = "Anime chan: %s", data)
                 updateUI(anime = data)
             }
 
-            it isFailure { data: Anime?, message: String ->
+            it onFailure { data: Anime?, message: String ->
                 utils.showToast(message = if ("NA" == message) getString(R.string.something_is_wrong) else message, context = nnContext)
             }
 
-            it isLoading { loadingState: LoadingState ->
+            it onLoading { loadingState: LoadingState ->
                 when (loadingState) {
                     LoadingState.SHOW -> Unit
                     LoadingState.HIDE -> Unit

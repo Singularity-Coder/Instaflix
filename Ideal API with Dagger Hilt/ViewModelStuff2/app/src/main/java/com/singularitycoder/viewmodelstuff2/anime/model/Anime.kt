@@ -65,6 +65,8 @@ data class AnimeData(
     var genres: List<String>,   // This must have a type converter
     var score: Int,
     var id: Int,
+    @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
+    @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
     @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",
     @Skip @ColumnInfo(name = "myFavReasonDate", defaultValue = "") var myFavReasonDate: String = "",
     @Skip @ColumnInfo(name = "isFavourite", defaultValue = "") var isFav: Boolean = false

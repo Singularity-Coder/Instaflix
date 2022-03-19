@@ -58,15 +58,31 @@ class CustomSearch :
                 binding.etSearch.setCompoundDrawablesWithIntrinsicBounds(searchDrawable, null, null, null)
             }
             addTextChangedListener { it: Editable? ->
-                if (it?.isBlank() == true) binding.cardVoiceSearch.visible() else binding.cardVoiceSearch.inVisible()
+                if (it?.isBlank() == true) {
+                    binding.cardVoiceSearch.visible()
+                    binding.ibClearText.gone()
+                } else {
+                    binding.cardVoiceSearch.inVisible()
+                    binding.ibClearText.visible()
+                }
             }
         }
+
+        binding.ibClearText.onSafeClick { clearTextAndHideKeyboard() }
 
         binding.etSearch.apply {
             setOnTouchListener(this@CustomSearch)
             setOnFocusChangeListener { v, hasFocus ->
                 if (!hasFocus) binding.etSearch.hideKeyboard()
             }
+        }
+    }
+
+    private fun clearTextAndHideKeyboard() {
+        binding.etSearch.apply {
+            setText("")
+            hideKeyboard() // This has to be before clearFocus else it wont work
+            clearFocus()
         }
     }
 
@@ -117,8 +133,7 @@ class CustomSearch :
     // GestureDetector.OnGestureListener
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
         println("Fling gesture")
-        binding.etSearch.setText("")
-        binding.etSearch.hideKeyboard()
+        clearTextAndHideKeyboard()
         return false
     }
 

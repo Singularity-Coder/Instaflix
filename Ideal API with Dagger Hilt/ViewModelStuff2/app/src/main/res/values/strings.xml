@@ -3,7 +3,7 @@
     <string name="something_is_wrong">Something is wrong! Please try again.</string>
     <string name="online">online</string>
     <string name="offline">offline</string>
-    <string name="offline_try_again">You are offline. Try again!</string>
+    <string name="offline_try_again">You are offline.</string>
     <string name="ok">OK</string>
     <string name="try_again">Try Again</string>
     <string name="nothing_to_show">Nothing to show</string>
