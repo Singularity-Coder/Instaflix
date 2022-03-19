@@ -8,13 +8,12 @@ import com.singularitycoder.viewmodelstuff2.helpers.NotificationUtils
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Notif
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.minutes
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.pollEvery
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.doEvery
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.seconds
 import com.singularitycoder.viewmodelstuff2.notifications.repository.NotificationsRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 // https://www.youtube.com/watch?v=FbpD5RZtbCc
@@ -36,7 +35,7 @@ class AnimeForegroundService : Service() {
     override fun onCreate() {
         super.onCreate()
         timer = Timer()
-        timer.pollEvery(
+        timer.doEvery(
             duration = 5.minutes(),
             withInitialDelay = 2.seconds(),
         ) {

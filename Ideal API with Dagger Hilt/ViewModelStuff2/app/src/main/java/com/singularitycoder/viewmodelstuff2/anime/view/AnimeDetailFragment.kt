@@ -141,7 +141,6 @@ class AnimeDetailFragment : BaseFragment() {
                     text = it
                     isCheckable = false
                     isClickable = false
-                    setOnCloseIconClickListener { v: View? -> }
                 }
 
                 binding.chipGroupGenre.addView(chip)

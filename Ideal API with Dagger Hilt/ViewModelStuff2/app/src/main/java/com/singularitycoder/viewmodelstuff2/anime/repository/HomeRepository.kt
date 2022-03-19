@@ -24,7 +24,7 @@ class HomeRepository @Inject constructor(
     private val utils: GeneralUtils,
     private val gson: Gson,
     private val networkState: NetworkState
-): BaseRepository() {
+) : BaseRepository() {
     val animeList = MutableLiveData<ApiState<AnimeList?>>()
     val sortedAnimeList = MutableLiveData<ApiState<AnimeList?>>()
     val mediatedAnimeList = MediatorLiveData<ApiState<AnimeList?>>()
@@ -50,7 +50,9 @@ class HomeRepository @Inject constructor(
             if (networkState.isOffline()) {
                 animeList.postValue(
                     ApiState.Success(
-                        data = AnimeList().apply { data = AnimeListData().apply { documents = dao.getAll().value ?: emptyList() } },
+                        data = if (null == dao.getAll().value) null else AnimeList().apply {
+                            data = AnimeListData().apply { documents = dao.getAll().value ?: emptyList() }
+                        },
                         message = context.getString(R.string.offline)
                     )
                 )

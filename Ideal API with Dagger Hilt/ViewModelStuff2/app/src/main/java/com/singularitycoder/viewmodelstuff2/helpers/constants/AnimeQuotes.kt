@@ -50,5 +50,17 @@ val animeQuoteList = listOf(
     AnimeQuote(
         quote = "The brighter the light shines, the darker the nearby shadows grow!",
         author = "Berserk"
+    ),
+    AnimeQuote(
+        quote = "If you gaze long into an abyss, the abyss also gazes into you.",
+        author = "Made In Abyss"
+    ),
+    AnimeQuote(
+        quote = "Emotions are a luxury.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Once words have been planted they cannot be removed. From those words, thoughts bloom like a flower and constantly linger.",
+        author = "Unknown"
     )
 )

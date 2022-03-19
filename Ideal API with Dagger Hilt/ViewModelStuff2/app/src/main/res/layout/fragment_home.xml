@@ -14,32 +14,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="74dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/tv_network_state"
+        app:layout_constraintTop_toBottomOf="@+id/tv_network_state_strip"
         tools:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_home"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_network_state"
-        tools:listitem="@layout/layout_home_anime_item_spotlight" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_network_state_strip">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            tools:listitem="@layout/layout_home_anime_item_spotlight" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <TextView
         android:id="@+id/tv_network_state_strip"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@android:color/holo_green_dark"
-        android:gravity="center"
-        android:text="ONLINE"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_network_state"
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:background="@android:color/holo_green_dark"
@@ -68,5 +63,19 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/lottie_empty"
+        tools:visibility="visible" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_search_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie_empty2"
         tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

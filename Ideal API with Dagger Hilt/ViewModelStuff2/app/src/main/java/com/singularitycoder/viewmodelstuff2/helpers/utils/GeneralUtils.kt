@@ -165,7 +165,7 @@ class GeneralUtils @Inject constructor(
     }
 
     private var toast: Toast? = null
-
+    // https://stackoverflow.com/questions/32815407/is-it-normal-to-show-a-single-toast-multiple-times-on-android
     @ExperimentalCoroutinesApi
     fun showToast(
         message: String,

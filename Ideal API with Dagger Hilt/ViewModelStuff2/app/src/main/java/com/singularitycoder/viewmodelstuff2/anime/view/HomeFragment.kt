@@ -25,6 +25,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -59,6 +60,7 @@ class HomeFragment : BaseFragment() {
 
     private val animeViewModel: AnimeViewModel by viewModels()
 
+    /** NonNull Context & Activity **/
     override fun onAttach(context: Context) {
         super.onAttach(context)
         nnContext = context
@@ -81,6 +83,11 @@ class HomeFragment : BaseFragment() {
 
     private fun setUpDefaults() {
         binding.customSearch.getSearchView().disable()
+        if (networkState.isOnline()) {
+            binding.tvNetworkStateStrip.showOnlineStrip()
+        } else {
+            binding.tvNetworkStateStrip.showOfflineStrip()
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -102,16 +109,10 @@ class HomeFragment : BaseFragment() {
     private fun loadAnimeList() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOnlineStrip()
-                    animeViewModel.loadAnimeList()
-                }
+                CoroutineScope(Main).launch { animeViewModel.loadAnimeList() }
             },
             offlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOfflineStrip()
-                    animeViewModel.loadAnimeList()
-                }
+                CoroutineScope(Main).launch { animeViewModel.loadAnimeList() }
             }
         )
     }
@@ -133,33 +134,33 @@ class HomeFragment : BaseFragment() {
 
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOnlineStrip()
-                    loadData()
-                }
+                CoroutineScope(Main).launch { loadData() }
             },
             offlineWork = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    binding.tvNetworkState.showOfflineStrip()
-                    loadData()
-                }
+                CoroutineScope(Main).launch { loadData() }
             }
         )
     }
 
     private fun subscribeToObservers() {
         animeViewModel.getAnimeList().observe(viewLifecycleOwner) { it: ApiState<AnimeList?>? ->
+            binding.swipeRefreshHome.isRefreshing = false
             when (it) {
                 is ApiState.Success -> {
                     if (getString(R.string.offline) == it.message) {
-                        utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_INDEFINITE, actionBtnText = this.getString(R.string.ok))
+                        utils.showSnackBar(
+                            view = binding.root,
+                            message = getString(R.string.offline_try_again),
+                            duration = Snackbar.LENGTH_INDEFINITE,
+                            anchorView = activity?.findViewById(R.id.bottom_nav),
+                            actionBtnText = this.getString(R.string.try_again)
+                        ) { loadAnimeList() }
                     }
                     utils.asyncLog(message = "AnimeList chan: %s", it.data)
-                    val animeDataCopy = (it.data as AnimeList).data.documents[0].copy() // This is equivalent to clone(). Shallow copy
+//                    val animeDataCopy = (it.data as AnimeList).data.documents[0].copy() // This is equivalent to clone(). Shallow copy
                     duplicateAnimeDataList.apply {
                         clear()
-                        add(AnimeData())
-                        addAll(it.data.data.documents)
+                        addAll(it.data?.data?.documents ?: listOf())
                     }
                     updateHomeAnimeList(list = duplicateAnimeDataList)
                     binding.customSearch.getSearchView().enable()
@@ -179,26 +180,28 @@ class HomeFragment : BaseFragment() {
 
         animeViewModel.getFilteredAnimeList().observe(viewLifecycleOwner) { it: NetRes<AnimeList?>? ->
             it ?: return@observe
+            binding.swipeRefreshHome.isRefreshing = false
             when (it.status) {
                 Status.SUCCESS -> {
                     if ("offline" == it.message) utils.showSnackBar(
                         view = binding.root,
-                        message = getString(R.string.offline),
+                        message = getString(R.string.offline_try_again),
                         duration = Snackbar.LENGTH_INDEFINITE,
+                        anchorView = activity?.findViewById(R.id.bottom_nav),
                         actionBtnText = this.getString(R.string.ok)
                     )
                     if ("na" == it.message?.toLowCase() || getString(R.string.nothing_to_show) == it.message) utils.showSnackBar(
                         view = binding.root,
                         message = getString(R.string.nothing_to_show),
                         duration = Snackbar.LENGTH_INDEFINITE,
+                        anchorView = activity?.findViewById(R.id.bottom_nav),
                         actionBtnText = this.getString(R.string.ok)
                     )
                     duplicateAnimeSearchDataList.apply {
                         clear()
-                        add(AnimeData())
                         addAll(it.data?.data?.documents ?: emptyList())
                     }
-                    updateHomeAnimeList(list = duplicateAnimeSearchDataList)
+                    updateHomeAnimeList(list = duplicateAnimeSearchDataList, type = "search")
                     utils.asyncLog(message = "Filtered Anime chan: %s", it.data)
                 }
                 Status.LOADING -> when (it.loadingState) {
@@ -236,14 +239,30 @@ class HomeFragment : BaseFragment() {
         homeAdapter.setStandardViewClickListener { animeId: String ->
             nnActivity.showAnimeDetailsOfThis(animeId)
         }
+
+        binding.swipeRefreshHome.setOnRefreshListener { loadAnimeList() }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun updateHomeAnimeList(list: List<AnimeData>) {
+    private fun updateHomeAnimeList(list: List<AnimeData>, type: String = "") {
         homeAdapter.apply {
             homeList = list
             notifyDataSetChanged()
         }
-        if (list.isEmpty()) binding.lottieEmpty.visible() else binding.lottieEmpty.gone()
+        if (type == "search") {
+            if (list.isEmpty()) {
+                binding.lottieEmpty.gone()
+                binding.lottieSearchEmpty.visible()
+            } else {
+                binding.lottieSearchEmpty.gone()
+            }
+        } else {
+            if (list.isEmpty()) {
+                binding.lottieSearchEmpty.gone()
+                binding.lottieEmpty.visible()
+            } else {
+                binding.lottieEmpty.gone()
+            }
+        }
     }
 }

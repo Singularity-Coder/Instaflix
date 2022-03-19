@@ -172,7 +172,7 @@ fun Long.toIntuitiveDateTime(): String {
     }
 }
 
-fun Timer.pollEvery(
+fun Timer.doEvery(
     duration: Long,
     withInitialDelay: Long = 2.seconds(),
     task: suspend () -> Unit
