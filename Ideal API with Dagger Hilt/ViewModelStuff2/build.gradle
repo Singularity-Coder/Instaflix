@@ -58,3 +58,7 @@ task clean(type: Delete) {
 // # lf is a line break. Used in Linux. lf means Line Feed. On Windows and old Macs there is CR which is Carriage Return. Both of them indicate line breaks.
 // # https://stackoverflow.com/questions/1552749/difference-between-cr-lf-lf-and-cr-line-break-types
 // end_of_line = lf
+
+// KTLINT
+// https://ktlint.github.io/
+// https://github.com/pinterest/ktlint

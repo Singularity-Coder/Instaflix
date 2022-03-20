@@ -60,11 +60,14 @@ data class AnimeData(
     @SerializedName("episodes_count") var episodesCount: Int,
     @SerializedName("episode_duration") var episodeDuration: Int,
     @SerializedName("trailer_url") var trailerUrl: String,
+    @SerializedName("cover_color") var coverColor: String,
     @SerializedName("cover_image") var coverImage: String,
     @SerializedName("banner_image") var bannerImage: String,
     var genres: List<String>,   // This must have a type converter
     var score: Int,
     var id: Int,
+    var prequel: Long,
+    var sequel: Long,
     @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
     @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
     @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",
@@ -86,11 +89,14 @@ data class AnimeData(
         episodesCount = 0,
         episodeDuration = 0,
         trailerUrl = "",
+        coverColor = "",
         coverImage = "",
         bannerImage = "",
         genres = emptyList(),
         score = 0,
-        id = 0
+        id = 0,
+        prequel = 0,
+        sequel = 0
     )
 
     override fun equals(other: Any?): Boolean = aniListId == (other as? AnimeData)?.aniListId
@@ -105,9 +111,10 @@ data class AnimeData(
 data class Titles(
     var en: String? = "",
     var jp: String? = "",
-    var it: String? = ""
+    var it: String? = "",
+    var rj: String? = "",
 ) : Parcelable {
-    constructor() : this(en = "", jp = "", it = "")
+    constructor() : this(en = "", jp = "", it = "", rj = "")
 }
 
 // Descriptions is in a one to one relationship with Anime. Each anime has a description obj

@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnScrollChangedListener
+import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.RequestManager
 import com.google.android.material.chip.Chip
@@ -17,15 +20,13 @@ import com.singularitycoder.viewmodelstuff2.anime.model.Anime
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.trimJunk
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -54,6 +55,7 @@ class AnimeDetailFragment : BaseFragment() {
 
     private val animeViewModel: AnimeViewModel by viewModels()
 
+    /** Non Null Activity and Context **/
     override fun onAttach(context: Context) {
         super.onAttach(context)
         nnContext = context
@@ -68,13 +70,24 @@ class AnimeDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getIntentData()
+        setUpDefaults()
         subscribeToObservers()
+        setUpUserActionListeners()
         loadAnime()
     }
 
     private fun getIntentData() {
         animeId = arguments?.getString(IntentKey.ANIME_ID, "") ?: ""
         println("Anime Id received: $animeId")
+    }
+
+    private fun setUpDefaults() {
+        // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
+        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
+            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
+            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
+        }
     }
 
     private fun subscribeToObservers() {
@@ -103,6 +116,24 @@ class AnimeDetailFragment : BaseFragment() {
                     LoadingState.HIDE -> Unit
                 }
             }
+        }
+    }
+
+    private fun setUpUserActionListeners() {
+        binding.ivContacts.onSafeClick {
+
+        }
+
+        binding.ivMessage.onSafeClick {
+
+        }
+
+        binding.ivWhatsapp.onSafeClick {
+
+        }
+
+        binding.ivShare.onSafeClick {
+
         }
     }
 

@@ -181,8 +181,8 @@ class NotificationsFragment : BaseFragment() {
                             coverImage = animeData.coverImage
                         )
                     } ?: emptyList()
-                    doWhenListIsEmpty()
                     notificationsAdapter.notifyDataSetChanged()
+                    doWhenListIsEmpty()
                 }
                 Status.LOADING -> when (it.loadingState) {
                     LoadingState.SHOW -> binding.layoutShimmerNotificationsLoader.shimmerLoader.visible()
