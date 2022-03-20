@@ -90,10 +90,10 @@
                     android:id="@+id/iv_contacts"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:background="@drawable/background_rounded_share_icons"
                     android:contentDescription="Share To Contacts"
                     android:padding="12dp"
-                    android:layout_weight="1"
                     android:src="@drawable/ic_outline_group_add_24"
                     app:tint="@color/purple_500" />
 
@@ -154,11 +154,44 @@
             </HorizontalScrollView>
 
             <TextView
+                android:id="@+id/tv_desc_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="48dp"
+                android:text="Description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/title_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
+
+            <TextView
+                android:id="@+id/tv_read_desc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="48dp"
+                android:drawableStart="@drawable/ic_baseline_record_voice_over_24"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/purple_500"
+                android:gravity="center"
+                android:text="Read"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/purple_500"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
+
+            <TextView
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="48dp"
                 android:text="Description"
@@ -166,7 +199,7 @@
                 android:textColor="@color/title_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_desc_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

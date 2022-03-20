@@ -135,6 +135,10 @@ class AnimeDetailFragment : BaseFragment() {
         binding.ivShare.onSafeClick {
 
         }
+
+        binding.tvReadDesc.onSafeClick {
+
+        }
     }
 
     private fun loadAnime() {
