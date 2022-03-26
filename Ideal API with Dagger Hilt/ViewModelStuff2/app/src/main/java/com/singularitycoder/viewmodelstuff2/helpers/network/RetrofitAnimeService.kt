@@ -46,4 +46,54 @@ interface RetrofitAnimeService {
         @Query(":count") count: Int,
         @Query("nsfw") nsfw: Boolean
     ): Call<RandomAnimeListData>
+
+    @GET("/v1/resources/{version}/{type}/")
+    fun getGenres(
+        @Path("version") version: String = "1.0",
+        @Path("type") type: AnimeResources = AnimeResources.GENRES
+    )
+
+    @GET("/v1/song/{id}/")
+    fun getSong(
+        @Path("id") id: String
+    )
+
+    @GET("/v1/song/")
+    fun getSongList(
+        @Query("anime_id") animeId: String,
+        @Query("title") title: String,
+        @Query("artist") artist: String,
+        @Query("year") year: String,
+        @Query("season") season: String,
+        @Query("type") type: String
+    )
+
+    @GET("/v1/random/song/")
+    fun getRandomSongList(
+        @Query(":count") count: Int
+    )
+
+    @GET("/v1/episode/")
+    fun getEpisode(
+        @Query(":id") episodeId: Int
+    )
+
+    @GET("/v1/episode/")
+    fun getEpisodeList(
+        @Query("anime_id") animeId: Int,
+        @Query("number") number: Int,
+        @Query("is_dub") isDub: Boolean,
+        @Query("locale") locale: String
+    )
+}
+
+enum class AnimeResources(val type: Byte) {
+    GENRES(type = 0),
+    LOCALIZATIONS(type = 1)
+}
+
+enum class AnimeSongS(val type: Byte) {
+    OPENING(type = 0),
+    ENDING(type = 1),
+    NONE(type = 2)
 }

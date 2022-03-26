@@ -3,11 +3,15 @@ package com.singularitycoder.viewmodelstuff2.helpers.extensions
 import android.Manifest
 import android.app.Activity
 import android.content.BroadcastReceiver
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
+import android.provider.ContactsContract
 import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -17,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.contacts.Contact
 import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,9 +32,11 @@ import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 /**
  * https://stackoverflow.com/questions/14389349/android-get-current-locale-not-default
@@ -191,3 +198,39 @@ fun Int.seconds(): Long = TimeUnit.SECONDS.toMillis(this.toLong())
 fun Int.minutes(): Long = TimeUnit.MINUTES.toMillis(this.toLong())
 
 fun Int.hours(): Long = TimeUnit.HOURS.toMillis(this.toLong())
+
+// https://stackoverflow.com/questions/12562151/android-get-all-contacts
+fun Context.getContacts(): List<Contact> {
+    val list: MutableList<Contact> = ArrayList()
+    val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)
+    if (cursor?.count ?: 0 > 0) {
+        while (cursor?.moveToNext() == true) {
+            val id: String = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID) ?: 0)
+            if (cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER) ?: 0) > 0) {
+                val cursorInfo: Cursor? = contentResolver.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", arrayOf(id), null
+                )
+                val inputStream: InputStream? = ContactsContract.Contacts.openContactPhotoInputStream(
+                    contentResolver,
+                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id.toLong())
+                )
+                val person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id.toLong())
+                val photoURI = Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY)
+                while (cursorInfo?.moveToNext() == true) {
+                    val info = Contact().apply {
+                        this.id = id
+                        this.name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME) ?: 0)
+                        this.mobileNumber = cursorInfo.getString(cursorInfo.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER) ?: 0)
+                        this.photo = if (inputStream != null) BitmapFactory.decodeStream(inputStream) else null
+                        this.photoURI = photoURI
+                    }
+                    list.add(info)
+                }
+                cursorInfo?.close()
+            }
+        }
+        cursor?.close()
+    }
+    return list
+}

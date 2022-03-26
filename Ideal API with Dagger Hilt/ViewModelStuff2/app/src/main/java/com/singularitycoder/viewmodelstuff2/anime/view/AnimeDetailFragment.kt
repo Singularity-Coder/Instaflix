@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnScrollChangedListener
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
@@ -136,6 +135,10 @@ class AnimeDetailFragment : BaseFragment() {
 
         }
 
+        binding.ivEmail.onSafeClick {
+
+        }
+
         binding.tvReadDesc.onSafeClick {
 
         }
@@ -167,6 +170,9 @@ class AnimeDetailFragment : BaseFragment() {
                     text = it
                     isCheckable = false
                     isClickable = false
+                    onSafeClick {
+                        // call filter api with grid view
+                    }
                 }
 
                 binding.chipGroupGenre.addView(chip)

@@ -1,19 +1,20 @@
 package com.singularitycoder.viewmodelstuff2.helpers.extensions
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
+import android.view.animation.AlphaAnimation
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import com.singularitycoder.viewmodelstuff2.R
@@ -137,6 +138,27 @@ class OnSafeClickListener(
         val elapsedRealtime = SystemClock.elapsedRealtime()
         if (elapsedRealtime - lastClickTime < delayAfterClick) return
         lastClickTime = elapsedRealtime
+        v?.startAnimation(AlphaAnimation(1F, 0.8F))
+        v?.setTouchEffect()
         onSafeClick(v)
+    }
+
+    // https://stackoverflow.com/questions/7175873/how-to-set-button-click-effect-in-android
+    // https://stackoverflow.com/questions/56716093/setcolorfilter-is-deprecated-on-api29
+    @SuppressLint("ClickableViewAccessibility")
+    fun View.setTouchEffect() {
+        this.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.background.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.purple_100, BlendModeCompat.SRC_ATOP)
+                    v.invalidate()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v.background.clearColorFilter()
+                    v.invalidate()
+                }
+            }
+            false
+        }
     }
 }

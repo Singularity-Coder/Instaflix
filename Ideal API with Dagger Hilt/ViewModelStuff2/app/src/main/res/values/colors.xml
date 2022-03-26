@@ -17,4 +17,5 @@
     <color name="splash_black">#080807</color>
     <color name="light_gray">#d6d6d6</color>
     <color name="default_color">#757575</color>
+    <color name="screen_background">#F0F3F4</color>
 </resources>

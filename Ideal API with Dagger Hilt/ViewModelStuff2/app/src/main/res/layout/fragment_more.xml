@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/screen_background"
     tools:context=".anime.view.HomeFragment">
 
     <ScrollView
@@ -128,7 +128,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_about"
+                android:id="@+id/card_share_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -137,9 +137,120 @@
                 app:cardElevation="3dp"
                 app:layout_constraintTop_toBottomOf="@+id/card_settings">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_share_apk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌   Share APK" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerInsetEnd="16dp"
+                        app:dividerInsetStart="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_share_apk" />
+
+                    <TextView
+                        android:id="@+id/tv_share_whatsapp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏻   Share with WhatsApp" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerInsetEnd="16dp"
+                        app:dividerInsetStart="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_share_sms"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏼   Share with SMS" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerInsetEnd="16dp"
+                        app:dividerInsetStart="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_share_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏽   Share with Email" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerInsetEnd="16dp"
+                        app:dividerInsetStart="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_share_apps"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏾   Share with Apps" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:dividerInsetEnd="16dp"
+                        app:dividerInsetStart="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_share_contacts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏿   Share with Contacts" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginBottom="96dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="3dp"
+                app:layout_constraintTop_toBottomOf="@+id/card_share_app">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_about"
@@ -154,11 +265,9 @@
                         android:text="🧑🏻‍💻   About"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         tools:visibility="visible" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <View

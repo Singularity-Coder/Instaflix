@@ -76,64 +76,88 @@
                 app:layout_constraintStart_toEndOf="@+id/card_cover_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-            <LinearLayout
-                android:id="@+id/ll_share"
+            <HorizontalScrollView
+                android:id="@+id/scroll_view_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
-                android:gravity="center_horizontal"
+                android:scrollbars="none"
                 app:layout_constraintTop_toBottomOf="@+id/card_cover_image">
 
-                <ImageView
-                    android:id="@+id/iv_contacts"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_rounded_share_icons"
-                    android:contentDescription="Share To Contacts"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_outline_group_add_24"
-                    app:tint="@color/purple_500" />
+                <LinearLayout
+                    android:id="@+id/ll_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_message"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_rounded_share_icons"
-                    android:contentDescription="Message"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_outline_textsms_24"
-                    app:tint="@color/purple_500" />
+                    <ImageView
+                        android:id="@+id/iv_contacts"
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rounded_share_icons"
+                        android:contentDescription="Share To Contacts"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_outline_group_add_24"
+                        app:tint="@color/purple_500" />
 
-                <!--https://materialdesignicons.com/icon/whatsapp-->
-                <ImageView
-                    android:id="@+id/iv_whatsapp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_rounded_share_icons"
-                    android:contentDescription="Share with WhatsApp"
-                    android:padding="12dp"
-                    android:src="@drawable/whatsapp"
-                    app:tint="@color/purple_500" />
+                    <ImageView
+                        android:id="@+id/iv_message"
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rounded_share_icons"
+                        android:contentDescription="Message"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_outline_textsms_24"
+                        app:tint="@color/purple_500" />
 
-                <ImageView
-                    android:id="@+id/iv_share"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_rounded_share_icons"
-                    android:contentDescription="Share with other Apps"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_baseline_share_24"
-                    app:tint="@color/purple_500" />
-            </LinearLayout>
+                    <!--https://materialdesignicons.com/icon/whatsapp-->
+                    <ImageView
+                        android:id="@+id/iv_whatsapp"
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rounded_share_icons"
+                        android:contentDescription="Share with WhatsApp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="12dp"
+                        android:src="@drawable/whatsapp"
+                        app:tint="@color/purple_500" />
+
+                    <ImageView
+                        android:id="@+id/iv_share"
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rounded_share_icons"
+                        android:contentDescription="Share with other Apps"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_baseline_share_24"
+                        app:tint="@color/purple_500" />
+
+                    <ImageView
+                        android:id="@+id/iv_email"
+                        android:layout_width="96dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rounded_share_icons"
+                        android:contentDescription="Share with Email"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_outline_email_24"
+                        app:tint="@color/purple_500" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <HorizontalScrollView
                 android:id="@+id/scroll_view_genres"
@@ -143,7 +167,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:scrollbars="none"
-                app:layout_constraintTop_toBottomOf="@+id/ll_share">
+                app:layout_constraintTop_toBottomOf="@+id/scroll_view_share">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_group_genre"
@@ -164,7 +188,7 @@
                 android:text="Description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/title_color"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_read_desc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
 
@@ -176,10 +200,14 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="48dp"
-                android:drawableStart="@drawable/ic_baseline_record_voice_over_24"
-                android:drawablePadding="8dp"
+                android:background="@drawable/background_rounded_share_icons"
                 android:drawableTint="@color/purple_500"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
                 android:text="Read"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/purple_500"

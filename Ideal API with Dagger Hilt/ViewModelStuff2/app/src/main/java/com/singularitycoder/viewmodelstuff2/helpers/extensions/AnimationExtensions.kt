@@ -1,6 +1,7 @@
 package com.singularitycoder.viewmodelstuff2.helpers.extensions
 
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 
@@ -31,3 +32,10 @@ fun View.revealRightToLeft() = revealAnimation(toXDelta = this.width, onAnimatio
 fun View.revealBottomToTop() = revealAnimation(fromYDelta = this.height, onAnimationStart = { this@revealBottomToTop.visible() })
 
 fun View.revealTopToBottom() = revealAnimation(toYDelta = this.height, onAnimationEnd = { this@revealTopToBottom.gone() })
+
+fun setFadeAnimation(view: View) {
+    val FADE_DURATION = 550
+    val anim = AlphaAnimation(0.0f, 1.0f)
+    anim.duration = FADE_DURATION.toLong()
+    view.startAnimation(anim)
+}
