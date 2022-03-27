@@ -1,30 +1,25 @@
 package com.singularitycoder.viewmodelstuff2.more.view
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
-import androidx.work.WorkManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.singularitycoder.viewmodelstuff2.BaseFragment
-import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.MainActivity
+import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentMoreBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Gender
-import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
-import com.singularitycoder.viewmodelstuff2.helpers.constants.WorkerTag
 import com.singularitycoder.viewmodelstuff2.helpers.constants.animeQuoteList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
-import com.singularitycoder.viewmodelstuff2.helpers.service.AnimeForegroundService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import timber.log.Timber
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -86,6 +81,22 @@ class MoreFragment : BaseFragment() {
         }
 
         binding.cardAbout.setOnClickListener { about() }
+
+        // https://stackoverflow.com/questions/36143802/how-to-detect-the-position-of-the-scroll-nestedscrollview-android-at-the-bottom
+        binding.nestedScrollMore.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            when {
+                scrollY > oldScrollY -> {
+                    Timber.i("Scroll DOWN")
+                    nnActivity.findViewById<BottomNavigationView>(R.id.bottom_nav).gone()
+                }
+                scrollY < oldScrollY -> {
+                    Timber.i("Scroll UP")
+                    nnActivity.findViewById<BottomNavigationView>(R.id.bottom_nav).visible()
+                }
+                scrollY == 0 -> Timber.i("TOP SCROLL")
+                scrollY == v.measuredHeight - v.getChildAt(0).measuredHeight -> Timber.i("BOTTOM SCROLL")
+            }
+        })
     }
 
     fun about() = Unit

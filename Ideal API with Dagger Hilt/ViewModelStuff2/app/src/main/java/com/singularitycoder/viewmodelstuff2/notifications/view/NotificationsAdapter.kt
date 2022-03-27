@@ -6,16 +6,18 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.singularitycoder.viewmodelstuff2.MainActivity
+import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutNotificationAnimeItemBinding
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.shareViaSms
 import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.onSafeClick
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.setMargins
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.toIntuitiveDateTime
 import javax.inject.Inject
 
 class NotificationsAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var openCardPosition: Int = -1
+    private var closedCardPosition: Int = -1
     private val diffUtil = object : DiffUtil.ItemCallback<Notification>() {
         override fun areItemsTheSame(oldItem: Notification, newItem: Notification): Boolean {
             return oldItem == newItem
@@ -62,21 +64,68 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
                 ratingNotifAnime.rating = rating
                 glide.load(notification.coverImage).into(ivCoverImage)
                 tvDateTime.text = notification.date.toIntuitiveDateTime()
-//                ivCoverImage.setOnClickListener {
-//                    ivCoverImage.apply {
-//                        layoutParams.height -= 16
-//                        layoutParams.width -= 16
-//                    }
-//                    cardCoverImage.apply {
-//                        layoutParams.height -= 16
-//                        layoutParams.width -= 16
-//                        elevation = 2F
-//                    }
-//                }
+
                 if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
                 if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
 
-                root.onSafeClick { notificationClickListener.invoke(notification.id.toString()) }
+                root.onSafeClick {
+                    if (openCardPosition != -1 && openCardPosition != closedCardPosition) {
+                        clNotificationAnimeItem.visible()
+                        layoutNotificationAnimeItemExpanded.root.gone()
+                        notifyItemChanged(openCardPosition)
+                        closedCardPosition = openCardPosition
+                    }
+                    clNotificationAnimeItem.gone()
+                    layoutNotificationAnimeItemExpanded.root.visible()
+                    openCardPosition = bindingAdapterPosition
+                }
+            }
+
+            itemBinding.layoutNotificationAnimeItemExpanded.apply {
+                tvCheckThisOut.text = notification.checkThisOut
+                tvTitle.text = notification.title ?: "Title Not Available"
+                val rating = (notification.score.div(10F)).div(2F)
+                println("Converted Rating: $rating vs Actual Rating: ${notification.score}")
+                ratingNotifAnime.rating = rating
+                glide.load(notification.coverImage).into(ivCoverImage)
+                tvDesc.text = if (notification.desc.isNullOrBlankOrNaOrNullString()) {
+                    root.context.getString(R.string.no_desc_check_later)
+                } else notification.desc
+                tvDateTime.text = notification.date.toIntuitiveDateTime()
+//
+                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
+                if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+
+                clTopSection.onSafeClick {
+                    itemBinding.clNotificationAnimeItem.visible()
+                    root.gone()
+                }
+                cardCoverImage.onSafeClick {
+                    // show fresco image viewer and allow setting wallpaper and downloading image
+                }
+                ivWhatsapp.onSafeClick {
+                    root.context.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
+                }
+                ivEmail.onSafeClick {
+                    root.context.shareViaEmail(
+                        email = "Friend's Email",
+                        subject = notification.title ?: root.context.getString(R.string.na),
+                        desc = notification.desc ?: root.context.getString(R.string.na)
+                    )
+                }
+                ivShare.onSafeClick {
+                    if (root.context is MainActivity) {
+                        (root.context as MainActivity).shareViaApps(
+                            imageDrawableOrUrl = notification.coverImage,
+                            imageView = itemBinding.ivCoverImage,
+                            title = notification.title ?: root.context.getString(R.string.na),
+                            subtitle = notification.desc ?: root.context.getString(R.string.na)
+                        )
+                    }
+                }
+                ivMessage.onSafeClick {
+                    root.context.shareViaSms(phoneNum = "0000000000")
+                }
             }
         }
     }

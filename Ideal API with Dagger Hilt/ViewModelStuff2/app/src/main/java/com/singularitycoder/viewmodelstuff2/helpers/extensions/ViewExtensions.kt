@@ -139,7 +139,7 @@ class OnSafeClickListener(
         if (elapsedRealtime - lastClickTime < delayAfterClick) return
         lastClickTime = elapsedRealtime
         v?.startAnimation(AlphaAnimation(1F, 0.8F))
-        v?.setTouchEffect()
+//        v?.setTouchEffect()
         onSafeClick(v)
     }
 
@@ -148,6 +148,7 @@ class OnSafeClickListener(
     @SuppressLint("ClickableViewAccessibility")
     fun View.setTouchEffect() {
         this.setOnTouchListener { v, event ->
+            v ?: return@setOnTouchListener false
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     v.background.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(R.color.purple_100, BlendModeCompat.SRC_ATOP)

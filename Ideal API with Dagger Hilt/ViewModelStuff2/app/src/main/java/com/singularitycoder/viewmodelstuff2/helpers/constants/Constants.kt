@@ -53,7 +53,12 @@ val checkThisOutList = listOf(
     "Oooooooooooooohh Yes!"
 )
 
-val mainActivityPermissions = arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
+val mainActivityPermissions = arrayOf(
+    Manifest.permission.READ_CONTACTS,
+    Manifest.permission.WRITE_CONTACTS,
+    Manifest.permission.READ_EXTERNAL_STORAGE,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+)
 
 enum class DateType(val value: String) {
     dd_MMM_yyyy_h_mm_a(value = "dd-MMM-yyyy h:mm a"),

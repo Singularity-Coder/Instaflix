@@ -74,6 +74,7 @@ class NotificationsRepository @Inject constructor(
                             aniListId = singleAnime?.aniListId ?: -1,
                             checkThisOut = checkThisOutList[secureRandom.nextInt(8)],
                             title = singleAnime?.titles?.en,
+                            desc = singleAnime?.descriptions?.en,
                             score = singleAnime?.score ?: 0,
                             coverImage = singleAnime?.coverImage,
                             date = timeNow

@@ -11,6 +11,7 @@ import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemSpotl
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemStandardBinding
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemTopMarginBinding
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
+import com.singularitycoder.viewmodelstuff2.helpers.utils.doAfter
 import javax.inject.Inject
 
 class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -78,9 +79,11 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
                 tvTitle.text = anime.titles.en
                 glide.load(anime.bannerImage).into(ivBannerImage)
 
-                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
-                if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
-
+                doAfter(3.seconds()) {
+                    itemBinding.root.context ?: return@doAfter
+                    if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+                    if (bindingAdapterPosition == homeList.lastIndex) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx())
+                }
                 root.onSafeClick { spotlightViewClickListener.invoke(anime.id.toString()) }
             }
         }

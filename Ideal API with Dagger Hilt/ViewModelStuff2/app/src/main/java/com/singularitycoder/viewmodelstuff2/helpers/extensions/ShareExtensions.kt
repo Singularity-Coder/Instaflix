@@ -1,4 +1,4 @@
-package com.singularitycoder.viewmodelstuff2.helpers.utils
+package com.singularitycoder.viewmodelstuff2.helpers.extensions
 
 import android.app.Activity
 import android.content.Context
@@ -12,11 +12,10 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.singularitycoder.viewmodelstuff2.helpers.utils.getLocalBitmapUri
 import java.io.IOException
 
-fun shareViaContacts() {
-
-}
+// FIXME: Other than whatsapp none of them are working properly on Android 12
 
 fun Context.shareViaSms(phoneNum: String) {
     val smsIntent = Intent(Intent.ACTION_VIEW).apply {
@@ -30,11 +29,11 @@ fun Context.shareViaSms(phoneNum: String) {
     }
 }
 
-fun Context.shareViaWhatsApp(whatsApp: String) {
+fun Context.shareViaWhatsApp(whatsAppPhoneNum: String) {
     try {
         // checks if such an app exists or not
         packageManager.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES)
-        val uri = Uri.parse("smsto:$whatsApp")
+        val uri = Uri.parse("smsto:$whatsAppPhoneNum")
         val intent = Intent(Intent.ACTION_SENDTO, uri).apply { setPackage("com.whatsapp") }
         startActivity(Intent.createChooser(intent, "Dummy Title"))
     } catch (e: PackageManager.NameNotFoundException) {
@@ -45,22 +44,21 @@ fun Context.shareViaWhatsApp(whatsApp: String) {
     }
 }
 
-fun Context.shareViaEmail(email: String) {
+fun Context.shareViaEmail(email: String, subject: String, desc: String) {
     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null)).apply {
-        putExtra(Intent.EXTRA_SUBJECT, "Fav Anime")
-        putExtra(Intent.EXTRA_TEXT, "Check this out...")
+        putExtra(Intent.EXTRA_SUBJECT, "Fav Anime App: $subject")
+        putExtra(Intent.EXTRA_TEXT, "Check this out... \n$desc")
     }
     startActivity(Intent.createChooser(intent, "Send email..."))
 }
 
-fun Activity.shareViaApps(imageDrawableOrUrl: Any?, imageView: ImageView?, title: String, subtitle: String): Void? {
+fun Activity.shareViaApps(imageDrawableOrUrl: Any?, imageView: ImageView?, title: String, subtitle: String) {
     if (null != imageDrawableOrUrl && null != imageView) {
         // Ask external storage permission
         shareImageAndText(imageDrawableOrUrl, imageView, title, subtitle)
     } else {
         shareOnlyText(title, subtitle)
     }
-    return null
 }
 
 fun Activity.shareImageAndText(imageDrawableOrUrl: Any, imageView: ImageView, title: String, subtitle: String) {

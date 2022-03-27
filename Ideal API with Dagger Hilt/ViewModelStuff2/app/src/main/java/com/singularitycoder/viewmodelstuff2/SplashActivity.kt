@@ -11,7 +11,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.extensions.getRawPathOf
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.seconds
 import com.singularitycoder.viewmodelstuff2.helpers.utils.doAfter
 
-
+// TODO - Do splash the right way
 // https://stackoverflow.com/questions/35837197/i-want-to-add-auto-play-media-in-android
 // https://gist.github.com/shubhubhosale/9ef8f34a00ee41835d909c1a023b3f7a
 
@@ -33,16 +33,15 @@ class SplashActivity : AppCompatActivity() {
             requestFocus()
             start()
             seekTo(1) // Autoplay
-        }
-
-        doAfter(2.seconds()) {
-            val options = ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in, android.R.anim.fade_out)
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent, options.toBundle())
-            finish()
-            // https://www.youtube.com/watch?v=0s6x3Sn4eYo
-            // https://stackoverflow.com/questions/3389501/activity-transition-in-android
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            setOnCompletionListener {
+                val options = ActivityOptions.makeCustomAnimation(this@SplashActivity, android.R.anim.fade_in, android.R.anim.fade_out)
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                startActivity(intent, options.toBundle())
+                finish()
+                // https://www.youtube.com/watch?v=0s6x3Sn4eYo
+                // https://stackoverflow.com/questions/3389501/activity-transition-in-android
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
         }
     }
 }
