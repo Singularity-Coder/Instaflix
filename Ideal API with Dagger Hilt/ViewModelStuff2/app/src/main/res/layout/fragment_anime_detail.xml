@@ -76,6 +76,30 @@
                 app:layout_constraintStart_toEndOf="@+id/card_cover_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
+            <!--            app:anim_scale_factor="2"-->
+            <!--            app:circle_end_color="#12A518"-->
+            <!--            app:circle_start_color="#F1DD31"-->
+            <!--            app:dots_primary_color="#0E77CC"-->
+            <!--            app:dots_secondary_color="#FF1A4F"-->
+            <!--            app:icon_size="40dp"-->
+            <!--            app:icon_type="heart"-->
+            <!--            app:is_enabled="true"-->
+            <!--            app:liked="false"-->
+            <!--            android:layout_marginEnd="15dp"-->
+            <!--            android:layout_marginBottom="8dp"-->
+            <!--            android:layout_gravity="center"-->
+            <com.like.LikeButton
+                android:id="@+id/btn_like"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                app:icon_type="heart"
+                app:icon_size="32dp"
+                app:unlike_drawable="@drawable/ic_baseline_unlike_border"
+                app:layout_constraintStart_toStartOf="@+id/rating_anime_detail"
+                app:layout_constraintTop_toBottomOf="@+id/rating_anime_detail"
+                app:like_drawable="@drawable/ic_round_favorite_24" />
+
             <HorizontalScrollView
                 android:id="@+id/scroll_view_share"
                 android:layout_width="match_parent"

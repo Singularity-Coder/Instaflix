@@ -12,6 +12,8 @@ import com.bumptech.glide.RequestManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.like.LikeButton
+import com.like.OnLikeListener
 import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
@@ -142,6 +144,18 @@ class AnimeDetailFragment : BaseFragment() {
         binding.tvReadDesc.onSafeClick {
 
         }
+
+        // https://github.com/jd-alexander/LikeButton
+        // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
+        binding.btnLike.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton) {
+                utils.showToast("Liked Heart", nnContext)
+            }
+
+            override fun unLiked(likeButton: LikeButton) {
+                utils.showToast("Unliked Heart", nnContext)
+            }
+        })
     }
 
     private fun loadAnime() {

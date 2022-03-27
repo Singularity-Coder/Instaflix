@@ -21,8 +21,10 @@
         <entry key="app/src/main/res/drawable/ic_back_blur.xml" value="0.16593017578125002" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_baseline_group_add_24.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_baseline_like_border.xml" value="0.183" />
         <entry key="app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1235" />
+        <entry key="app/src/main/res/drawable/ic_baseline_unlike_border.xml" value="0.183" />
         <entry key="app/src/main/res/drawable/ic_launcher.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.24375" />
