@@ -10,7 +10,6 @@ import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutNotificationAnimeItemBinding
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.shareViaSms
 import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
 import javax.inject.Inject
 
@@ -65,8 +64,8 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
                 glide.load(notification.coverImage).into(ivCoverImage)
                 tvDateTime.text = notification.date.toIntuitiveDateTime()
 
-                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
-                if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+//                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
+//                if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
 
                 root.onSafeClick {
                     if (openCardPosition != -1 && openCardPosition != closedCardPosition) {
@@ -93,8 +92,8 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
                 } else notification.desc
                 tvDateTime.text = notification.date.toIntuitiveDateTime()
 //
-                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
-                if (bindingAdapterPosition == notificationsList.lastIndex) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
+//                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 0, end = 0, bottom = 82.dpToPx()) // Since RecyclerView is reversed
+//                if (bindingAdapterPosition == 0) this.root.setMargins(start = 0, top = 8.dpToPx(), end = 0, bottom = 0)
 
                 clTopSection.onSafeClick {
                     itemBinding.clNotificationAnimeItem.visible()
@@ -102,6 +101,7 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
                 }
                 cardCoverImage.onSafeClick {
                     // show fresco image viewer and allow setting wallpaper and downloading image
+                    notificationClickListener.invoke(notification.id.toString())
                 }
                 ivWhatsapp.onSafeClick {
                     root.context.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")

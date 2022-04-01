@@ -38,17 +38,18 @@
         <entry key="app/src/main/res/drawable/ic_round_notifications_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_round_search_24.xml" value="0.1355" />
         <entry key="app/src/main/res/drawable/saitama.xml" value="0.1235" />
+        <entry key="app/src/main/res/drawable/saitama5.xml" value="0.105" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/whatsapp.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/fav_anime_fragment.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
-        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.2065613608748481" />
+        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.16216216216216217" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_fav_anime.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.29388297872340424" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.23822714681440443" />
         <entry key="app/src/main/res/layout/layout_anime_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_custom_search.xml" value="0.25" />

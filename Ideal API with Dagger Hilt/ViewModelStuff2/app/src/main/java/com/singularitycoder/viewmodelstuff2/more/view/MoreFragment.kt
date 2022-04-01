@@ -72,15 +72,42 @@ class MoreFragment : BaseFragment() {
     private fun setUpUserActionListeners() {
         binding.clAnimeQuotes.setOnClickListener { setUpAnimeQuotes() }
 
-        binding.switchRandomWorker.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) nnContext.startAnimeRecommendationWorker() else nnContext.stopAnimeRecommendationWorker()
+        binding.apply {
+            switchRandomWorker.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) nnContext.startAnimeRecommendationWorker() else nnContext.stopAnimeRecommendationWorker()
+            }
+            switchRandomForegroundService.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) nnActivity.startAnimeForegroundService() else nnActivity.stopAnimeForegroundService()
+            }
         }
 
-        binding.switchRandomForegroundService.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) nnActivity.startAnimeForegroundService() else nnActivity.stopAnimeForegroundService()
+        binding.apply {
+            tvShareContacts.onSafeClick {
+                nnContext.shareSmsToAll()
+            }
+            tvShareApk.onSafeClick {
+                nnActivity.shareApk()
+            }
+            tvShareApps.onSafeClick {
+                nnActivity.shareViaApps(
+                    imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
+                    imageView = binding.ivQuoteBackground,
+                    title = "Fav Anime App",
+                    subtitle = "Fav Anime App"
+                )
+            }
+            tvShareEmail.onSafeClick {
+                nnContext.shareViaEmail(email = "Friend's Email", subject = "Fav Anime App", desc = "Fav Anime App")
+            }
+            tvShareWhatsapp.onSafeClick {
+                nnContext.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
+            }
+            tvShareSms.onSafeClick {
+                nnContext.shareViaSms(phoneNum = "0000000000")
+            }
         }
 
-        binding.cardAbout.setOnClickListener { about() }
+        binding.cardAbout.onSafeClick { about() }
 
         // https://stackoverflow.com/questions/36143802/how-to-detect-the-position-of-the-scroll-nestedscrollview-android-at-the-bottom
         binding.nestedScrollMore.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->

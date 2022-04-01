@@ -107,7 +107,7 @@ class NetworkState @Inject constructor(val context: Context) {
             }
 
             override fun onLost(network: Network) {
-                offlineWork.invoke()
+                CoroutineScope(Main).launch { offlineWork.invoke() }
             }
         }
 

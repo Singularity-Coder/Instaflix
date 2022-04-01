@@ -137,7 +137,8 @@ data class Titles(
 data class Descriptions(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "descId") var descId: Long = -1,   // either add index = true in the ColumnInfo or in the @Entity annotation. Also avoid autoGenerate primary key as much as possible. What if int overflows? Since it belongs to Anime Table use aniListId as primary key
     @ColumnInfo(defaultValue = "") var en: String? = "",
-    @ColumnInfo(defaultValue = "") var it: String? = ""
+    @ColumnInfo(defaultValue = "") var it: String? = "",
+    @ColumnInfo(defaultValue = "") var jp: String? = ""
 ) : Parcelable {
     constructor() : this(descId = -1, en = "", it = "")
 }

@@ -57,7 +57,6 @@ import java.lang.reflect.Type
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-
 // Easy Memory Leaks - Static context
 
 // This Utils class should not be a singleton as it deals with context stuff. Move to Activity Module
@@ -125,15 +124,6 @@ class GeneralUtils @Inject constructor(
             Timber.e("getErrorMessageWithRetrofit: ${e.localizedMessage}")
             return getDefaultMessage()
         }
-    }
-
-    fun getDeviceSize(): Point = try {
-        val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
-        val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
-        Point(deviceWidth, deviceHeight)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        Point(0, 0)
     }
 
     fun <T> asyncLog(message: String?, vararg objs: T) = CoroutineScope(Default).launch {
@@ -260,6 +250,19 @@ fun openSettings(context: Context) {
     }
     context.startActivity(intent)
 }
+
+fun getDeviceSize(): Point = try {
+    val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
+    val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
+    Point(deviceWidth, deviceHeight)
+} catch (e: Exception) {
+    e.printStackTrace()
+    Point(0, 0)
+}
+
+fun deviceWidth() = Resources.getSystem().displayMetrics.widthPixels
+
+fun deviceHeight() = Resources.getSystem().displayMetrics.heightPixels
 
 fun checkFunctionExecutionTimings() {
     TimingLogger("TAG", "hasValidInput").apply {

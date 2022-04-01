@@ -16,6 +16,7 @@ import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
@@ -36,7 +37,6 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-
 
 /**
  * https://stackoverflow.com/questions/14389349/android-get-current-locale-not-default
@@ -234,3 +234,5 @@ fun Context.getContacts(): List<Contact> {
     }
     return list
 }
+
+fun Context?.toast(message: String, duration: Int = Toast.LENGTH_LONG) = Toast.makeText(this, message, duration).show()

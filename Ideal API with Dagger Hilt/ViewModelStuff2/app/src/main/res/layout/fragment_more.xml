@@ -148,15 +148,16 @@
                         android:id="@+id/tv_share_apk"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
                         android:padding="16dp"
+                        android:text="🙌   Share APK"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:text="🙌   Share APK" />
+                        tools:visibility="visible" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/divider_2"
@@ -170,15 +171,16 @@
                         android:id="@+id/tv_share_whatsapp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
                         android:padding="16dp"
+                        android:text="🙌🏻   Share with WhatsApp"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:text="🙌🏻   Share with WhatsApp" />
+                        tools:visibility="visible" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:id="@+id/divider_3"
@@ -191,15 +193,16 @@
                         android:id="@+id/tv_share_sms"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
                         android:padding="16dp"
+                        android:text="🙌🏼   Share with SMS"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:text="🙌🏼   Share with SMS" />
+                        tools:visibility="visible" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
@@ -211,15 +214,16 @@
                         android:id="@+id/tv_share_email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
                         android:padding="16dp"
+                        android:text="🙌🏽   Share with Email"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:text="🙌🏽   Share with Email" />
+                        tools:visibility="visible" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
@@ -231,15 +235,16 @@
                         android:id="@+id/tv_share_apps"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏾   Share with Apps"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:padding="16dp"
-                        android:text="🙌🏾   Share with Apps" />
+                        tools:visibility="visible" />
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
@@ -251,15 +256,16 @@
                         android:id="@+id/tv_share_contacts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:drawableEnd="@drawable/ic_round_keyboard_arrow_right_24"
                         android:ellipsize="end"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:maxLines="1"
+                        android:padding="16dp"
+                        android:text="🙌🏿   Share with Contacts"
                         android:textColor="@color/black"
                         android:visibility="visible"
-                        tools:visibility="visible"
-                        android:padding="16dp"
-                        android:text="🙌🏿   Share with Contacts" />
+                        tools:visibility="visible" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

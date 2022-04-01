@@ -91,10 +91,11 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
 
     inner class HomeStandardViewHolder(val itemBinding: LayoutHomeAnimeItemStandardBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(anime: AnimeData) {
-            val description = if (anime.descriptions.en.isNullOrBlankOrNaOrNullString()) anime.descriptions.it?.trimJunk() else anime.descriptions.en?.trimJunk()
             itemBinding.apply {
-                tvTitle.text = if (anime.titles.en.isNullOrBlankOrNaOrNullString()) "No Title Available" else anime.titles.en
-                tvDesc.text = if (description.isNullOrBlankOrNaOrNullString()) "No Description Available" else description
+                tvTitle.text = if (anime.titles.en.isNullOrBlankOrNaOrNullString()) anime.titles.rj ?: "No Title Available" else anime.titles.en
+                tvDesc.text = if (anime.descriptions.en.isNullOrBlankOrNaOrNullString()) {
+                    anime.descriptions.jp?.trimJunk() ?: "No Description Available"
+                } else anime.descriptions.en?.trimJunk()
                 val rating = (anime.score.div(10F)).div(2F)
                 println("Converted Rating: $rating vs Actual Rating: ${anime.score}")
                 ratingAnime.rating = rating

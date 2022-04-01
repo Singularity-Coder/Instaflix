@@ -13,7 +13,7 @@ data class Notification(
     var coverImage: String? = "",
     var date: Long = 0L,
     var desc: String? = "",
-    var id: Long = 0L,
+    var id: Int = 0,
     var coverImageBase64: String = ""
 ) {
 

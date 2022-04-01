@@ -93,20 +93,34 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                app:icon_type="heart"
                 app:icon_size="32dp"
-                app:unlike_drawable="@drawable/ic_baseline_unlike_border"
+                app:icon_type="heart"
                 app:layout_constraintStart_toStartOf="@+id/rating_anime_detail"
                 app:layout_constraintTop_toBottomOf="@+id/rating_anime_detail"
-                app:like_drawable="@drawable/ic_round_favorite_24" />
+                app:like_drawable="@drawable/ic_round_favorite_24"
+                app:unlike_drawable="@drawable/ic_baseline_unlike_border" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_like_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:text="Add to Favorites"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/purple_500"
+                app:layout_constraintBottom_toBottomOf="@+id/btn_like"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_like"
+                app:layout_constraintTop_toTopOf="@+id/btn_like" />
 
             <HorizontalScrollView
                 android:id="@+id/scroll_view_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
                 android:scrollbars="none"
                 app:layout_constraintTop_toBottomOf="@+id/card_cover_image">
 
@@ -118,66 +132,68 @@
 
                     <ImageView
                         android:id="@+id/iv_contacts"
-                        android:layout_width="96dp"
-                        android:layout_height="50dp"
+                        android:layout_width="88dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_rounded_share_icons"
                         android:contentDescription="Share To Contacts"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_outline_group_add_24"
                         app:tint="@color/purple_500" />
 
                     <ImageView
-                        android:id="@+id/iv_message"
-                        android:layout_width="96dp"
-                        android:layout_height="50dp"
+                        android:id="@+id/iv_sms"
+                        android:layout_width="88dp"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_rounded_share_icons"
-                        android:contentDescription="Message"
+                        android:contentDescription="SMS"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_outline_textsms_24"
                         app:tint="@color/purple_500" />
 
                     <!--https://materialdesignicons.com/icon/whatsapp-->
                     <ImageView
                         android:id="@+id/iv_whatsapp"
-                        android:layout_width="96dp"
-                        android:layout_height="50dp"
+                        android:layout_width="88dp"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_rounded_share_icons"
                         android:contentDescription="Share with WhatsApp"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/whatsapp"
                         app:tint="@color/purple_500" />
 
                     <ImageView
                         android:id="@+id/iv_share"
-                        android:layout_width="96dp"
-                        android:layout_height="50dp"
+                        android:layout_width="88dp"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_rounded_share_icons"
                         android:contentDescription="Share with other Apps"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_baseline_share_24"
                         app:tint="@color/purple_500" />
 
                     <ImageView
                         android:id="@+id/iv_email"
-                        android:layout_width="96dp"
-                        android:layout_height="50dp"
+                        android:layout_width="88dp"
+                        android:layout_height="48dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_rounded_share_icons"
                         android:contentDescription="Share with Email"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_outline_email_24"
                         app:tint="@color/purple_500" />
                 </LinearLayout>
@@ -187,21 +203,21 @@
                 android:id="@+id/scroll_view_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
                 android:scrollbars="none"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_share">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chip_group_genre"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     app:singleLine="true" />
 
             </HorizontalScrollView>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_desc_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -216,7 +232,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_read_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -224,7 +240,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="48dp"
-                android:background="@drawable/background_rounded_share_icons"
                 android:drawableTint="@color/purple_500"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
@@ -238,7 +253,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

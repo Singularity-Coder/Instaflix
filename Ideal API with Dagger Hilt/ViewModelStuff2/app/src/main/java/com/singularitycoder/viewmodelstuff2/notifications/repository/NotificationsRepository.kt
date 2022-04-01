@@ -18,6 +18,7 @@ import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
 import com.singularitycoder.viewmodelstuff2.helpers.NotificationUtils
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.trimJunk
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.service.AnimeForegroundService
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
@@ -73,11 +74,12 @@ class NotificationsRepository @Inject constructor(
                         val notification = Notification(
                             aniListId = singleAnime?.aniListId ?: -1,
                             checkThisOut = checkThisOutList[secureRandom.nextInt(8)],
-                            title = singleAnime?.titles?.en,
-                            desc = singleAnime?.descriptions?.en,
+                            title = singleAnime?.titles?.en?.trimJunk() ?: singleAnime?.titles?.rj?.trimJunk(),
+                            desc = singleAnime?.descriptions?.en?.trimJunk() ?: singleAnime?.descriptions?.jp?.trimJunk(),
                             score = singleAnime?.score ?: 0,
                             coverImage = singleAnime?.coverImage,
-                            date = timeNow
+                            date = timeNow,
+                            id = singleAnime?.id ?: -1
                         )
                         dao.insert(notification)
                         getRandomAnimeListFromDb()

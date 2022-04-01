@@ -137,8 +137,8 @@ class NotificationsFragment : BaseFragment() {
     private fun setUpRecyclerView() {
         binding.rvNotifications.apply {
             layoutManager = LinearLayoutManager(nnContext).apply {
-                reverseLayout = true
-                stackFromEnd = true // Latest items at the top
+//                reverseLayout = true
+//                stackFromEnd = true // Latest items at the top
             }
             adapter = notificationsAdapter
             setUpScrollListener()
@@ -200,7 +200,7 @@ class NotificationsFragment : BaseFragment() {
             when (it?.status) {
                 Status.SUCCESS -> {
                     utils.asyncLog(message = "Random Anime chan: %s", it.data)
-                    notificationsAdapter.notificationsList = it.data ?: emptyList()
+                    notificationsAdapter.notificationsList = it.data?.sortedBy { it.date }?.reversed() ?: emptyList()
                     notificationsAdapter.notifyDataSetChanged()
                     doWhenListIsEmpty()
                 }

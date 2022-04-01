@@ -1,8 +1,7 @@
 Fav Anime App Features
 
 // TODO
-
-0. Search with filters, favorites, Detail View, Youtube player
+0. Search with filters, favorites, Youtube player
 1. Github graph ql api views
 4. Tests
 8. Room Android doc - Room Foreign Key and Reationships
@@ -10,8 +9,8 @@ Fav Anime App Features
 13. Custom Views - heart icon, 5 stars
 
 
-
 Later
+Export favorites list to CSV, PDF, plain txt files
 0. Logins
 1. Anime Wallpapers
 2. Permissions Screen

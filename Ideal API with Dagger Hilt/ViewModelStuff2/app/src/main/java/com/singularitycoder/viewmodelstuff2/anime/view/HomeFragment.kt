@@ -7,6 +7,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -83,6 +84,10 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
+        binding.swipeRefreshHome.setColorSchemeColors(
+            nnContext.color(R.color.purple_500),
+            nnContext.color(R.color.purple_700)
+        )
         binding.customSearch.getSearchView().disable()
 //        binding.customSearch.getSearchView().revealBottomToTop()
 //        nnActivity.findViewById<BottomNavigationView>(R.id.bottom_nav).revealTopToBottom()

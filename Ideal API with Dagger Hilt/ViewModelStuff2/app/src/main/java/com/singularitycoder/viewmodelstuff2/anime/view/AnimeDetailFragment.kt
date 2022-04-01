@@ -24,6 +24,8 @@ import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
+import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
+import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -83,12 +85,7 @@ class AnimeDetailFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
-        // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
-        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
-            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
-            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
-        }
+        setViewsBasedOnDeviceDimensions()
     }
 
     private fun subscribeToObservers() {
@@ -121,41 +118,57 @@ class AnimeDetailFragment : BaseFragment() {
     }
 
     private fun setUpUserActionListeners() {
-        binding.ivContacts.onSafeClick {
-
-        }
-
-        binding.ivMessage.onSafeClick {
-
-        }
-
-        binding.ivWhatsapp.onSafeClick {
-
-        }
-
-        binding.ivShare.onSafeClick {
-
-        }
-
-        binding.ivEmail.onSafeClick {
-
+        binding.apply {
+            ivContacts.onSafeClick {
+                nnContext.shareSmsToAll()
+            }
+            ivSms.onSafeClick {
+                nnContext.shareViaSms(phoneNum = "0000000000")
+            }
+            ivWhatsapp.onSafeClick {
+                nnContext.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
+            }
+            ivShare.onSafeClick {
+                nnActivity.shareViaApps(
+                    imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
+                    imageView = binding.ivCoverImage,
+                    title = "Fav Anime App",
+                    subtitle = "Fav Anime App"
+                )
+            }
+            ivEmail.onSafeClick {
+                nnContext.shareViaEmail(email = "Friend's Email", subject = "Fav Anime App", desc = "Fav Anime App")
+            }
         }
 
         binding.tvReadDesc.onSafeClick {
 
         }
 
+        binding.tvLikeState.onSafeClick {
+            binding.btnLike.performClick() // So when u click tvLikeState the click is delegated to btnLike
+        }
+
         // https://github.com/jd-alexander/LikeButton
         // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
+                binding.tvLikeState.text = "Remove"
                 utils.showToast("Liked Heart", nnContext)
             }
 
             override fun unLiked(likeButton: LikeButton) {
+                binding.tvLikeState.text = "Add to Favorites"
                 utils.showToast("Unliked Heart", nnContext)
             }
         })
+
+        // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
+        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
+            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
+            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
+        }
     }
 
     private fun loadAnime() {
@@ -173,9 +186,14 @@ class AnimeDetailFragment : BaseFragment() {
     private fun updateUI(anime: Anime?) {
         binding.apply {
             glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
-            glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
-            tvTitle.text = anime?.data?.titles?.en?.trimJunk() ?: getString(R.string.na)
-            tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: getString(R.string.na)
+            if (anime?.data?.bannerImage.isNullOrBlankOrNaOrNullString()) {
+                binding.ivBannerImage.gone()
+                binding.cardCoverImage.setMargins(16.dpToPx(), 16.dpToPx(), 0, 0)
+            } else {
+                glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
+            }
+            tvTitle.text = anime?.data?.titles?.en?.trimJunk() ?: anime?.data?.titles?.rj?.trimJunk() ?: getString(R.string.na)
+            tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: anime?.data?.descriptions?.jp?.trimJunk() ?: getString(R.string.na)
             val rating = (anime?.data?.score?.div(10F))?.div(2F) ?: 0F
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
@@ -192,5 +210,14 @@ class AnimeDetailFragment : BaseFragment() {
                 binding.chipGroupGenre.addView(chip)
             }
         }
+    }
+
+    // https://stackoverflow.com/questions/5042197/android-set-height-and-width-of-custom-view-programmatically
+    private fun setViewsBasedOnDeviceDimensions() {
+        binding.ivCoverImage.layoutParams.apply {
+            width = deviceWidth() / 3
+            height = deviceHeight() / 4
+        }
+        binding.ivBannerImage.layoutParams.height = (deviceHeight() / 3.5).toInt()
     }
 }
