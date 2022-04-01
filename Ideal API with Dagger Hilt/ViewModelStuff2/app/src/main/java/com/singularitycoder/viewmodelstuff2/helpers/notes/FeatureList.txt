@@ -11,6 +11,7 @@ Fav Anime App Features
 
 Later
 Export favorites list to CSV, PDF, plain txt files
+show fresco image viewer and allow setting wallpaper and downloading image
 0. Logins
 1. Anime Wallpapers
 2. Permissions Screen

@@ -18,12 +18,14 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 // FIXME: Other than whatsapp none of them are working properly on Android 12
 
-fun Context.shareViaSms(phoneNum: String) {
+fun Context.shareViaSms(phoneNum: String) = try {
     val smsIntent = Intent(Intent.ACTION_VIEW).apply {
         type = "vnd.android-dir/mms-sms"
         putExtra("address", phoneNum)
@@ -32,7 +34,8 @@ fun Context.shareViaSms(phoneNum: String) {
     }
     if (smsIntent.resolveActivity(packageManager) != null) {
         startActivity(smsIntent)
-    }
+    } else null
+} catch (e: Exception) {
 }
 
 fun Context.shareViaWhatsApp(whatsAppPhoneNum: String) {
@@ -44,9 +47,12 @@ fun Context.shareViaWhatsApp(whatsAppPhoneNum: String) {
         startActivity(Intent.createChooser(intent, "Dummy Title"))
     } catch (e: PackageManager.NameNotFoundException) {
         Toast.makeText(this, "WhatsApp not found. Install from PlayStore.", Toast.LENGTH_SHORT).show()
-        val uri = Uri.parse("market://details?id=com.whatsapp")
-        val intent = Intent(Intent.ACTION_VIEW, uri).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
-        startActivity(intent)
+        try {
+            val uri = Uri.parse("market://details?id=com.whatsapp")
+            val intent = Intent(Intent.ACTION_VIEW, uri).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET) }
+            startActivity(intent)
+        } catch (e: Exception) {
+        }
     }
 }
 
@@ -77,26 +83,32 @@ fun Activity.shareImageAndText(imageDrawableOrUrl: Any, imageView: ImageView, ti
             }
             override fun onLoadCleared(placeholder: Drawable?) = Unit
         })
-    val bmpUri = getLocalBitmapUri(imageView) ?: Uri.EMPTY
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "image/.*"
-        putExtra(Intent.EXTRA_STREAM, bmpUri)
-        putExtra(Intent.EXTRA_SUBJECT, title)
-        putExtra(Intent.EXTRA_TEXT, subtitle)
-        addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+    try {
+        val bmpUri = getLocalBitmapUri(imageView) ?: Uri.EMPTY
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/.*"
+            putExtra(Intent.EXTRA_STREAM, bmpUri)
+            putExtra(Intent.EXTRA_SUBJECT, title)
+            putExtra(Intent.EXTRA_TEXT, subtitle)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        }
+        startActivity(Intent.createChooser(intent, "Share image using"))
+    } catch (e: Exception) {
     }
-    startActivity(Intent.createChooser(intent, "Share image using"))
 }
 
 fun Activity.shareOnlyText(title: String, subtitle: String) {
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_SUBJECT, title)
-        putExtra(Intent.EXTRA_TEXT, subtitle)
-//        addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
-        addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+    try {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, title)
+            putExtra(Intent.EXTRA_TEXT, subtitle)
+    //        addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+        }
+        startActivity(Intent.createChooser(intent, "Share to"))
+    } catch (e: Exception) {
     }
-    startActivity(Intent.createChooser(intent, "Share to"))
 }
 
 @Throws(IOException::class)
@@ -114,14 +126,19 @@ fun Activity.shareApk() = try {
 
 // https://stackoverflow.com/questions/20999876/sending-bulk-sms-using-sms-manager-in-android
 fun List<String>.sendBulkSms() = CoroutineScope(IO).launch {
-    val smsManager = SmsManager.getDefault()
-    this@sendBulkSms.forEach {
-        smsManager.sendTextMessage(it, null, "Fav Anime App: All about anime in one place. Get it now!", null, null)
-        wait(1.seconds())
+    try {
+        val smsManager = SmsManager.getDefault()
+        this@sendBulkSms.forEach {
+            smsManager.sendTextMessage(it, null, "Fav Anime App: All about anime in one place. Get it now!", null, null)
+            wait(1.seconds())
+        }
+    } catch (e: Exception) {
     }
 }
 
 fun Context.shareSmsToAll() = CoroutineScope(IO).launch {
     getContacts().mapNotNull { it.mobileNumber?.trim() }.filter { it.length == 10 }.sendBulkSms()
-    toast("Sending SMS to all contacts!")
+    withContext(Main) {
+        toast("Sending SMS to all contacts!")
+    }
 }

@@ -252,9 +252,7 @@ fun openSettings(context: Context) {
 }
 
 fun getDeviceSize(): Point = try {
-    val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
-    val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
-    Point(deviceWidth, deviceHeight)
+    Point(deviceWidth(), deviceHeight())
 } catch (e: Exception) {
     e.printStackTrace()
     Point(0, 0)

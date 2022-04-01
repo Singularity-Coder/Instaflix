@@ -146,7 +146,7 @@ class AnimeDetailFragment : BaseFragment() {
         }
 
         binding.tvLikeState.onSafeClick {
-            binding.btnLike.performClick() // So when u click tvLikeState the click is delegated to btnLike
+            binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
         }
 
         // https://github.com/jd-alexander/LikeButton
@@ -188,7 +188,7 @@ class AnimeDetailFragment : BaseFragment() {
             glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
             if (anime?.data?.bannerImage.isNullOrBlankOrNaOrNullString()) {
                 binding.ivBannerImage.gone()
-                binding.cardCoverImage.setMargins(16.dpToPx(), 16.dpToPx(), 0, 0)
+                binding.cardCoverImage.setMargins(start = 16.dpToPx(), top = 16.dpToPx(), end = 0, bottom = 0)
             } else {
                 glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
             }
