@@ -167,4 +167,8 @@ class AnimeViewModel @Inject constructor(
             filteredAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
         }
     }
+
+    internal fun addToFavorites() = viewModelScope.launch {
+        repository.getAnimeList()
+    }
 }

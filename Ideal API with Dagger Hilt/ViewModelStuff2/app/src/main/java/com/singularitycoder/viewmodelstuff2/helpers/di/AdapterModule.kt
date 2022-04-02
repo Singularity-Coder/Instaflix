@@ -2,6 +2,7 @@ package com.singularitycoder.viewmodelstuff2.helpers.di
 
 import com.bumptech.glide.RequestManager
 import com.singularitycoder.viewmodelstuff2.anime.view.HomeAdapter
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesAdapter
 import com.singularitycoder.viewmodelstuff2.notifications.view.NotificationsAdapter
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,10 @@ object AdapterModule {
     @Singleton
     @Provides
     fun injectNotificationsAdapter(requestManager: RequestManager): NotificationsAdapter = NotificationsAdapter(requestManager)
+
+    @Singleton
+    @Provides
+    fun injectFavoritesAdapter(requestManager: RequestManager): FavoritesAdapter = FavoritesAdapter(requestManager)
 
     @Singleton
     @Provides

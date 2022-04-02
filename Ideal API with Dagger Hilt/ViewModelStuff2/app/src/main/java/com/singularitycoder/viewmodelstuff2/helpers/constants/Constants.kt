@@ -21,6 +21,7 @@ object Table {
     const val DESCRIPTIONS = "table_descriptions"
     const val ABOUT_ME = "table_about_me"
     const val NOTIFICATIONS = "table_notifications"
+    const val FAVORITES = "table_favorites"
 }
 
 object BaseURL {

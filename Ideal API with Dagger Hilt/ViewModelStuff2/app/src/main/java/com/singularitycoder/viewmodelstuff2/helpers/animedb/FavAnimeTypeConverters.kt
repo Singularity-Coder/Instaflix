@@ -47,5 +47,5 @@ class AnimeTitleConverter {
     }
 }
 
-//class recommendationsConverter: ListConverters<String>()
+class RecommendationsListConverter: ListConverters<String>()
 

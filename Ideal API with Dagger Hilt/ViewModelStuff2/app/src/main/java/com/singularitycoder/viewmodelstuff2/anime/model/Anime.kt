@@ -69,7 +69,7 @@ data class AnimeData(
     var id: Int,
     var prequel: Long,
     var sequel: Long,
-//    val recommendations: List<Int>,
+    val recommendations: List<Int>,
     @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
     @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
     @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",
@@ -100,7 +100,7 @@ data class AnimeData(
         prequel = 0,
         sequel = 0,
         weeklyAiringDay = 0,
-//        recommendations = emptyList()
+        recommendations = emptyList()
     )
 
     override fun equals(other: Any?): Boolean = aniListId == (other as? AnimeData)?.aniListId

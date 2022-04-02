@@ -8,7 +8,10 @@ import com.singularitycoder.viewmodelstuff2.BaseRepository
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
-import com.singularitycoder.viewmodelstuff2.helpers.network.*
+import com.singularitycoder.viewmodelstuff2.helpers.network.ApiState
+import com.singularitycoder.viewmodelstuff2.helpers.network.LoadingState
+import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
+import com.singularitycoder.viewmodelstuff2.helpers.network.RetrofitAnimeService
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
 import io.reactivex.Single

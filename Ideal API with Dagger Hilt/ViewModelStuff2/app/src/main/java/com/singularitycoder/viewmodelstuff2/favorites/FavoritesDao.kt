@@ -1,30 +1,31 @@
-package com.singularitycoder.viewmodelstuff2.notifications.dao
+package com.singularitycoder.viewmodelstuff2.favorites
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Table
 
 @Dao
-interface NotificationsDao {
+interface FavoritesDao {
 
     // Single Item CRUD ops ------------------------------------------------------------------------------------------------------------------------
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(notification: Notification)
+    suspend fun insert(favorite: Favorite)
 
     @Transaction
-    @Query("SELECT * FROM ${Table.NOTIFICATIONS} WHERE id LIKE :id LIMIT 1")
-    suspend fun getNotificationById(id: String): Notification?
+    @Query("SELECT * FROM ${Table.FAVORITES} WHERE id LIKE :id LIMIT 1")
+    suspend fun getFavoriteById(id: String): Favorite?
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(notification: Notification)
+    suspend fun update(favorite: Favorite)
 
     @Delete
-    suspend fun delete(notification: Notification)
+    suspend fun delete(favorite: Favorite)
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
-    @Query("SELECT * FROM ${Table.NOTIFICATIONS}")
-    suspend fun getAll(): List<Notification>
+    @Query("SELECT * FROM ${Table.FAVORITES}")
+    fun getAll(): LiveData<List<Favorite>>
 
-    @Query("DELETE FROM ${Table.NOTIFICATIONS}")
+    @Query("DELETE FROM ${Table.FAVORITES}")
     suspend fun deleteAll()
 }

@@ -6,6 +6,8 @@ import com.singularitycoder.viewmodelstuff2.more.dao.AboutMeDao
 import com.singularitycoder.viewmodelstuff2.more.repository.MoreRepository
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.repository.HomeRepository
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesDao
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesRepository
 import com.singularitycoder.viewmodelstuff2.notifications.dao.NotificationsDao
 import com.singularitycoder.viewmodelstuff2.notifications.repository.NotificationsRepository
 import com.singularitycoder.viewmodelstuff2.helpers.NotificationUtils
@@ -87,5 +89,11 @@ object RepositoryModule {
             secureRandom = secureRandom,
             notificationUtils = notificationUtils
         )
+    }
+
+    @Singleton
+    @Provides
+    fun injectFavoritesRepository(favoritesDao: FavoritesDao): FavoritesRepository {
+        return FavoritesRepository(dao = favoritesDao)
     }
 }

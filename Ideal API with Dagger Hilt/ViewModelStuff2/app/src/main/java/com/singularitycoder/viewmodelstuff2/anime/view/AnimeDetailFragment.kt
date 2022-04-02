@@ -20,15 +20,20 @@ import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.model.*
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
+import com.singularitycoder.viewmodelstuff2.favorites.Favorite
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesViewModel
 import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
+import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
+import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.security.SecureRandom
 import javax.inject.Inject
 
 
@@ -52,12 +57,18 @@ class AnimeDetailFragment : BaseFragment() {
     @Inject
     lateinit var glide: RequestManager
 
+    @Inject
+    lateinit var secureRandom: SecureRandom
+
+    var favoriteAnime: Favorite? = null
+
     private lateinit var animeId: String
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
     private lateinit var binding: FragmentAnimeDetailBinding
 
     private val animeViewModel: AnimeViewModel by viewModels()
+    private val favoritesViewModel: FavoritesViewModel by viewModels()
 
     /** Non Null Activity and Context **/
     override fun onAttach(context: Context) {
@@ -87,6 +98,7 @@ class AnimeDetailFragment : BaseFragment() {
 
     private fun setUpDefaults() {
         setViewsBasedOnDeviceDimensions()
+        binding.btnLike.isLiked = favoritesViewModel.getAnimeList().value?.any { it.id == favoriteAnime?.id } == true
     }
 
     private fun subscribeToObservers() {
@@ -102,6 +114,15 @@ class AnimeDetailFragment : BaseFragment() {
                     actionBtnText = this.getString(R.string.try_again)
                 )
                 utils.asyncLog(message = "Anime chan: %s", data)
+                favoriteAnime = Favorite(
+                    checkThisOut = checkThisOutList[secureRandom.nextInt(8)],
+                    title = data?.data?.titles?.en?.trimJunk() ?: data?.data?.titles?.rj?.trimJunk(),
+                    desc = data?.data?.descriptions?.en?.trimJunk() ?: data?.data?.descriptions?.jp?.trimJunk(),
+                    score = data?.data?.score ?: 0,
+                    coverImage = data?.data?.coverImage,
+                    date = timeNow,
+                    id = data?.data?.id ?: -1
+                )
                 updateUI(anime = data)
             }
 
@@ -155,12 +176,12 @@ class AnimeDetailFragment : BaseFragment() {
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
                 binding.tvLikeState.text = "Remove"
-                utils.showToast("Liked Heart", nnContext)
+                favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
                 binding.tvLikeState.text = "Add to Favorites"
-                utils.showToast("Unliked Heart", nnContext)
+                favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
         })
 
