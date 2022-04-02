@@ -113,7 +113,7 @@ class AnimeViewModel @Inject constructor(
         formats: Array<AnimeFormats>?,
         status: AnimeStatus?,
         year: Int?,
-        season: AnimeSeason?,
+        seasonPeriod: AnimeSeasonPeriod?,
         genres: Array<String>?,
         nsfw: Boolean
     ) = viewModelScope.launch {
@@ -137,7 +137,7 @@ class AnimeViewModel @Inject constructor(
                 formats = formats,
                 status = status,
                 year = year,
-                season = season,
+                seasonPeriod = seasonPeriod,
                 genres = genres,
                 nsfw = nsfw
             )

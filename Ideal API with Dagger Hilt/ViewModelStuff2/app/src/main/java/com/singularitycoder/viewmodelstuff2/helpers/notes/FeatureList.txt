@@ -8,9 +8,19 @@ Fav Anime App Features
 12. Implement Timber
 13. Custom Views - heart icon, 5 stars
 
+status
+format
+start_date
+end_date
+season_period
+season_year
+episode_duration
+episodes_count
+weekly_airing_day
 
 Later
 Export favorites list to CSV, PDF, plain txt files
+Multiple select contacts to send sms at once
 show fresco image viewer and allow setting wallpaper and downloading image
 0. Logins
 1. Anime Wallpapers

@@ -85,3 +85,9 @@ internal val MIGRATION_2_TO_3 = object : Migration(2, 3) {
         database.execSQL("ALTER TABLE table_anime_data_temporary RENAME TO ${Table.ANIME_DATA}")
     }
 }
+
+internal val MIGRATION_3_TO_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE ${Table.ANIME_DATA} ADD COLUMN weeklyAiringDay INTEGER DEFAULT 0 NOT NULL")
+    }
+}

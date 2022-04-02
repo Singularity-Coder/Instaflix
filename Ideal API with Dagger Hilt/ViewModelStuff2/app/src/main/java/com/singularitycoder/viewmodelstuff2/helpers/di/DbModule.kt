@@ -10,6 +10,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.aboutmedb.AboutMeDatabase
 import com.singularitycoder.viewmodelstuff2.helpers.animedb.AnimeDatabase
 import com.singularitycoder.viewmodelstuff2.helpers.animedb.MIGRATION_1_TO_2
 import com.singularitycoder.viewmodelstuff2.helpers.animedb.MIGRATION_2_TO_3
+import com.singularitycoder.viewmodelstuff2.helpers.animedb.MIGRATION_3_TO_4
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +28,8 @@ object DbModule {
         return Room.databaseBuilder(context, AnimeDatabase::class.java, Db.ANIME)
             .addMigrations(
                 MIGRATION_1_TO_2,
-                MIGRATION_2_TO_3
+                MIGRATION_2_TO_3,
+                MIGRATION_3_TO_4
             )
             .build()
     }

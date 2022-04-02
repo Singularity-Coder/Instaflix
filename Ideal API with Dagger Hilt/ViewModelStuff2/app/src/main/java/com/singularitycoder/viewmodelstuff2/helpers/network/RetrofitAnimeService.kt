@@ -36,7 +36,7 @@ interface RetrofitAnimeService {
         @Query("formats") formats: Array<AnimeFormats>? = null,
         @Query("status") status: AnimeStatus? = null,
         @Query("year") year: Int? = null,
-        @Query("season") season: AnimeSeason? = null,
+        @Query("season") seasonPeriod: AnimeSeasonPeriod? = null,
         @Query("genres") genres: Array<String>? = null,
         @Query("nsfw") nsfw: Boolean
     ): Response<AnimeList>
@@ -85,15 +85,4 @@ interface RetrofitAnimeService {
         @Query("is_dub") isDub: Boolean,
         @Query("locale") locale: String
     )
-}
-
-enum class AnimeResources(val type: Byte) {
-    GENRES(type = 0),
-    LOCALIZATIONS(type = 1)
-}
-
-enum class AnimeSongS(val type: Byte) {
-    OPENING(type = 0),
-    ENDING(type = 1),
-    NONE(type = 2)
 }

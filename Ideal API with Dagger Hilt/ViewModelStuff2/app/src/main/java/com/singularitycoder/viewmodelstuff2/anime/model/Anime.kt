@@ -63,11 +63,13 @@ data class AnimeData(
     @SerializedName("cover_color") var coverColor: String,
     @SerializedName("cover_image") var coverImage: String,
     @SerializedName("banner_image") var bannerImage: String,
+    @SerializedName("weekly_airing_day") var weeklyAiringDay: Int,
     var genres: List<String>,   // This must have a type converter
     var score: Int,
     var id: Int,
     var prequel: Long,
     var sequel: Long,
+//    val recommendations: List<Int>,
     @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
     @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
     @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",
@@ -96,7 +98,9 @@ data class AnimeData(
         score = 0,
         id = 0,
         prequel = 0,
-        sequel = 0
+        sequel = 0,
+        weeklyAiringDay = 0,
+//        recommendations = emptyList()
     )
 
     override fun equals(other: Any?): Boolean = aniListId == (other as? AnimeData)?.aniListId
@@ -150,6 +154,52 @@ data class RandomAnimeListData(
     val version: Int = -1
 )
 
-enum class AnimeFormats
-enum class AnimeStatus
-enum class AnimeSeason
+enum class AnimeResources(val type: Byte) {
+    GENRES(type = 0),
+    LOCALIZATIONS(type = 1)
+}
+
+enum class AnimeSongs(val type: Byte, val text: String) {
+    OPENING(type = 0, text = "Opening"),
+    ENDING(type = 1, text = "Ending"),
+    NONE(type = 2, text = "None")
+}
+
+enum class AnimeFormats(val value: Byte, val text: String) {
+    TV(value = 0, text = "TV"),
+    TV_SHORT(value = 1, text = "TV Short"),
+    MOVIE(value = 2, text = "Movie"),
+    SPECIAL(value = 3, text = "Special"),
+    OVA(value = 4, text = "OVA"),
+    ONA(value = 5, text = "ONA"),
+    MUSIC(value = 6, text = "Music")
+}
+
+enum class AnimeStatus(val value: Byte, val text: String) {
+    FINISHED(value = 0, text = "Finished"),
+    RELEASING(value = 1, text = "Releasing"),
+    NOT_YET_RELEASED(value = 2, text = "Not Yet Released"),
+    CANCELLED(value = 3, text = "Cancelled");
+
+    companion object {
+        fun getText(value: Byte): String? = values().filter { it.value == value }.firstOrNull()?.text
+    }
+}
+
+enum class AnimeSeasonPeriod(val value: Byte, val text: String) {
+    WINTER(value = 0, text = "Winter"),
+    SPRING(value = 1, text = "Spring"),
+    SUMMER(value = 2, text = "Summer"),
+    FALL(value = 3, text = "Fall"),
+    UNKNOWN(value = 4, text = "Unknown")
+}
+
+enum class WeeklyAiringDay(val value: Byte, val text: String) {
+    SUNDAY(value = 0, text = "Sunday"),
+    MONDAY(value = 1, text = "Monday"),
+    TUESDAY(value = 2, text = "Tuesday"),
+    WEDNESDAY(value = 3, text = "Wednesday"),
+    THURSDAY(value = 4, text = "Thursday"),
+    FRIDAY(value = 5, text = "Friday"),
+    SATURDAY(value = 6, text = "Saturday")
+}

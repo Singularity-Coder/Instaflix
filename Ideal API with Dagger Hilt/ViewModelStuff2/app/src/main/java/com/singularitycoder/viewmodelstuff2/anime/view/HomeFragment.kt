@@ -7,11 +7,9 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.BaseFragment
@@ -25,11 +23,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -231,7 +225,7 @@ class HomeFragment : BaseFragment() {
                 formats = null,
                 status = null,
                 year = null,
-                season = null,
+                seasonPeriod = null,
                 genres = null,
                 nsfw = false
             )

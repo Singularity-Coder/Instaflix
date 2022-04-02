@@ -18,6 +18,8 @@ import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.model.Anime
+import com.singularitycoder.viewmodelstuff2.anime.model.AnimeFormats
+import com.singularitycoder.viewmodelstuff2.anime.model.AnimeStatus
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
@@ -197,6 +199,17 @@ class AnimeDetailFragment : BaseFragment() {
             val rating = (anime?.data?.score?.div(10F))?.div(2F) ?: 0F
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
+
+            tvStatus.text = String.format(getString(R.string.anime_detail_status_s), AnimeStatus.valueOf(anime?.data?.status.toString()).text)
+            tvFormat.text = String.format(getString(R.string.anime_detail_format_s), AnimeFormats.valueOf(anime?.data?.format.toString()).text)
+            tvStartDate.text = String.format(getString(R.string.anime_detail_start_date_s), anime?.data?.startDate)
+            tvEndDate.text = String.format(getString(R.string.anime_detail_end_date_s), anime?.data?.endDate)
+            tvSeasonPeriod.text = String.format(getString(R.string.anime_detail_season_period_s), anime?.data?.seasonPeriod)
+            tvSeasonYear.text = String.format(getString(R.string.anime_detail_season_year_s), anime?.data?.seasonYear)
+            tvEpisodeCount.text = String.format(getString(R.string.anime_detail_episode_count_s), anime?.data?.episodesCount)
+            tvEpisodeDuration.text = String.format(getString(R.string.anime_detail_episode_duration_s), anime?.data?.episodeDuration)
+            tvWeeklyAiringDate.text = String.format(getString(R.string.anime_detail_weekly_airing_date_s), anime?.data?.weeklyAiringDay)
+
             anime?.data?.genres?.forEach {
                 val chip = Chip(nnContext).apply {
                     text = it
@@ -206,7 +219,6 @@ class AnimeDetailFragment : BaseFragment() {
                         // call filter api with grid view
                     }
                 }
-
                 binding.chipGroupGenre.addView(chip)
             }
         }

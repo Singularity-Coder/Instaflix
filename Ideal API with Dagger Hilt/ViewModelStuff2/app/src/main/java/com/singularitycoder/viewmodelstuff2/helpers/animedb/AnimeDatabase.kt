@@ -15,7 +15,7 @@ import com.singularitycoder.viewmodelstuff2.notifications.dao.NotificationsDao
         Descriptions::class,
         Notification::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(

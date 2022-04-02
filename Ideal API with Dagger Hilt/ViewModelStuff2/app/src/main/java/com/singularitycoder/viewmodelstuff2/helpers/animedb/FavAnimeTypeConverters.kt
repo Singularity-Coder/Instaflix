@@ -4,6 +4,9 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.singularitycoder.viewmodelstuff2.anime.model.Titles
+import com.singularitycoder.viewmodelstuff2.helpers.aboutmedb.ListConverters
+import com.singularitycoder.viewmodelstuff2.helpers.aboutmedb.ObjectConverters
+import com.singularitycoder.viewmodelstuff2.more.model.Data
 import java.lang.reflect.Type
 
 // Type converters must not contain any arguments in the constructor
@@ -43,3 +46,6 @@ class AnimeTitleConverter {
         return gson.fromJson(string, Titles::class.java)
     }
 }
+
+//class recommendationsConverter: ListConverters<String>()
+
