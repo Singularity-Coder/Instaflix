@@ -17,11 +17,10 @@ import com.like.OnLikeListener
 import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
-import com.singularitycoder.viewmodelstuff2.anime.model.Anime
-import com.singularitycoder.viewmodelstuff2.anime.model.AnimeFormats
-import com.singularitycoder.viewmodelstuff2.anime.model.AnimeStatus
+import com.singularitycoder.viewmodelstuff2.anime.model.*
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
+import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
@@ -200,15 +199,42 @@ class AnimeDetailFragment : BaseFragment() {
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
 
-            tvStatus.text = String.format(getString(R.string.anime_detail_status_s), AnimeStatus.valueOf(anime?.data?.status.toString()).text)
-            tvFormat.text = String.format(getString(R.string.anime_detail_format_s), AnimeFormats.valueOf(anime?.data?.format.toString()).text)
-            tvStartDate.text = String.format(getString(R.string.anime_detail_start_date_s), anime?.data?.startDate)
-            tvEndDate.text = String.format(getString(R.string.anime_detail_end_date_s), anime?.data?.endDate)
-            tvSeasonPeriod.text = String.format(getString(R.string.anime_detail_season_period_s), anime?.data?.seasonPeriod)
-            tvSeasonYear.text = String.format(getString(R.string.anime_detail_season_year_s), anime?.data?.seasonYear)
-            tvEpisodeCount.text = String.format(getString(R.string.anime_detail_episode_count_s), anime?.data?.episodesCount)
-            tvEpisodeDuration.text = String.format(getString(R.string.anime_detail_episode_duration_s), anime?.data?.episodeDuration)
-            tvWeeklyAiringDate.text = String.format(getString(R.string.anime_detail_weekly_airing_date_s), anime?.data?.weeklyAiringDay)
+            tvStatus.text = String.format(
+                getString(R.string.anime_detail_status_s),
+                AnimeStatus.getText(anime?.data?.status?.toByte()) ?: getString(R.string.na)
+            )
+            tvFormat.text = String.format(
+                getString(R.string.anime_detail_format_s),
+                AnimeFormats.getText(anime?.data?.format?.toByte()) ?: getString(R.string.na)
+            )
+            tvStartDate.text = String.format(
+                getString(R.string.anime_detail_start_date_s),
+                anime?.data?.startDate?.utcTimeTo(DateType.dd_MMM_yyyy_hh_mm_a)
+            )
+            tvEndDate.text = String.format(
+                getString(R.string.anime_detail_end_date_s),
+                anime?.data?.endDate?.utcTimeTo(DateType.dd_MMM_yyyy_hh_mm_a)
+            )
+            tvSeasonPeriod.text = String.format(
+                getString(R.string.anime_detail_season_period_s),
+                AnimeSeasonPeriod.getText(anime?.data?.seasonPeriod?.toByte()) ?: getString(R.string.na)
+            )
+            tvSeasonYear.text = String.format(
+                getString(R.string.anime_detail_season_year_s),
+                anime?.data?.seasonYear
+            )
+            tvEpisodeCount.text = String.format(
+                getString(R.string.anime_detail_episode_count_s),
+                anime?.data?.episodesCount
+            )
+            tvEpisodeDuration.text = String.format(
+                getString(R.string.anime_detail_episode_duration_s),
+                anime?.data?.episodeDuration.toString().plus(" minutes")
+            )
+            tvWeeklyAiringDate.text = String.format(
+                getString(R.string.anime_detail_weekly_airing_date_s),
+                AnimeWeeklyAiringDay.getText(anime?.data?.weeklyAiringDay?.toByte()) ?: getString(R.string.na)
+            )
 
             anime?.data?.genres?.forEach {
                 val chip = Chip(nnContext).apply {

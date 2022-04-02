@@ -9,10 +9,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -35,6 +39,7 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -236,3 +241,21 @@ fun Context.getContacts(): List<Contact> {
 }
 
 fun Context?.toast(message: String, duration: Int = Toast.LENGTH_LONG) = Toast.makeText(this, message, duration).show()
+
+fun String.parseHtml(): Spanned = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+fun String.toBold(): Unit = SpannableString(this).setSpan(StyleSpan(Typeface.BOLD), 0, this.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+// https://stackoverflow.com/questions/15730298/java-format-yyyy-mm-ddthhmmss-sssz-to-yyyy-mm-dd-hhmmss
+fun String?.utcTimeTo(type: DateType): String? {
+    this ?: return this
+    var outputDate = ""
+    try {
+        val inputFormat = SimpleDateFormat(DateType.yyyy_MM_dd_T_HH_mm_ss_SS_Z.value, Locale.getDefault())
+        val outputFormat = SimpleDateFormat(type.value, Locale.getDefault())
+        val date = inputFormat.parse(this)
+        outputDate = outputFormat.format(date!!)
+    } catch (e: Exception) {
+    }
+    return outputDate
+}

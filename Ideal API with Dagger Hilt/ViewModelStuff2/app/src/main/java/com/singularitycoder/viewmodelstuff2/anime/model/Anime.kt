@@ -162,7 +162,11 @@ enum class AnimeResources(val type: Byte) {
 enum class AnimeSongs(val type: Byte, val text: String) {
     OPENING(type = 0, text = "Opening"),
     ENDING(type = 1, text = "Ending"),
-    NONE(type = 2, text = "None")
+    NONE(type = 2, text = "None");
+
+    companion object {
+        fun getText(type: Byte?): String? = values().filter { it.type == type }.firstOrNull()?.text
+    }
 }
 
 enum class AnimeFormats(val value: Byte, val text: String) {
@@ -172,7 +176,11 @@ enum class AnimeFormats(val value: Byte, val text: String) {
     SPECIAL(value = 3, text = "Special"),
     OVA(value = 4, text = "OVA"),
     ONA(value = 5, text = "ONA"),
-    MUSIC(value = 6, text = "Music")
+    MUSIC(value = 6, text = "Music");
+
+    companion object {
+        fun getText(value: Byte?): String? = values().filter { it.value == value }.firstOrNull()?.text
+    }
 }
 
 enum class AnimeStatus(val value: Byte, val text: String) {
@@ -182,7 +190,7 @@ enum class AnimeStatus(val value: Byte, val text: String) {
     CANCELLED(value = 3, text = "Cancelled");
 
     companion object {
-        fun getText(value: Byte): String? = values().filter { it.value == value }.firstOrNull()?.text
+        fun getText(value: Byte?): String? = values().filter { it.value == value }.firstOrNull()?.text
     }
 }
 
@@ -191,15 +199,23 @@ enum class AnimeSeasonPeriod(val value: Byte, val text: String) {
     SPRING(value = 1, text = "Spring"),
     SUMMER(value = 2, text = "Summer"),
     FALL(value = 3, text = "Fall"),
-    UNKNOWN(value = 4, text = "Unknown")
+    UNKNOWN(value = 4, text = "Unknown");
+
+    companion object {
+        fun getText(value: Byte?): String? = values().filter { it.value == value }.firstOrNull()?.text
+    }
 }
 
-enum class WeeklyAiringDay(val value: Byte, val text: String) {
+enum class AnimeWeeklyAiringDay(val value: Byte, val text: String) {
     SUNDAY(value = 0, text = "Sunday"),
     MONDAY(value = 1, text = "Monday"),
     TUESDAY(value = 2, text = "Tuesday"),
     WEDNESDAY(value = 3, text = "Wednesday"),
     THURSDAY(value = 4, text = "Thursday"),
     FRIDAY(value = 5, text = "Friday"),
-    SATURDAY(value = 6, text = "Saturday")
+    SATURDAY(value = 6, text = "Saturday");
+
+    companion object {
+        fun getText(value: Byte?): String? = values().filter { it.value == value }.firstOrNull()?.text
+    }
 }

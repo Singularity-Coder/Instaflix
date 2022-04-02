@@ -283,7 +283,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="📣   Status"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -291,10 +291,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="📀   Format"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -302,10 +302,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="🐣   Start Date"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -313,10 +313,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="⚰   End Date"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -324,10 +324,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="⏳   Season Period"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -335,10 +335,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="🗓   Season Year"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -346,10 +346,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="#️⃣   Episode Count"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -357,10 +357,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="⏱   Episode Duration"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -368,10 +368,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="📅   Weekly Airing Date"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/title_color" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
