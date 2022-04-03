@@ -52,7 +52,7 @@ class FavoritesFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
-        favoritesViewModel.getAnimeList()
+        favoritesViewModel.getFavoritesList()
     }
 
     private fun setUpRecyclerView() {
@@ -64,7 +64,7 @@ class FavoritesFragment : BaseFragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun subscribeToObservers() {
-        favoritesViewModel.getAnimeList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
+        favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
             it ?: return@observe
             favoritesAdapter.favoritesList = it
             binding.rvFavorites.adapter?.notifyDataSetChanged()

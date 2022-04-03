@@ -38,6 +38,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
@@ -105,7 +106,6 @@ class AnimeDetailFragment : BaseFragment() {
 
     private fun setUpDefaults() {
         setViewsBasedOnDeviceDimensions()
-        binding.btnLike.isLiked = favoritesViewModel.getAnimeList().value?.any { it.id == favoriteAnime?.id } == true
         initTextToSpeech()
     }
 
@@ -144,6 +144,11 @@ class AnimeDetailFragment : BaseFragment() {
                     LoadingState.HIDE -> Unit
                 }
             }
+        }
+
+        favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
+            it ?: return@observe
+            binding.btnLike.isLiked = it.any { it.id == favoriteAnime?.id } == true
         }
     }
 
@@ -184,12 +189,12 @@ class AnimeDetailFragment : BaseFragment() {
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
                 binding.tvLikeState.text = "Remove"
-                favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
+                favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
                 binding.tvLikeState.text = "Add to Favorites"
-                favoritesViewModel.addToFavorites(favoriteAnime ?: return)
+                favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }
         })
 
@@ -211,6 +216,7 @@ class AnimeDetailFragment : BaseFragment() {
                 animeViewModel.loadAnime(animeId)
             }
         )
+        favoritesViewModel.getFavoritesList()
     }
 
     private fun updateUI(anime: Anime?) {
@@ -291,9 +297,9 @@ class AnimeDetailFragment : BaseFragment() {
     private fun initTextToSpeech() {
         textToSpeech = TextToSpeech(context) { status: Int ->
             if (status == TextToSpeech.SUCCESS) {
-                val result: Int? = textToSpeech?.setLanguage(Locale.ROOT)
+                val result: Int? = textToSpeech?.setLanguage(Locale.getDefault())
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    utils.showToast("Language not supported!", nnContext)
+                    Timber.w("Language not supported for Text-to-Speech!")
                 }
             }
         }
