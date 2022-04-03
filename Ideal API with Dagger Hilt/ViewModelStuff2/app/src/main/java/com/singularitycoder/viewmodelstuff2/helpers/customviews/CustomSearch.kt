@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.view.*
 import android.view.View.OnFocusChangeListener
 import android.widget.EditText
+import android.widget.ImageButton
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import com.singularitycoder.viewmodelstuff2.R
@@ -87,6 +89,8 @@ class CustomSearch :
     }
 
     fun getSearchView(): EditText = binding.etSearch
+
+    fun getVoiceSearchView(): ImageButton = binding.ibVoiceSearch
 
     // https://github.com/mitchtabian/CodingWithMitchStore
     // https://www.youtube.com/watch?v=xHCsL5QOSv4

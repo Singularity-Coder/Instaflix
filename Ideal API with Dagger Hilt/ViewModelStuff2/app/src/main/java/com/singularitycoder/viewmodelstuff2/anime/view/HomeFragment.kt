@@ -1,12 +1,21 @@
 package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +34,9 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -55,6 +66,15 @@ class HomeFragment : BaseFragment() {
     private val duplicateAnimeSearchDataList = ArrayList<AnimeData>()
 
     private val animeViewModel: AnimeViewModel by viewModels()
+
+    // https://stackoverflow.com/questions/62671106/onactivityresult-method-is-deprecated-what-is-the-alternative
+    private val speechToTextResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
+        result ?: return@registerForActivityResult
+        if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data: Intent? = result.data
+        val text = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+        binding.customSearch.getSearchView().setText(text?.firstOrNull())
+    }
 
     /** NonNull Context & Activity **/
     override fun onAttach(context: Context) {
@@ -186,6 +206,16 @@ class HomeFragment : BaseFragment() {
             } else {
                 loadFilteredAnimeList(title = it.toString())
             }
+        }
+
+        binding.customSearch.getVoiceSearchView().onSafeClick {
+            // Start Speech to Text
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+                putExtra(RecognizerIntent.EXTRA_PROMPT, "Start Speaking Now!")
+            }
+            speechToTextResult.launch(intent)
         }
 
         homeAdapter.setSpotlightViewClickListener { animeId: String ->

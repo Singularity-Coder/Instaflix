@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val mainActivityPermissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+    private val mainActivityPermissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: MutableMap<String, Boolean>? ->
+        permissions ?: return@registerForActivityResult
         permissions.entries.forEach { it: Map.Entry<String, @JvmSuppressWildcards Boolean> ->
             Timber.i("Permission status: ", "${it.key} = ${it.value}")
             val permission = it.key

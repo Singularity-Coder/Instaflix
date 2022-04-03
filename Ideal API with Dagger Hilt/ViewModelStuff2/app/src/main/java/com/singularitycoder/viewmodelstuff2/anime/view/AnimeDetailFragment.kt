@@ -2,6 +2,8 @@ package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +34,12 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import java.security.SecureRandom
+import java.util.*
 import javax.inject.Inject
 
 
@@ -61,6 +67,7 @@ class AnimeDetailFragment : BaseFragment() {
     lateinit var secureRandom: SecureRandom
 
     var favoriteAnime: Favorite? = null
+    var textToSpeech: TextToSpeech? = null
 
     private lateinit var animeId: String
     private lateinit var nnContext: Context
@@ -99,6 +106,7 @@ class AnimeDetailFragment : BaseFragment() {
     private fun setUpDefaults() {
         setViewsBasedOnDeviceDimensions()
         binding.btnLike.isLiked = favoritesViewModel.getAnimeList().value?.any { it.id == favoriteAnime?.id } == true
+        initTextToSpeech()
     }
 
     private fun subscribeToObservers() {
@@ -164,7 +172,7 @@ class AnimeDetailFragment : BaseFragment() {
         }
 
         binding.tvReadDesc.onSafeClick {
-
+            startTextToSpeech()
         }
 
         binding.tvLikeState.onSafeClick {
@@ -278,5 +286,39 @@ class AnimeDetailFragment : BaseFragment() {
             height = deviceHeight() / 4
         }
         binding.ivBannerImage.layoutParams.height = (deviceHeight() / 3.5).toInt()
+    }
+
+    private fun initTextToSpeech() {
+        textToSpeech = TextToSpeech(context) { status: Int ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result: Int? = textToSpeech?.setLanguage(Locale.ROOT)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    utils.showToast("Language not supported!", nnContext)
+                }
+            }
+        }
+        textToSpeech?.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String) {
+                CoroutineScope(Main).launch { utils.showToast("Started reading $utteranceId", nnContext) }
+            }
+
+            override fun onDone(utteranceId: String) {
+                CoroutineScope(Main).launch { utils.showToast("Finished reading $utteranceId", nnContext) }
+            }
+
+            override fun onError(utteranceId: String) {
+                CoroutineScope(Main).launch { utils.showToast("Error reading $utteranceId", nnContext) }
+            }
+        })
+    }
+
+    private fun startTextToSpeech() {
+        val utteranceId = getString(R.string.description)
+        val params = Bundle().apply { putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId) }
+        val textToSpeak = binding.tvDesc.text
+        textToSpeech?.apply {
+            speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, params, utteranceId)
+            playSilentUtterance(1000, TextToSpeech.QUEUE_ADD, utteranceId) // Stay silent for 1000 ms
+        }
     }
 }

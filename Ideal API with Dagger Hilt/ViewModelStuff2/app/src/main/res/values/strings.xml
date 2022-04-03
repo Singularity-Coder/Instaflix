@@ -9,6 +9,7 @@
     <string name="nothing_to_show">Nothing to show</string>
     <string name="na">Not Available</string>
     <string name="no_desc_check_later">This anime doesn\'t seem to have any description right now. Check again later!</string>
+    <string name="description">Description</string>
 
     <string name="anime_detail_status_s"><strong>📣&#160;&#160;&#160;Status:</strong> %s</string>
     <string name="anime_detail_format_s"><strong>📀&#160;&#160;&#160;Format:</strong>  %s</string>

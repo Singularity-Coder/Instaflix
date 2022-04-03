@@ -59,6 +59,7 @@ val mainActivityPermissions = arrayOf(
     Manifest.permission.WRITE_CONTACTS,
     Manifest.permission.READ_EXTERNAL_STORAGE,
     Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    Manifest.permission.RECORD_AUDIO
 )
 
 enum class DateType(val value: String) {

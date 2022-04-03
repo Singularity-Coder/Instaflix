@@ -2,10 +2,7 @@ package com.singularitycoder.viewmodelstuff2.helpers.extensions
 
 import android.Manifest
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.ContentUris
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.BitmapFactory
@@ -14,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.speech.RecognizerIntent
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
@@ -22,6 +20,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RawRes
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import com.google.gson.Gson
@@ -43,9 +42,9 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 /**
  * https://stackoverflow.com/questions/14389349/android-get-current-locale-not-default
@@ -246,8 +245,10 @@ fun Context.getContacts(): List<Contact> {
 
 fun Context?.toast(message: String, duration: Int = Toast.LENGTH_LONG) = Toast.makeText(this, message, duration).show()
 
+// not working
 fun String.parseHtml(): Spanned = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
+// not working
 fun String.toBold(): Unit = SpannableString(this).setSpan(StyleSpan(Typeface.BOLD), 0, this.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 // https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats
@@ -277,3 +278,5 @@ fun String?.utcTimeTo(type: DateType): String? {
         }
     }
 }
+
+
