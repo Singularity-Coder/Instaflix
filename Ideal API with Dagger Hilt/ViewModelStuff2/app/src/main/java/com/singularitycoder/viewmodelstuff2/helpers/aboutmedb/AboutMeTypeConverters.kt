@@ -7,23 +7,22 @@ import com.singularitycoder.viewmodelstuff2.more.model.*
 
 // https://stackoverflow.com/questions/46585075/android-how-to-make-type-converters-for-room-generic-for-all-list-of-objects
 abstract class ListConverters<T> {
-    val gson: Gson = Gson()
+    private val gson = Gson()
+    private val type = object : TypeToken<List<T>>() {}.type
 
     @TypeConverter
     fun mapListToString(value: List<T>): String {
-        val type = object : TypeToken<List<T>>() {}.type
         return gson.toJson(value, type)
     }
 
     @TypeConverter
     fun mapStringToList(value: String): List<T> {
-        val type = object : TypeToken<List<T>>() {}.type
         return gson.fromJson(value, type)
     }
 }
 
 abstract class ObjectConverters<T> {
-    val gson: Gson = Gson()
+    private val gson: Gson = Gson()
 
     @TypeConverter
     fun objectToString(obj: T?): String? {

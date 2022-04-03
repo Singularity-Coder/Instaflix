@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.singularitycoder.viewmodelstuff2.more.dao.AboutMeDao
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesDao
 import com.singularitycoder.viewmodelstuff2.notifications.dao.NotificationsDao
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Db
 import com.singularitycoder.viewmodelstuff2.helpers.aboutmedb.AboutMeDatabase
@@ -51,4 +52,8 @@ object DbModule {
     @Singleton
     @Provides
     fun injectNotificationsDao(db: AnimeDatabase): NotificationsDao = db.notificationsDao()
+
+    @Singleton
+    @Provides
+    fun injectFavoritesDao(db: AnimeDatabase): FavoritesDao = db.favoritesDao()
 }

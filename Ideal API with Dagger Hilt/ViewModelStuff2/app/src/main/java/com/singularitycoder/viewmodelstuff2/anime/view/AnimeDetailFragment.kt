@@ -230,11 +230,11 @@ class AnimeDetailFragment : BaseFragment() {
             )
             tvStartDate.text = String.format(
                 getString(R.string.anime_detail_start_date_s),
-                anime?.data?.startDate?.utcTimeTo(DateType.dd_MMM_yyyy_hh_mm_a)
+                anime?.data?.startDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
             )
             tvEndDate.text = String.format(
                 getString(R.string.anime_detail_end_date_s),
-                anime?.data?.endDate?.utcTimeTo(DateType.dd_MMM_yyyy_hh_mm_a)
+                anime?.data?.endDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
             )
             tvSeasonPeriod.text = String.format(
                 getString(R.string.anime_detail_season_period_s),
@@ -242,15 +242,15 @@ class AnimeDetailFragment : BaseFragment() {
             )
             tvSeasonYear.text = String.format(
                 getString(R.string.anime_detail_season_year_s),
-                anime?.data?.seasonYear
+                anime?.data?.seasonYear ?: getString(R.string.na)
             )
             tvEpisodeCount.text = String.format(
                 getString(R.string.anime_detail_episode_count_s),
-                anime?.data?.episodesCount
+                anime?.data?.episodesCount ?: getString(R.string.na)
             )
             tvEpisodeDuration.text = String.format(
                 getString(R.string.anime_detail_episode_duration_s),
-                anime?.data?.episodeDuration.toString().plus(" minutes")
+                anime?.data?.episodeDuration?.toString().plus(" minutes")
             )
             tvWeeklyAiringDate.text = String.format(
                 getString(R.string.anime_detail_weekly_airing_date_s),

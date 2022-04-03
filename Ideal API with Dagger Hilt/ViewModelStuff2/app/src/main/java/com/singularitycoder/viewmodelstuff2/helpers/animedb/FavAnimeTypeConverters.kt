@@ -15,8 +15,7 @@ import java.lang.reflect.Type
 
 class AnimeGeneresListConverter {
     private val type: Type = object : TypeToken<List<String>?>() {}.type
-//    @Inject lateinit var gson: Gson   // Not injecting
-    val gson: Gson = Gson()
+    private val gson = Gson()
 
     @TypeConverter
     fun listToString(list: List<String>?): String? {
@@ -32,7 +31,7 @@ class AnimeGeneresListConverter {
 }
 
 class AnimeTitleConverter {
-    val gson: Gson = Gson()
+    private val gson = Gson()
 
     @TypeConverter
     fun objectToString(obj: Titles?): String? {
@@ -47,5 +46,19 @@ class AnimeTitleConverter {
     }
 }
 
-class RecommendationsListConverter: ListConverters<String>()
+class RecommendationsListConverter {
+    private val type: Type = object : TypeToken<List<Int>?>() {}.type
+    private val gson = Gson()
 
+    @TypeConverter
+    fun listToString(list: List<Int>?): String? {
+        list ?: return null
+        return gson.toJson(list, type)
+    }
+
+    @TypeConverter
+    fun stringToList(string: String?): List<Int>? {
+        string ?: return null
+        return gson.fromJson(string, type)
+    }
+}

@@ -39,6 +39,10 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -246,16 +250,30 @@ fun String.parseHtml(): Spanned = HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML
 
 fun String.toBold(): Unit = SpannableString(this).setSpan(StyleSpan(Typeface.BOLD), 0, this.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
+// https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats
+// https://stackoverflow.com/questions/10725246/java-android-convert-a-gmt-time-string-to-local-time
 // https://stackoverflow.com/questions/15730298/java-format-yyyy-mm-ddthhmmss-sssz-to-yyyy-mm-dd-hhmmss
+// https://stackoverflow.com/questions/6543174/how-can-i-parse-utc-date-time-string-into-something-more-readable
+/** Converts an ISO-8601 formatted UTC timestamp **/
 fun String?.utcTimeTo(type: DateType): String? {
     this ?: return this
-    var outputDate = ""
-    try {
-        val inputFormat = SimpleDateFormat(DateType.yyyy_MM_dd_T_HH_mm_ss_SS_Z.value, Locale.getDefault())
-        val outputFormat = SimpleDateFormat(type.value, Locale.getDefault())
-        val date = inputFormat.parse(this)
-        outputDate = outputFormat.format(date!!)
-    } catch (e: Exception) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val format1 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
+        val format2 = DateTimeFormatter.ofPattern(type.value)
+        return Instant.parse(this)
+            .atZone(ZoneId.of("UTC"))
+            .format(format2)
+    } else {
+        return try {
+            val inputFormat = SimpleDateFormat(DateType.yyyy_MM_dd_T_HH_mm_ss_SS_Z.value, Locale.getDefault()).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
+            val outputFormat = SimpleDateFormat(type.value, Locale.getDefault())
+            val date = inputFormat.parse(this)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            Timber.i(e)
+            this
+        }
     }
-    return outputDate
 }

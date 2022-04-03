@@ -108,5 +108,21 @@ val animeQuoteList = listOf(
             And when they lie down, they would want to sleep.
         """.trimIndentsAndNewLines(),
         author = "Peerless Dad"
+    ),
+    AnimeQuote(
+        quote = "Luck is also a skill.",
+        author = "Escort Warrior"
+    ),
+    AnimeQuote(
+        quote = "The farther you look, the wider the world is.",
+        author = "Escort Warrior"
+    ),
+    AnimeQuote(
+        quote = """
+            There is only a slight difference between poison and medicine!
+            Even if a medicine good for your health is taken too much, it becomes poison.
+            And if you take the right amount of poison that is bad for health, it becomes a medicine!
+        """.trimIndentsAndNewLines(),
+        author = "Escort Warrior"
     )
 )

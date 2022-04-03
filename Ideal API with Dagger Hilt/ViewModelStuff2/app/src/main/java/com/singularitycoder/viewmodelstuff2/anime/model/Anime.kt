@@ -69,7 +69,7 @@ data class AnimeData(
     var id: Int,
     var prequel: Long,
     var sequel: Long,
-    val recommendations: List<Int>,
+    var recommendations: List<Int>,
     @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
     @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
     @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",

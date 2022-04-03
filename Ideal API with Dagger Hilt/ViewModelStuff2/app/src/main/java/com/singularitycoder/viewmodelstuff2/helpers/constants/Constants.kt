@@ -62,6 +62,7 @@ val mainActivityPermissions = arrayOf(
 )
 
 enum class DateType(val value: String) {
+    dd_MMM_yyyy(value = "dd MMM yyyy"),
     dd_MMM_yyyy_h_mm_a(value = "dd-MMM-yyyy h:mm a"),
     dd_MMM_yyyy_hh_mm_a(value = "dd MMM yyyy, hh:mm a"),
     dd_MMM_yyyy_hh_mm_ss_a(value = "dd MMM yyyy, hh:mm:ss a"),
