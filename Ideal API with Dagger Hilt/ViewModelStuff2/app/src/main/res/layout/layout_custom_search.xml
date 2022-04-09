@@ -82,7 +82,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@null"
-                    android:src="@drawable/ic_baseline_mic_24"
+                    android:src="@drawable/ic_round_keyboard_voice_24"
                     app:tint="@color/purple_500" />
             </com.google.android.material.card.MaterialCardView>
 
