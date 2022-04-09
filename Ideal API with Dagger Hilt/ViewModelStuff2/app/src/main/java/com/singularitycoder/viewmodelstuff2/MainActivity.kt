@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun TextView.showOfflineStrip() {
         this.apply {
-            text = getString(R.string.offline).toUpCase()
+            text = getString(R.string.offline)
             visible()
             setBackgroundColor(color(android.R.color.holo_red_dark))
             setTextColor(color(R.color.white))
@@ -313,8 +313,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun TextView.showOnlineStrip() {
         this.apply {
-            if (text == getString(R.string.online).toUpCase()) return@apply
-            text = getString(R.string.online).toUpCase()
+            text = getString(R.string.online)
             visible()
             setBackgroundColor(color(android.R.color.holo_green_dark))
             setTextColor(color(R.color.white))

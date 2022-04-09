@@ -154,7 +154,7 @@ fun EditText?.showKeyboard() {
 
 fun Context.getRawPathOf(@RawRes video: Int) = "android.resource://$packageName/$video"
 
-fun Context.getHtmlFormattedQuote(quote: String, author: String): String {
+fun Context.getHtmlFormattedQuote(quote: String, author: String): Spanned {
     val html = """
                 <font color=${color(R.color.white)}>
                 <body>${quote}</body>
@@ -162,7 +162,7 @@ fun Context.getHtmlFormattedQuote(quote: String, author: String): String {
                 <br />
                 <small>${author}</small>
                 """.trimIndentsAndNewLines()
-    return HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+    return HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun Long.toIntuitiveDateTime(): String {
@@ -257,7 +257,7 @@ fun String.toBold(): Unit = SpannableString(this).setSpan(StyleSpan(Typeface.BOL
 // https://stackoverflow.com/questions/6543174/how-can-i-parse-utc-date-time-string-into-something-more-readable
 /** Converts an ISO-8601 formatted UTC timestamp **/
 fun String?.utcTimeTo(type: DateType): String? {
-    this ?: return this
+    if (this.isNullOrBlankOrNaOrNullString()) return this
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val format1 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
         val format2 = DateTimeFormatter.ofPattern(type.value)
@@ -277,6 +277,12 @@ fun String?.utcTimeTo(type: DateType): String? {
             this
         }
     }
+}
+
+fun String.toYoutubeThumbnailUrl(): String {
+    val imageUrl = "https://img.youtube.com/vi/$this/0.jpg"
+    println("Image url: $imageUrl")
+    return imageUrl
 }
 
 

@@ -24,7 +24,10 @@ interface FavoritesDao {
     // ---------------------------------------------------------------------------------------------------------------------------------------------
 
     @Query("SELECT * FROM ${Table.FAVORITES}")
-    fun getAll(): LiveData<List<Favorite>>
+    fun getAllLiveList(): LiveData<List<Favorite>>
+
+    @Query("SELECT * FROM ${Table.FAVORITES}")
+    fun getAll(): List<Favorite>
 
     @Query("DELETE FROM ${Table.FAVORITES}")
     suspend fun deleteAll()

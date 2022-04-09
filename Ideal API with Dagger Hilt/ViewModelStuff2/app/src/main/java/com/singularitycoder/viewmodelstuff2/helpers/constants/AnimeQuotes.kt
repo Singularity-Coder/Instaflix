@@ -124,5 +124,10 @@ val animeQuoteList = listOf(
             And if you take the right amount of poison that is bad for health, it becomes a medicine!
         """.trimIndentsAndNewLines(),
         author = "Escort Warrior"
+    ),
+    AnimeQuote(
+        quote = "Absolute power indeed trumps over any ploy!",
+        author = "Magic Emperor"
     )
+
 )

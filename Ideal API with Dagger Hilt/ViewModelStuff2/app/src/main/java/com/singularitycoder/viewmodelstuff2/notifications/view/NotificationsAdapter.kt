@@ -9,6 +9,9 @@ import com.bumptech.glide.RequestManager
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutNotificationAnimeItemBinding
+import com.singularitycoder.viewmodelstuff2.databinding.ListItemHeaderBinding
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesAdapter
+import com.singularitycoder.viewmodelstuff2.favorites.FavoritesItemType
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.notifications.model.Notification
 import javax.inject.Inject
@@ -36,21 +39,38 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = LayoutNotificationAnimeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NotificationViewHolder(itemBinding = itemBinding)
+        val itemBindingHeader = ListItemHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return when (viewType) {
+            FavoritesItemType.HEADER.ordinal -> HeaderViewHolder(itemBindingHeader)
+            else -> NotificationViewHolder(itemBinding)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as NotificationViewHolder).setData(notificationsList[position])
+        when (holder) {
+            is NotificationViewHolder -> holder.setData(notificationsList[position])
+            else -> holder
+        }
     }
 
     override fun getItemCount(): Int = notificationsList.size
 
     // Position gets messed up without itemViewType
     // https://stackoverflow.com/questions/44932450/wrong-order-of-restored-items-in-recyclerview
-    override fun getItemViewType(position: Int): Int = position
+    override fun getItemViewType(position: Int): Int = when {
+        position == 0 -> FavoritesItemType.HEADER.ordinal
+        else -> FavoritesItemType.STANDARD.ordinal
+    }
 
     fun setNotificationViewClickListener(listener: (animeId: String) -> Unit) {
         notificationClickListener = listener
+    }
+
+    inner class HeaderViewHolder(itemBinding: ListItemHeaderBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+        init {
+            itemBinding.tvHeader.text = "🔔  Notifications"
+        }
     }
 
     inner class NotificationViewHolder(val itemBinding: LayoutNotificationAnimeItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
@@ -129,4 +149,9 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
             }
         }
     }
+}
+
+enum class FavoritesItemType {
+    HEADER,
+    STANDARD
 }

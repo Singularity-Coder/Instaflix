@@ -13,13 +13,13 @@ import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentMoreBinding
+import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Gender
 import com.singularitycoder.viewmodelstuff2.helpers.constants.animeQuoteList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
-
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -107,7 +107,9 @@ class MoreFragment : BaseFragment() {
             }
         }
 
-        binding.cardAbout.onSafeClick { about() }
+        binding.cardAbout.onSafeClick {
+            nnActivity.showScreen(fragment = AboutMeFragment.newInstance(), tag = FragmentsTags.ABOUT.value, isAdd = true)
+        }
 
         // https://stackoverflow.com/questions/36143802/how-to-detect-the-position-of-the-scroll-nestedscrollview-android-at-the-bottom
         binding.nestedScrollMore.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
@@ -125,6 +127,4 @@ class MoreFragment : BaseFragment() {
             }
         })
     }
-
-    fun about() = Unit
 }

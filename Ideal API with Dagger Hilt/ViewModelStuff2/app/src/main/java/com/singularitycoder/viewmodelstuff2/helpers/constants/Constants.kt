@@ -5,6 +5,8 @@ import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
 import com.singularitycoder.viewmodelstuff2.helpers.ApIAuthToken
 import com.singularitycoder.viewmodelstuff2.helpers.JniDefinitions
+import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
+import com.singularitycoder.viewmodelstuff2.more.view.AboutMeFragment
 
 object AuthToken {
     val ANI_API = JniDefinitions.getApIAuthToken(apiType = ApIAuthToken.ANI_API.value)
@@ -80,6 +82,7 @@ enum class Tab(val tag: String) {
 
 enum class FragmentsTags(val value: String) {
     ANIME_DETAIL(AnimeDetailFragment::class.java.simpleName),
+    ABOUT(AboutMeFragment::class.java.simpleName),
 }
 
 enum class Language(value: String) {
@@ -105,6 +108,52 @@ enum class Gender(val value: String) {
     MALE("\uD83D\uDC66  Hi Weeb"),
     FEMALE("\uD83D\uDC69  Hi Weeb")
 }
+
+val animeFightsList = listOf(
+    YoutubeVideo(title = "Attack on Titan - Levi vs Kenny Squad - (Full Fight) HD", videoId = "CeLvx_1FBdk"),
+    YoutubeVideo(title = "Attack on Titan - Levi vs. The Beast Titan", videoId = "ceQ4nhyuX2k"),
+    YoutubeVideo(title = "Attack On Titan - Floch vs ALL (60 fps)", videoId = "hzp1AeiEIMg"),
+    YoutubeVideo(title = "Attack On Titan - The true form of Eren's rumbling titan that destroyed world civilization", videoId = "1-WVczhtXTw"),
+    YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "IOkz2ld1-Kk"),
+    YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki | (Full Fight) (1080p)", videoId = "CZJBkQQTiCo")
+)
+
+val animeMusicList = listOf(
+    YoutubeVideo(title = "Ost Anne Happy - Michino Timothy Kimino Kimochi", videoId = "815kbvmNWNM"),
+    YoutubeVideo(title = "Aimer - Am02:00", videoId = "-Hn6O-WvD7o"),
+    YoutubeVideo(title = "Aimer - Even Heaven", videoId = "BOGoJYZWmuk"),
+    YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0")
+)
+
+val otherMusicList = listOf(
+    YoutubeVideo(title = "Pandit Jasraj - Vraje Vasantam", videoId = "ItAnTZjopAM"),
+    YoutubeVideo(title = "James Brown - I Got The Feelin' (Extended Version)", videoId = "Cda0twzCMC4"),
+    YoutubeVideo(title = "James Brown - People Get Up And Drive Your Funky Soul (Remix)", videoId = "Nl-RVIdTUVI"),
+    YoutubeVideo(title = "James Brown - Ain't It Funky Now (Live At The Olympia, Paris / 1971)", videoId = "NKloz_wR6n4"),
+    YoutubeVideo(title = "James Brown - Sunny (Live At The Olympia, Paris / 1971)", videoId = "cNFb7vfANVE"),
+    YoutubeVideo(title = "James Brown - Get Up Offa That Thing (Release The Pressure)", videoId = "QS8FxHsw0U0"),
+    YoutubeVideo(title = "James Brown - Papa Don't Take No Mess", videoId = "T0QQUps8954"),
+    YoutubeVideo(title = "James Brown - Mind Power", videoId = "7naR12OPxRw"),
+    YoutubeVideo(title = "James Brown - Super Bad, Pts. 1, 2 & 3 (Mono Version)", videoId = "u4ePdvrp9go"),
+    YoutubeVideo(title = "James Brown - The Payback", videoId = "D7ks03zsg1o"),
+    YoutubeVideo(title = "James Brown - Cold Sweat", videoId = "lSh-QQuW3lU"),
+    YoutubeVideo(title = "James Brown - Papa's Got A Brand New Bag", videoId = "M7DNkovC2Tk"),
+    YoutubeVideo(title = "James Brown - Your Cheatin' Heart", videoId = "fGY9i61XhEg"),
+    YoutubeVideo(title = "James Brown - Money Won't Change You", videoId = "8tJ6HyUmjqk"),
+    YoutubeVideo(title = "James Brown - Get It Together (Boston) 1968", videoId = "RnO8sHmkbv4"),
+    YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
+    YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
+    YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
+    YoutubeVideo(title = "Lamb of God - The Faded Line", videoId = "JuRRnVqv2Vc"),
+    YoutubeVideo(title = "Lamb of God - 11th Hour", videoId = "beltaLLilj4"),
+    YoutubeVideo(title = "Lamb of God - Descending", videoId = "_V_ZbJE5oLs"),
+    YoutubeVideo(title = "Lamb of God - Blacken the Cursed Sun", videoId = "_oGY68hJbs4"),
+    YoutubeVideo(title = "Lamb of God - As the Palaces Burn", videoId = "eWVrdFrpXHE")
+)
+ 
+val animeSakugaList = listOf(
+    YoutubeVideo(title = "Attack on Titan - The Owl", videoId = "gLtky3DaBO0")
+)
 
 // https://stackoverflow.com/questions/37833395/kotlin-annotation-intdef
 //const val GERMAN = "de"

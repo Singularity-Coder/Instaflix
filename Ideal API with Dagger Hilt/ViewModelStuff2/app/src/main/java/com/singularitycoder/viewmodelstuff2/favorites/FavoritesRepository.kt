@@ -12,5 +12,7 @@ class FavoritesRepository @Inject constructor(
 
     suspend fun removeToFavorites(favorite: Favorite) = dao.delete(favorite)
 
-    fun getFavoritesList(): LiveData<List<Favorite>> = dao.getAll()
+    fun getFavoritesLiveList(): LiveData<List<Favorite>> = dao.getAllLiveList()
+
+    fun getFavoritesList(): List<Favorite> = dao.getAll()
 }

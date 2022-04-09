@@ -14,6 +14,9 @@
     <color name="title_color">#1D1D1F</color>
     <color name="subtitle_color">#6E6E73</color>
 
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_00">#00FFFFFF</color>
+
     <color name="splash_black">#080807</color>
     <color name="light_gray">#d6d6d6</color>
     <color name="default_color">#757575</color>

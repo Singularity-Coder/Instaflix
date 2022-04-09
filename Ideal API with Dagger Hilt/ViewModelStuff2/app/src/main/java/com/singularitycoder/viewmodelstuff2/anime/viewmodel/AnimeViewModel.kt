@@ -126,6 +126,8 @@ class AnimeViewModel @Inject constructor(
                         message = "offline"
                     )
                 )
+                wait()
+                filteredAnimeList.postValue(NetRes(status = Status.LOADING, loadingState = LoadingState.HIDE))
                 return@launch
             }
 

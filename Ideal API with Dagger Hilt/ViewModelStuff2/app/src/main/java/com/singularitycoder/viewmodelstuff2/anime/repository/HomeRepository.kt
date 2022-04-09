@@ -57,6 +57,8 @@ class HomeRepository @Inject constructor(
                         message = context.getString(R.string.offline)
                     )
                 )
+                wait()
+                animeList.postValue(ApiState.Loading<AnimeList>(loadingState = LoadingState.HIDE))
                 return
             }
 

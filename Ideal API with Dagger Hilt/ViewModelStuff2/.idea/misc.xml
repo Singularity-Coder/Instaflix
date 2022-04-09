@@ -13,6 +13,8 @@
         <entry key="app/src/main/res/drawable/background_rounded_shimmer_view.xml" value="0.2075" />
         <entry key="app/src/main/res/drawable/background_rounded_toast.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/background_spotlight_fade.xml" value="0.1235" />
+        <entry key="app/src/main/res/drawable/background_white_gradient_fade.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bg_tab_indicator.xml" value="0.1135" />
         <entry key="app/src/main/res/drawable/bottom_nav_favorites_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/bottom_nav_home_selector.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/bottom_nav_more_selector.xml" value="0.24375" />
@@ -44,18 +46,22 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/fav_anime_fragment.xml" value="0.19300911854103345" />
+        <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2386206364286118" />
+        <entry key="app/src/main/res/layout/fragment_about_me.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
-        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.14881780250347706" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_fav_anime.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24074074074074073" />
-        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_more.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.23822714681440443" />
+        <entry key="app/src/main/res/layout/fragment_video_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_youtube_video_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_anime_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_custom_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_custom_toast.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/layout_favorite_anime_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/layout_favorite_anime_item.xml" value="0.22088353413654618" />
         <entry key="app/src/main/res/layout/layout_home_anime_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_home_anime_item_small.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_home_anime_item_spotlight.xml" value="0.18796296296296297" />
@@ -68,6 +74,8 @@
         <entry key="app/src/main/res/layout/layout_shimmer_notification_content_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loader.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loading.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/list_item_header.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_video.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1235" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1235" />

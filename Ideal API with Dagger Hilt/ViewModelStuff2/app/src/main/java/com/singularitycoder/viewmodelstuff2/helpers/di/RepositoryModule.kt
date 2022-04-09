@@ -71,6 +71,7 @@ object RepositoryModule {
     @Provides
     fun injectNotificationsRepository(
         notificationsDao: NotificationsDao,
+        animeDao: AnimeDao,
         retrofitService: RetrofitAnimeService,
         @ApplicationContext context: Context,
         utils: GeneralUtils,
@@ -80,7 +81,8 @@ object RepositoryModule {
         notificationUtils: NotificationUtils
     ): NotificationsRepository {
         return NotificationsRepository(
-            dao = notificationsDao,
+            notificationsDao = notificationsDao,
+            animeDao = animeDao,
             retrofit = retrofitService,
             context = context,
             utils = utils,

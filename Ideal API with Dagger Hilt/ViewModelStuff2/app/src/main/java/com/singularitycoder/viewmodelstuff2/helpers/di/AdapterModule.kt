@@ -3,6 +3,7 @@ package com.singularitycoder.viewmodelstuff2.helpers.di
 import com.bumptech.glide.RequestManager
 import com.singularitycoder.viewmodelstuff2.anime.view.HomeAdapter
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesAdapter
+import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoListAdapter
 import com.singularitycoder.viewmodelstuff2.notifications.view.NotificationsAdapter
 import dagger.Module
 import dagger.Provides
@@ -25,4 +26,8 @@ object AdapterModule {
     @Singleton
     @Provides
     fun injectHomeAdapter(requestManager: RequestManager): HomeAdapter = HomeAdapter(requestManager)
+
+    @Singleton
+    @Provides
+    fun injectYoutubeVideoListAdapter(requestManager: RequestManager): YoutubeVideoListAdapter = YoutubeVideoListAdapter(requestManager)
 }

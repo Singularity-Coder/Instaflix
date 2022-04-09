@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.SystemClock
@@ -17,12 +18,14 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
 import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
 import java.net.URL
+
 
 fun Int.dpToPx(): Int = (this * Resources.getSystem().displayMetrics.density).toInt()
 
@@ -122,7 +125,7 @@ fun AppCompatActivity.showAnimeDetailsOfThis(animeId: String) {
 // https://stackoverflow.com/questions/5608720/android-preventing-double-click-on-a-button
 fun View.onSafeClick(
     delayAfterClick: Long = 1.seconds(),
-    onSafeClick: (View?) -> Unit
+    onSafeClick: (Pair<View?, Boolean>) -> Unit
 ) {
     val onSafeClickListener = OnSafeClickListener(delayAfterClick, onSafeClick)
     setOnClickListener(onSafeClickListener)
@@ -130,9 +133,10 @@ fun View.onSafeClick(
 
 class OnSafeClickListener(
     private val delayAfterClick: Long,
-    private val onSafeClick: (View?) -> Unit
+    private val onSafeClick: (Pair<View?, Boolean>) -> Unit
 ) : View.OnClickListener {
     private var lastClickTime = 0L
+    private var isClicked = false
 
     override fun onClick(v: View?) {
         val elapsedRealtime = SystemClock.elapsedRealtime()
@@ -140,7 +144,8 @@ class OnSafeClickListener(
         lastClickTime = elapsedRealtime
         v?.startAnimation(AlphaAnimation(1F, 0.8F))
 //        v?.setTouchEffect()
-        onSafeClick(v)
+        isClicked = !isClicked
+        onSafeClick(v to isClicked)
     }
 
     // https://stackoverflow.com/questions/7175873/how-to-set-button-click-effect-in-android
@@ -162,4 +167,35 @@ class OnSafeClickListener(
             false
         }
     }
+}
+
+// https://stackoverflow.com/questions/16954109/reduce-the-size-of-a-bitmap-to-a-specified-size-in-android
+fun Bitmap?.resizeTo(maxWidth: Int, maxHeight: Int): Bitmap? {
+    this ?: return this
+    var width = this.width
+    var height = this.height
+    val bitmapRatio = width.toFloat() / height.toFloat()
+    if (bitmapRatio > 1) {
+        width = maxWidth
+        height = (width / bitmapRatio).toInt()
+    } else {
+        height = maxHeight
+        width = (height * bitmapRatio).toInt()
+    }
+    return Bitmap.createScaledBitmap(this, width, height, true)
+}
+
+fun Bitmap?.getDominantColor(): Int {
+    this ?: return -1
+    val newBitmap = Bitmap.createScaledBitmap(this, 1, 1, true)
+    val color = newBitmap.getPixel(0, 0)
+    newBitmap.recycle()
+    return color
+}
+
+fun SwipeRefreshLayout.setDefaultColors(context: Context) {
+    setColorSchemeColors(
+        context.color(R.color.purple_500),
+        context.color(R.color.purple_700)
+    )
 }

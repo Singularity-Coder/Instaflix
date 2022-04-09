@@ -13,7 +13,7 @@ interface AnimeDao {
     suspend fun insert(anime: AnimeData)
 
     @Transaction
-    @Query("SELECT * FROM ${Table.ANIME_DATA} WHERE aniListId LIKE :id LIMIT 1")
+    @Query("SELECT * FROM ${Table.ANIME_DATA} WHERE id LIKE :id LIMIT 1")
     suspend fun getAnimeById(id: String): AnimeData?
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

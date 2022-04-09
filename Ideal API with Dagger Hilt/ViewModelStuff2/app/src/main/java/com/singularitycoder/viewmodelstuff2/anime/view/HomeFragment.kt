@@ -98,10 +98,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
-        binding.swipeRefreshHome.setColorSchemeColors(
-            nnContext.color(R.color.purple_500),
-            nnContext.color(R.color.purple_700)
-        )
+        binding.swipeRefreshHome.setDefaultColors(nnContext)
         binding.customSearch.getSearchView().disable()
 //        binding.customSearch.getSearchView().revealBottomToTop()
 //        nnActivity.findViewById<BottomNavigationView>(R.id.bottom_nav).revealTopToBottom()
@@ -127,7 +124,7 @@ class HomeFragment : BaseFragment() {
                         utils.showSnackBar(
                             view = binding.root,
                             message = getString(R.string.offline_try_again),
-                            duration = Snackbar.LENGTH_INDEFINITE,
+                            duration = Snackbar.LENGTH_LONG,
                             anchorView = activity?.findViewById(R.id.bottom_nav),
                             actionBtnText = this.getString(R.string.try_again)
                         ) { loadAnimeList() }
@@ -270,7 +267,7 @@ class HomeFragment : BaseFragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun updateHomeAnimeList(list: List<AnimeData>, type: String = "") {
         homeAdapter.apply {
-            homeList = list
+            homeList = list.shuffled()
             notifyDataSetChanged()
         }
         if (type == "search") {

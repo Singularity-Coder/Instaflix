@@ -7,6 +7,7 @@ import android.speech.tts.UtteranceProgressListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
@@ -107,6 +108,13 @@ class AnimeDetailFragment : BaseFragment() {
     private fun setUpDefaults() {
         setViewsBasedOnDeviceDimensions()
         initTextToSpeech()
+        binding.tvDesc.maxLines = 4
+        binding.layoutTrailer.apply {
+            tvVideoTitle.gone()
+            ivPlay.visible()
+            ivThumbnail.layoutParams.height = deviceWidth() / 2
+            ivThumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
+        }
     }
 
     private fun subscribeToObservers() {
@@ -176,6 +184,11 @@ class AnimeDetailFragment : BaseFragment() {
             }
         }
 
+        binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
+            if (it.second) binding.tvDesc.maxLines = 50
+            else binding.tvDesc.maxLines = 4
+        }
+
         binding.tvReadDesc.onSafeClick {
             startTextToSpeech()
         }
@@ -228,11 +241,21 @@ class AnimeDetailFragment : BaseFragment() {
             } else {
                 glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
             }
+            if (binding.ivBannerImage.visibility == View.GONE) {
+                binding.viewBannerWhiteFade.gone()
+            } else binding.viewBannerWhiteFade.visible()
             tvTitle.text = anime?.data?.titles?.en?.trimJunk() ?: anime?.data?.titles?.rj?.trimJunk() ?: getString(R.string.na)
             tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: anime?.data?.descriptions?.jp?.trimJunk() ?: getString(R.string.na)
             val rating = (anime?.data?.score?.div(10F))?.div(2F) ?: 0F
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
+            if (anime?.data?.trailerUrl?.contains("www.youtube.com") == true) {
+                val youtubeVideoId = anime.data.trailerUrl.substringAfterLast("/")
+                glide.load(youtubeVideoId.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
+            } else {
+                binding.cardTrailer.gone()
+                binding.tvTrailerTitle.gone()
+            }
 
             tvStatus.text = String.format(
                 getString(R.string.anime_detail_status_s),

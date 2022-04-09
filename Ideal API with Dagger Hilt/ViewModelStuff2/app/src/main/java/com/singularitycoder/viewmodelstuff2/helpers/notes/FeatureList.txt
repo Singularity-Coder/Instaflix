@@ -40,6 +40,7 @@ Glassmorphic effect
 7. LiveData Android doc - Mediator LiveData
 Full screen image views using fresco
 Anime Sharable memes
+Recently viewed or History - pretty basic. on click store in separate table
 
 
 // TODO OPTIMISATIONS - https://developer.android.com/topic/performance/reduce-apk-size

@@ -2,19 +2,8 @@ package com.singularitycoder.viewmodelstuff2.favorites
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.BaseViewModel
-import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
-import com.singularitycoder.viewmodelstuff2.anime.model.Anime
-import com.singularitycoder.viewmodelstuff2.anime.model.AnimeList
-import com.singularitycoder.viewmodelstuff2.anime.repository.HomeRepository
-import com.singularitycoder.viewmodelstuff2.helpers.network.ApiState
-import com.singularitycoder.viewmodelstuff2.helpers.network.NetRes
-import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
-import com.singularitycoder.viewmodelstuff2.helpers.network.RetrofitAnimeService
-import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,7 +25,7 @@ class FavoritesViewModel @Inject constructor(
 
     // Provide access to immutable value only to views. Functions are good as they are temporary in call stack than permanently allocating space with another variable
 
-    internal fun getFavoritesList(): LiveData<List<Favorite>> = repository.getFavoritesList()
+    internal fun getFavoritesList(): LiveData<List<Favorite>> = repository.getFavoritesLiveList()
 
     // -------------------------------------------------------------------------------------------------------------------------------------------
 

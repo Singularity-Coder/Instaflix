@@ -2,16 +2,31 @@ package com.singularitycoder.viewmodelstuff2.favorites
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.request.target.ViewTarget
 import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentFavoritesBinding
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
+import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
+import com.singularitycoder.viewmodelstuff2.helpers.utils.waitFor
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 // Voice Search
@@ -23,6 +38,9 @@ class FavoritesFragment : BaseFragment() {
     companion object {
         fun newInstance() = FavoritesFragment()
     }
+
+    @Inject
+    lateinit var glide: RequestManager
 
     @Inject
     lateinit var favoritesAdapter: FavoritesAdapter
@@ -49,9 +67,11 @@ class FavoritesFragment : BaseFragment() {
         setUpDefaults()
         setUpRecyclerView()
         subscribeToObservers()
+        setUpUserActionListeners()
     }
 
     private fun setUpDefaults() {
+        binding.swipeRefreshFavorites.setDefaultColors(nnContext)
         favoritesViewModel.getFavoritesList()
     }
 
@@ -59,6 +79,7 @@ class FavoritesFragment : BaseFragment() {
         binding.rvFavorites.apply {
             layoutManager = LinearLayoutManager(nnContext)
             adapter = favoritesAdapter
+            setUpScrollListener()
         }
     }
 
@@ -66,8 +87,69 @@ class FavoritesFragment : BaseFragment() {
     private fun subscribeToObservers() {
         favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
             it ?: return@observe
-            favoritesAdapter.favoritesList = it
+//            val coverImageViewsList = it.map { it: Favorite ->
+//                val imageView = ImageView(nnContext)
+//                glide.load(it.coverImage).into(imageView)
+//                imageView
+//            }
+//
+//            CoroutineScope(Default).launch {
+//                val blurredBitmapsList = coverImageViewsList.map { it: ImageView ->
+//                    val bitmap = try {
+//                        Blurry.with(nnContext)
+//                            .radius(10)
+//                            .sampling(8)
+//                            .capture(it).get()
+//                    } catch (e: Exception) {
+//                        null
+//                    }
+//                    bitmap
+//                }
+//
+//                favoritesAdapter.favoritesList = it.mapIndexed { index: Int, favorite: Favorite ->
+//                    favorite.apply {
+//                        blurredCoverBitmap = blurredBitmapsList[index]
+//                    }
+//                }
+
+//                favoritesAdapter.favoritesList = it.map { it: Favorite ->
+//
+////                    withContext(Main) {
+////                        glide.load(it.coverImage).into(binding.ivBlur)
+////                    }
+//
+//                    val bitmap = try {
+//                        Blurry.with(nnContext)
+//                            .radius(10)
+//                            .sampling(8)
+//                            .capture(binding.ivBlur).get()
+//                    } catch (e: Exception) {
+//                        null
+//                    }
+//                    it.apply {
+//                        blurredCoverBitmap = bitmap
+//                    }
+//                }
+
+//                withContext(Main) {
+//                    binding.rvFavorites.adapter?.notifyDataSetChanged()
+//                }
+//            }
+
+            favoritesAdapter.favoritesList = it.sortedBy { it.date }.reversed()
             binding.rvFavorites.adapter?.notifyDataSetChanged()
+            binding.swipeRefreshFavorites.isRefreshing = false
+        }
+    }
+
+    private fun setUpUserActionListeners() {
+        (binding.rvFavorites.adapter as FavoritesAdapter).setFavoriteViewClickListener { animeId: String ->
+            nnActivity.showAnimeDetailsOfThis(animeId)
+        }
+
+        binding.swipeRefreshFavorites.setOnRefreshListener {
+            favoritesViewModel.getFavoritesList()
+            binding.swipeRefreshFavorites.isRefreshing = false
         }
     }
 }

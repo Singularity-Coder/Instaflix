@@ -29,26 +29,26 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_network_state"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@android:color/holo_green_dark"
-        android:gravity="center"
-        android:text="ONLINE"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
     <FrameLayout
         android:id="@+id/bottom_nav_view_container"
         style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/tv_network_state"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_network_state"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@android:color/holo_green_dark"
+        android:gravity="center"
+        android:text="@string/online"
+        android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_network_state" />
+        tools:visibility="visible" />
 
     <!--https://www.youtube.com/watch?v=DoA_D6tmo6o-->
     <com.google.android.material.card.MaterialCardView
@@ -60,7 +60,7 @@
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="32dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_nav_view_container">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
@@ -72,7 +72,6 @@
             app:itemIconTint="@drawable/bottom_nav_color_states"
             app:itemTextColor="@drawable/bottom_nav_color_states"
             app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_bottom_navigation" />
     </com.google.android.material.card.MaterialCardView>
 

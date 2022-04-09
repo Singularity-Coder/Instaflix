@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.BaseRepository
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeErrorResponse
 import com.singularitycoder.viewmodelstuff2.anime.model.RandomAnimeListData
 import com.singularitycoder.viewmodelstuff2.notifications.dao.NotificationsDao
@@ -36,7 +37,8 @@ import java.security.SecureRandom
 import javax.inject.Inject
 
 class NotificationsRepository @Inject constructor(
-    private val dao: NotificationsDao,
+    private val notificationsDao: NotificationsDao,
+    private val animeDao: AnimeDao,
     private val retrofit: RetrofitAnimeService,
     private val context: Context,
     private val utils: GeneralUtils,
@@ -50,7 +52,7 @@ class NotificationsRepository @Inject constructor(
 
     suspend fun getRandomAnimeListFromDb() {
         // get list in reverse chron order
-        randomAnimeListFromDb.postValue(NetRes(status = Status.SUCCESS, data = dao.getAll()))
+        randomAnimeListFromDb.postValue(NetRes(status = Status.SUCCESS, data = notificationsDao.getAll()))
     }
 
     @ExperimentalCoroutinesApi
@@ -70,7 +72,8 @@ class NotificationsRepository @Inject constructor(
                 CoroutineScope(IO).launch {
 
                     suspend fun loadNotificationDataIntoDb() {
-                        val singleAnime = response.body()?.data?.firstOrNull()
+                        val singleAnime = response.body()?.data?.firstOrNull() ?: return
+                        if (null != animeDao.getAnimeById(singleAnime.id.toString())) animeDao.insert(singleAnime)
                         val notification = Notification(
                             aniListId = singleAnime?.aniListId ?: -1,
                             checkThisOut = checkThisOutList[secureRandom.nextInt(8)],
@@ -81,7 +84,7 @@ class NotificationsRepository @Inject constructor(
                             date = timeNow,
                             id = singleAnime?.id ?: -1
                         )
-                        dao.insert(notification)
+                        notificationsDao.insert(notification)
                         getRandomAnimeListFromDb()
                     }
 

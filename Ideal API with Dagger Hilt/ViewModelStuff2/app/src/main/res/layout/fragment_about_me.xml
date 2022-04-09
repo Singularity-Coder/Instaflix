@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_sbout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".more.view.AboutMeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleGravity="start"
+            app:collapsedTitleTextAppearance="@color/white_70"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleEnabled="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:nestedScrollingEnabled="true"
+                android:paddingBottom="50dp"
+                android:scrollbars="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img_profile_header"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@color/purple_200"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:ellipsize="end"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:text="Title"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/title_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_profile_header" />
+
+                <TextView
+                    android:id="@+id/tv_main_subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Subtitle"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_name"
+                    app:layout_constraintStart_toStartOf="@+id/tv_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+                <LinearLayout
+                    android:id="@+id/con_lay_profile_action_icons"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="16dp"
+                    android:visibility="visible"
+                    android:weightSum="5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_main_subtitle">
+
+                    <TextView
+                        android:id="@+id/tv_call"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="Call"
+                        android:textAlignment="center"
+                        android:textColor="@color/purple_500"
+                        android:textSize="13sp"
+                        app:drawableTint="@color/purple_500"
+                        app:drawableTopCompat="@drawable/ic_round_call_24"
+                        app:layout_constraintEnd_toEndOf="@+id/img_call"
+                        app:layout_constraintStart_toStartOf="@+id/img_call"
+                        app:layout_constraintTop_toBottomOf="@+id/img_call" />
+
+                    <TextView
+                        android:id="@+id/tv_sms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="SMS"
+                        android:textAlignment="center"
+                        android:textColor="@color/purple_500"
+                        android:textSize="13sp"
+                        app:drawableTint="@color/purple_500"
+                        app:drawableTopCompat="@drawable/ic_outline_textsms_24"
+                        app:layout_constraintEnd_toEndOf="@+id/img_sms"
+                        app:layout_constraintStart_toStartOf="@+id/img_sms"
+                        app:layout_constraintTop_toBottomOf="@+id/img_sms" />
+
+                    <TextView
+                        android:id="@+id/tv_whatsapp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="WhatsApp"
+                        android:textAlignment="center"
+                        android:textColor="@color/purple_500"
+                        android:textSize="13sp"
+                        app:drawableTint="@color/purple_500"
+                        app:drawableTopCompat="@drawable/whatsapp"
+                        app:layout_constraintEnd_toEndOf="@+id/img_whatsapp"
+                        app:layout_constraintStart_toStartOf="@+id/img_whatsapp"
+                        app:layout_constraintTop_toBottomOf="@+id/img_whatsapp" />
+
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="Email"
+                        android:textAlignment="center"
+                        android:textColor="@color/purple_500"
+                        android:textSize="13sp"
+                        app:drawableTint="@color/purple_500"
+                        app:drawableTopCompat="@drawable/ic_outline_email_24"
+                        app:layout_constraintEnd_toEndOf="@+id/img_email"
+                        app:layout_constraintStart_toStartOf="@+id/img_email"
+                        app:layout_constraintTop_toBottomOf="@+id/img_email" />
+
+                    <TextView
+                        android:id="@+id/tv_share"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="Share"
+                        android:textAlignment="center"
+                        android:textColor="@color/purple_500"
+                        android:textSize="13sp"
+                        app:drawableTint="@color/purple_500"
+                        app:drawableTopCompat="@drawable/ic_baseline_share_24"
+                        app:layout_constraintEnd_toEndOf="@+id/img_share"
+                        app:layout_constraintStart_toStartOf="@+id/img_share"
+                        app:layout_constraintTop_toBottomOf="@+id/img_share" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_about"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:layout_marginBottom="48dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="2dp"
+                android:layout_gravity="bottom"
+                app:tabIndicator="@drawable/bg_tab_indicator"
+                app:tabIndicatorColor="@color/purple_500"
+                app:tabIndicatorHeight="4dp"
+                app:tabMode="scrollable"
+                app:tabBackground="@color/white"
+                app:tabGravity="fill"
+                app:tabTextAppearance="@style/CustomTextAppearanceTab"
+                app:tabSelectedTextColor="@color/purple_500"
+                app:tabTextColor="@android:color/darker_gray" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager_about"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
