@@ -313,6 +313,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun TextView.showOnlineStrip() {
         this.apply {
+//            if (text != getString(R.string.offline)) return // This is to not show online evey time its online
             text = getString(R.string.online)
             visible()
             setBackgroundColor(color(android.R.color.holo_green_dark))

@@ -95,13 +95,15 @@ class FavoritesAdapter @Inject constructor(val glide: RequestManager) : Recycler
                 tvTitle.text = favorite.title ?: "Title Not Available"
                 val rating = (favorite.score.div(10F)).div(2F)
                 println("Converted Rating: $rating vs Actual Rating: ${favorite.score}")
+
+                // https://stackoverflow.com/questions/2538787/how-to-print-a-float-with-2-decimal-places-in-java
                 tvRating.text = String.format(Locale.US, "%.1f", rating)
                 tvDateTime.text = favorite.date.toIntuitiveDateTime()
 
                 glide.load(favorite.coverImage).into(ivBannerImage)
 
                 /**
-                * Center crop scale type is allows this view to expand to full dimensions. What an amazing fluke
+                * Center crop scale type is what allows this view to expand to full dimensions. What an amazing fluke
                  * */
                 glide.asBitmap().load(favorite.coverImage).into(object : CustomTarget<Bitmap>(2, 2) { // LOL. Tried so hard with Blurry to get blur n it was as simple as reducing bitmap size to get the blur.
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
