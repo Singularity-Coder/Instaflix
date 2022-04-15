@@ -1,5 +1,10 @@
 Fav Anime App Features
 
+// FIXME
+1. NetworkState doesnt listen to network changes immediately
+2. AboutMe viewpager tabs issue
+
+
 // TODO
 0. Search with filters, favorites, Youtube player
 1. Github graph ql api views

@@ -253,7 +253,7 @@ class AnimeDetailFragment : BaseFragment() {
                 val youtubeVideoId = anime.data.trailerUrl.substringAfterLast("/")
                 glide.load(youtubeVideoId.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
             } else {
-                binding.cardTrailer.gone()
+                binding.layoutTrailer.root.gone()
                 binding.tvTrailerTitle.gone()
             }
 

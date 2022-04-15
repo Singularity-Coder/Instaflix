@@ -16,14 +16,14 @@ Java_com_singularitycoder_viewmodelstuff2_helpers_JniDefinitions_getApIAuthToken
         jobject thiz,
         jint apiType) {
 
-    std::string authToken = "Bearer";
+    std::string authToken = "Bearer ";
     switch (apiType) {
         case 0:
-//            authToken = "ANI_API_AUTH_TOKEN";
-            authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzOTUiLCJuYmYiOjE2NDcxNjQzMjYsImV4cCI6MTY0OTc1NjMyNiwiaWF0IjoxNjQ3MTY0MzI2fQ.PMApITJLGm_j8k0_LQbtzQfT3uSjQg5hjL7X8YBG3kg";
+//            authToken += "ANI_API_AUTH_TOKEN";
+            authToken += "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzOTUiLCJuYmYiOjE2NDcxNjQzMjYsImV4cCI6MTY0OTc1NjMyNiwiaWF0IjoxNjQ3MTY0MzI2fQ.PMApITJLGm_j8k0_LQbtzQfT3uSjQg5hjL7X8YBG3kg";
             break;
         case 1:
-            authToken = "GITHUB_GRAPH_QL_API_AUTH_TOKEN";
+            authToken += "GITHUB_GRAPH_QL_API_AUTH_TOKEN";
             break;
         default:
             break;

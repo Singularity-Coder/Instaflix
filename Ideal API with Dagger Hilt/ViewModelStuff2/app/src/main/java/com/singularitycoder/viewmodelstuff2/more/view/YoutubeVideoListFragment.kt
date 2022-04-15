@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentYoutubeVideoListBinding
 import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
-private const val VIDEO_LIST = "VIDEO_LIST"
 
 @AndroidEntryPoint
-class YoutubeVideoListFragment : Fragment() {
+class YoutubeVideoListFragment : BaseFragment() {
 
     companion object {
         fun newInstance(videoList: ArrayList<YoutubeVideo>) = YoutubeVideoListFragment().apply {
@@ -27,9 +24,6 @@ class YoutubeVideoListFragment : Fragment() {
 
     private var youtubeVideoList: List<YoutubeVideo> = listOf()
     private lateinit var binding: FragmentYoutubeVideoListBinding
-
-    @Inject
-    lateinit var youtubeVideoListAdapter: YoutubeVideoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,22 +40,22 @@ class YoutubeVideoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        setUpUserActionListeners()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setUpRecyclerView() {
         binding.rvVideoList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = youtubeVideoListAdapter
-            youtubeVideoListAdapter.youtubeVideoList = youtubeVideoList
-            adapter?.notifyDataSetChanged()
-        }
-    }
+            adapter = YoutubeVideoListAdapter(
+                youtubeVideoList = youtubeVideoList,
+                youtubeVideoClickListener = { videoId: String ->
 
-    private fun setUpUserActionListeners() {
-        youtubeVideoListAdapter.setVideoItemClickListener { videoId: String ->
-            // Open Video View
+                }
+            )
+            setUpScrollListener()
         }
     }
 }
+
+private const val VIDEO_LIST = "VIDEO_LIST"
+

@@ -109,20 +109,54 @@ enum class Gender(val value: String) {
     FEMALE("\uD83D\uDC69  Hi Weeb")
 }
 
+//"Fav Anime Memes", "Fav Anime Walls"
+val aboutMeTabsList = listOf(
+    "Fav Anime Fights",
+    "Fav Anime Music",
+    "Fav Anime Moments",
+    "Fav Music"
+)
+
 val animeFightsList = listOf(
+    YoutubeVideo(title = "Shingeki No Kyojin - Eren Rage Mode (Berserk) vs Annie Episode 25", videoId = "w-QxK1I7Va8"),
+    YoutubeVideo(title = "Shingeki no Kyojin HD (EPISODE 24) - Eren Titan Transformation vs Annie Scene", videoId = "GLff3_jPZIM"),
+    YoutubeVideo(title = "Fog Hill of the Five Elements", videoId = "0OoKXPUvVbo"),
+    YoutubeVideo(title = "Fog Hill of the Five Elements (BRIDGE FIGHT SCENE)", videoId = "qZZLkmMeGRY"),
+    YoutubeVideo(title = "Fog Hill of the Five Elements - Wu Shan Wu Xing", videoId = "l5k8GjTpa9I"),
+    YoutubeVideo(title = "Attack on Titan - Eren vs The Armored Titan full fight", videoId = "hyEbggGnT0U"),
     YoutubeVideo(title = "Attack on Titan - Levi vs Kenny Squad - (Full Fight) HD", videoId = "CeLvx_1FBdk"),
     YoutubeVideo(title = "Attack on Titan - Levi vs. The Beast Titan", videoId = "ceQ4nhyuX2k"),
     YoutubeVideo(title = "Attack On Titan - Floch vs ALL (60 fps)", videoId = "hzp1AeiEIMg"),
     YoutubeVideo(title = "Attack On Titan - The true form of Eren's rumbling titan that destroyed world civilization", videoId = "1-WVczhtXTw"),
+    YoutubeVideo(title = "Attack On Titan - Eren's first transformation and first fight scenes", videoId = "p2FKMB_sImg"),
+    YoutubeVideo(title = "Attack On Titan - Levi vs The Female Titan", videoId = "QMf_Z-Fl7_w"),
+    YoutubeVideo(title = "Attack On Titan - Titan Eren vs Female Titan - 60FPS", videoId = "k2u1nTvBYx0"),
+    YoutubeVideo(title = "Attack On Titan - Eren vs Warhammer Titan", videoId = "Rv0085ZOIsg"),
     YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "IOkz2ld1-Kk"),
-    YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki | (Full Fight) (1080p)", videoId = "CZJBkQQTiCo")
+    YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki", videoId = "CZJBkQQTiCo"),
+    YoutubeVideo(title = "SABER ALTER VS RIDER - Fate/stay night: Heaven’s Feel lll", videoId = "8W7x_-mMOtU"),
+    YoutubeVideo(title = "Saber Alter Excalibur Morgan [4K 60fps]", videoId = "f1JT8z-3cV0"),
+    YoutubeVideo(title = "Meliodas vs Ten Commandments", videoId = "92Gvvh0UKjk"),
+    YoutubeVideo(title = "Parasyte The Maxim - Fights from anime compilation", videoId = "r_JH_oOkhmk"),
+    YoutubeVideo(title = "One Punch Man - Saitama vs Genos Fight | One Punch Man (60FPS)", videoId = "km2OPUctni4"),
+    YoutubeVideo(title = "One Punch Man - Saitama vs Boros Fight Full HD", videoId = "ErXfj3sbIfU"),
+    YoutubeVideo(title = "Code Geass R2 - Final battle between Kallen and Suzaku", videoId = "9Y44LiqBHsw"),
+    YoutubeVideo(title = "Mob Psycho 100 - Shimazaki Fight", videoId = "Ar7fHWRMNoE"),
+    YoutubeVideo(title = "Mob Psycho 100 - MOB VS Toichiro Final Fight", videoId = "wRG7Er6qlvk"),
+    YoutubeVideo(title = "Mob Psycho 100 - Mob vs Koyama Full Fight (60fps)", videoId = "nJlmcQA_dVQ"),
 )
 
 val animeMusicList = listOf(
     YoutubeVideo(title = "Ost Anne Happy - Michino Timothy Kimino Kimochi", videoId = "815kbvmNWNM"),
     YoutubeVideo(title = "Aimer - Am02:00", videoId = "-Hn6O-WvD7o"),
     YoutubeVideo(title = "Aimer - Even Heaven", videoId = "BOGoJYZWmuk"),
-    YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0")
+    YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0"),
+    YoutubeVideo(title = "Attack on Titan - Reiner and Bertholdt's Transformation Theme", videoId = "rdml5r6Y_g4"),
+    YoutubeVideo(title = "The Seven Deadly Sins - Here Comes The Jikkai · KOHTA YAMAMOTO", videoId = "VMZTkvnRUPE"),
+    YoutubeVideo(title = "Berserk - Son Cauchemar - Shiro Sagisu", videoId = "FNC-M9279jE"),
+    YoutubeVideo(title = "Berserk Golden Age - Hundred Years War", videoId = "OG8GxzJTBck"),
+    YoutubeVideo(title = "Kenji Kawai Cinema Symphony Ghost In The Shell", videoId = "WjOuEruzoh0"),
+    YoutubeVideo(title = "Made In Abyss - Tomorrow", videoId = "BeSbmS06k1k"),
 )
 
 val otherMusicList = listOf(
@@ -141,6 +175,7 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "James Brown - Your Cheatin' Heart", videoId = "fGY9i61XhEg"),
     YoutubeVideo(title = "James Brown - Money Won't Change You", videoId = "8tJ6HyUmjqk"),
     YoutubeVideo(title = "James Brown - Get It Together (Boston) 1968", videoId = "RnO8sHmkbv4"),
+    YoutubeVideo(title = "James Brown - I Got The Feeling - Live At The Boston Garden (1968)", videoId = "n0rOo8bX6P8"),
     YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
     YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
     YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
@@ -148,11 +183,21 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "Lamb of God - 11th Hour", videoId = "beltaLLilj4"),
     YoutubeVideo(title = "Lamb of God - Descending", videoId = "_V_ZbJE5oLs"),
     YoutubeVideo(title = "Lamb of God - Blacken the Cursed Sun", videoId = "_oGY68hJbs4"),
-    YoutubeVideo(title = "Lamb of God - As the Palaces Burn", videoId = "eWVrdFrpXHE")
+    YoutubeVideo(title = "Lamb of God - As the Palaces Burn", videoId = "eWVrdFrpXHE"),
+    YoutubeVideo(title = "Louis Armstrong - What A Wonderful World (Lyrics)", videoId = "A3yCcXgbKrE")
 )
- 
-val animeSakugaList = listOf(
-    YoutubeVideo(title = "Attack on Titan - The Owl", videoId = "gLtky3DaBO0")
+
+val epicAnimeMomentsList = listOf(
+    YoutubeVideo(title = "Code Geass, Best Anime Ever, Ending! 1080p", videoId = "rS-FBuWG_zQ"),
+    YoutubeVideo(title = "Code Geass R2 - Lelouch Takes Over the World", videoId = "xnFdY7168DY"),
+    YoutubeVideo(title = "Attack On Titan - Eren vs Annie - Eren Transforms in the forest", videoId = "BPohSG4ZNes"),
+    YoutubeVideo(title = "Attack on Titan - The Owl", videoId = "gLtky3DaBO0"),
+    YoutubeVideo(title = "Attack on Titan - Colossal & Armored Titan REVEALED", videoId = "3v_561hRxs4"),
+    YoutubeVideo(title = "Attack on Titan - Annie Leonhardt/Female Titan - Powers & Fight Scenes (AOT)", videoId = "IZdNJJueKfU"),
+    YoutubeVideo(title = "Kizumonogatari Part 2: Nekketsu - Koyomi Araragi vs. Guillotine Cutter", videoId = "yl7ldmQPwIM"),
+    YoutubeVideo(title = "The Rumbling Begins - Attack on Titan Season 4 Episode 5", videoId = "Uwza8rHaPzw"),
+    YoutubeVideo(title = "Shingeki no Kyojin - Eren blocks gate with boulder", videoId = "iaLJ1Jk35lU"),
+    YoutubeVideo(title = "Shingeki no Kyojin - Eren Transforms - Willy Tybur Speech: The Final Season", videoId = "pR3KdTbbBoM"),
 )
 
 // https://stackoverflow.com/questions/37833395/kotlin-annotation-intdef

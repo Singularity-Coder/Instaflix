@@ -12,8 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--        <item name="fontFamily">@font/comfortaa_bold</item>-->
         <item name="android:windowActivityTransitions">true</item>
     </style>
+
+<!--    <style name="customfontstyle" parent="@android:style/TextAppearance.Small">-->
+<!--        <item name="android:fontFamily">@font/comfortaa_regular</item>-->
+<!--    </style>-->
 
     <!--https://www.youtube.com/watch?v=rIHArmoq9f8-->
     <!--Set theme in manifest to this one. Do it on the activity instead on the Application tag to not affect all activities - android:theme="@style/SplashScreenTheme" -->
@@ -40,5 +45,17 @@
         <item name="android:divider">@android:color/black</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabSelectedTextColor">@color/purple_500</item>
+    </style>
+
+    <style name="CustomCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_custom_corners</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">32dp</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 </resources>

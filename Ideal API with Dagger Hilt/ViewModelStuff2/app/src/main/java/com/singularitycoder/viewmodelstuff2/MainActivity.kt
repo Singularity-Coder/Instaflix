@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.scottyab.rootbeer.RootBeer
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
@@ -30,11 +29,10 @@ import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Tab
 import com.singularitycoder.viewmodelstuff2.helpers.constants.mainActivityPermissions
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
-import com.singularitycoder.viewmodelstuff2.helpers.network.*
+import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.doAfter
 import com.singularitycoder.viewmodelstuff2.helpers.utils.isEmulator
-import com.singularitycoder.viewmodelstuff2.more.model.GitHubProfileQueryModel
 import com.singularitycoder.viewmodelstuff2.more.view.MoreFragment
 import com.singularitycoder.viewmodelstuff2.more.viewmodel.MoreViewModel
 import com.singularitycoder.viewmodelstuff2.notifications.dao.NotificationsDao
@@ -85,7 +83,6 @@ class MainActivity : AppCompatActivity() {
     private var accelerometer: Sensor? = null
     private var shakeDetector: ShakeDetector? = null
 
-    private val animeViewModel: AnimeViewModel by viewModels()
     private val moreViewModel: MoreViewModel by viewModels()
 //    val sharedViewModel: SharedViewModel by activityViewModels()  // Works only in Fragments
 
@@ -99,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Port this to a separate screen
     private val mainActivityPermissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: MutableMap<String, Boolean>? ->
         permissions ?: return@registerForActivityResult
         permissions.entries.forEach { it: Map.Entry<String, @JvmSuppressWildcards Boolean> ->
@@ -132,9 +130,6 @@ class MainActivity : AppCompatActivity() {
         setUpBottomNav()
         showScreen(HomeFragment(), Tab.HOME.tag)
         getIntentDataAndNavigateAccordingly()
-        loadData()
-        setUpClickListeners()
-        subscribeToObservers()
         setUpShakeDetectionSensor()
         startAnimeForegroundService()
         setUpBlurEffect()
@@ -204,49 +199,6 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun loadData() {
-//        if (null == aboutMeViewModel.getAboutMe().value) loadAboutMe()
-    }
-
-    private fun setUpClickListeners() {
-        binding.apply {
-            btnAboutMe.onSafeClick { loadAboutMe() }
-        }
-    }
-
-    private fun loadAboutMe() {
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                moreViewModel.loadAboutMe()
-            },
-            offlineWork = {
-                moreViewModel.loadAboutMe()
-            }
-        )
-    }
-
-    private fun subscribeToObservers() {
-        moreViewModel.getAboutMe().observe(this) { it: ApiState<GitHubProfileQueryModel?>? ->
-            when (it) {
-                is ApiState.Success -> {
-                    if (getString(R.string.offline) == it.message) {
-                        utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_INDEFINITE, actionBtnText = this.getString(R.string.ok))
-                    }
-                    utils.asyncLog(message = "Github chan: %s", it.data)
-                }
-                is ApiState.Loading -> when (it.loadingState) {
-                    LoadingState.SHOW -> binding.progressCircular.visible()
-                    LoadingState.HIDE -> binding.progressCircular.gone()
-                }
-                is ApiState.Error -> {
-                    binding.progressCircular.gone()
-                    utils.showToast(message = it.message, context = this)
-                }
-                null -> Unit
-            }
-        }
-    }
-
     private fun setUpShakeDetectionSensor() {
         // ShakeDetector initialization
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -313,7 +265,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun TextView.showOnlineStrip() {
         this.apply {
-//            if (text != getString(R.string.offline)) return // This is to not show online evey time its online
+            if (text != getString(R.string.offline)) return // This is to not show online evey time its online
             text = getString(R.string.online)
             visible()
             setBackgroundColor(color(android.R.color.holo_green_dark))

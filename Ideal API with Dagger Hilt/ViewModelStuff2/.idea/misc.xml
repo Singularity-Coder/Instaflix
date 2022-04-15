@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/background_rounded_share_icons.xml" value="0.183" />
         <entry key="app/src/main/res/drawable/background_rounded_shimmer_view.xml" value="0.2075" />
         <entry key="app/src/main/res/drawable/background_rounded_toast.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/background_rounded_view.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/background_spotlight_fade.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/background_white_gradient_fade.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/bg_tab_indicator.xml" value="0.1135" />
@@ -42,12 +43,13 @@
         <entry key="app/src/main/res/drawable/saitama.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/saitama5.xml" value="0.105" />
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.5" />
+        <entry key="app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/whatsapp.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/fav_anime_fragment.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2386206364286118" />
-        <entry key="app/src/main/res/layout/fragment_about_me.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_about_me.xml" value="0.22088353413654618" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.14881780250347706" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />

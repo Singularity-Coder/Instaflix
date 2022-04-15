@@ -6,36 +6,23 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.ListItemVideoBinding
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.toYoutubeThumbnailUrl
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
-import javax.inject.Inject
 
-class YoutubeVideoListAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val diffUtil = object : DiffUtil.ItemCallback<YoutubeVideo>() {
-        override fun areItemsTheSame(oldItem: YoutubeVideo, newItem: YoutubeVideo): Boolean {
-            return oldItem == newItem
-        }
-
-        override fun areContentsTheSame(oldItem: YoutubeVideo, newItem: YoutubeVideo): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    private val youtubeVideoDiffer = AsyncListDiffer(this, diffUtil)
-    var youtubeVideoList: List<YoutubeVideo>
-        get() = youtubeVideoDiffer.currentList
-        set(value) = youtubeVideoDiffer.submitList(value)
-
-    private var youtubeVideoClickListener: (videoId: String) -> Unit = {}
+// This is getting inconsistent in setting the list. I am facing same issue. https://stackoverflow.com/questions/31759171/recyclerview-and-java-lang-indexoutofboundsexception-inconsistency-detected-in
+// I think its because of Hilt doing injecting adapter in worker threads, for viewpagers it seems to be sending the adapter/list internally a bit late. Just a guess
+class YoutubeVideoListAdapter(
+    private val youtubeVideoList: List<YoutubeVideo>,
+    private val youtubeVideoClickListener: (videoId: String) -> Unit = {}
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding = ListItemVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -50,13 +37,11 @@ class YoutubeVideoListAdapter @Inject constructor(val glide: RequestManager) : R
 
     override fun getItemViewType(position: Int): Int = position
 
-    fun setVideoItemClickListener(listener: (videoId: String) -> Unit) {
-        youtubeVideoClickListener = listener
-    }
-
     inner class YoutubeVideoViewHolder(val itemBinding: ListItemVideoBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun setData(youtube: YoutubeVideo?) {
+            val requestOptions = RequestOptions().placeholder(R.color.purple_100).error(android.R.color.holo_red_dark)
+            val glide = Glide.with(itemBinding.root.context).setDefaultRequestOptions(requestOptions)
             itemBinding.apply {
                 root.tag = bindingAdapterPosition
                 tvVideoTitle.text = youtube?.title

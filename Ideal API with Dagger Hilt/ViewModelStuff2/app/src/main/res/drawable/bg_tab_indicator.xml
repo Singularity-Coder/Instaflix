@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/teal_200" />
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:end="20dp"
+        android:start="20dp"
+        tools:targetApi="m">
+        <shape android:shape="rectangle">
+            <corners android:radius="5dp" />
+            <solid android:color="@color/purple_500" />
+        </shape>
+    </item>
+</layer-list>
 
-    <corners
-        android:topLeftRadius="10dp"
-        android:topRightRadius="10dp" />
-</shape>
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--<solid android:color="@color/purple_500" />-->
+<!--<corners-->
+<!--    android:topLeftRadius="10dp"-->
+<!--    android:topRightRadius="10dp" />-->
+<!--</shape>-->
