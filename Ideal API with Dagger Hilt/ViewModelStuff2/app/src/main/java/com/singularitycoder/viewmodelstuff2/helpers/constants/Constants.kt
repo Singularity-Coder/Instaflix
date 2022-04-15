@@ -132,10 +132,10 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Attack On Titan - Levi vs The Female Titan", videoId = "QMf_Z-Fl7_w"),
     YoutubeVideo(title = "Attack On Titan - Titan Eren vs Female Titan - 60FPS", videoId = "k2u1nTvBYx0"),
     YoutubeVideo(title = "Attack On Titan - Eren vs Warhammer Titan", videoId = "Rv0085ZOIsg"),
+    YoutubeVideo(title = "Saber Alter vs Rider - Fate/stay night: Heaven’s Feel lll", videoId = "8W7x_-mMOtU"),
+    YoutubeVideo(title = "Saber Alter Excalibur Morgan [4K 60fps]", videoId = "f1JT8z-3cV0"),
     YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "IOkz2ld1-Kk"),
     YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki", videoId = "CZJBkQQTiCo"),
-    YoutubeVideo(title = "SABER ALTER VS RIDER - Fate/stay night: Heaven’s Feel lll", videoId = "8W7x_-mMOtU"),
-    YoutubeVideo(title = "Saber Alter Excalibur Morgan [4K 60fps]", videoId = "f1JT8z-3cV0"),
     YoutubeVideo(title = "Meliodas vs Ten Commandments", videoId = "92Gvvh0UKjk"),
     YoutubeVideo(title = "Parasyte The Maxim - Fights from anime compilation", videoId = "r_JH_oOkhmk"),
     YoutubeVideo(title = "One Punch Man - Saitama vs Genos Fight | One Punch Man (60FPS)", videoId = "km2OPUctni4"),
@@ -157,6 +157,8 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Berserk Golden Age - Hundred Years War", videoId = "OG8GxzJTBck"),
     YoutubeVideo(title = "Kenji Kawai Cinema Symphony Ghost In The Shell", videoId = "WjOuEruzoh0"),
     YoutubeVideo(title = "Made In Abyss - Tomorrow", videoId = "BeSbmS06k1k"),
+    YoutubeVideo(title = "Tower of God - Irregular God", videoId = "ENCJrayjnjE"),
+    YoutubeVideo(title = "Tower of God - Alita", videoId = "elGoXAIsddM"),
 )
 
 val otherMusicList = listOf(
