@@ -1,12 +1,15 @@
 package com.singularitycoder.viewmodelstuff2.more.view
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singularitycoder.viewmodelstuff2.BaseFragment
+import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentYoutubeVideoListBinding
 import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +26,17 @@ class YoutubeVideoListFragment : BaseFragment() {
     }
 
     private var youtubeVideoList: List<YoutubeVideo> = listOf()
+
+    private lateinit var nnContext: Context
+    private lateinit var nnActivity: MainActivity
     private lateinit var binding: FragmentYoutubeVideoListBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        nnContext = context
+        nnActivity = context as MainActivity
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +62,8 @@ class YoutubeVideoListFragment : BaseFragment() {
             adapter = YoutubeVideoListAdapter(
                 youtubeVideoList = youtubeVideoList,
                 youtubeVideoClickListener = { videoId: String ->
-
+                    val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(VIDEO_ID, videoId) }
+                    startActivity(intent)
                 }
             )
             setUpScrollListener()
@@ -58,4 +72,6 @@ class YoutubeVideoListFragment : BaseFragment() {
 }
 
 private const val VIDEO_LIST = "VIDEO_LIST"
+const val VIDEO_ID = "VIDEO_ID"
+
 

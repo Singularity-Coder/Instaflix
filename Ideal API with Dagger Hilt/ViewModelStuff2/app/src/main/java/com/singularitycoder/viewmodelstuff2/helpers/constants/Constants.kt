@@ -11,6 +11,7 @@ import com.singularitycoder.viewmodelstuff2.more.view.AboutMeFragment
 object AuthToken {
     val ANI_API = JniDefinitions.getApIAuthToken(apiType = ApIAuthToken.ANI_API.value)
     val GITHUB_GRAPH_QL_API = JniDefinitions.getApIAuthToken(apiType = ApIAuthToken.GITHUB.value)
+    val YOUTUBE_API = JniDefinitions.getApIAuthToken(apiType = ApIAuthToken.YOUTUBE.value)
 }
 
 object Db {
@@ -159,6 +160,7 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Made In Abyss - Tomorrow", videoId = "BeSbmS06k1k"),
     YoutubeVideo(title = "Tower of God - Irregular God", videoId = "ENCJrayjnjE"),
     YoutubeVideo(title = "Tower of God - Alita", videoId = "elGoXAIsddM"),
+    YoutubeVideo(title = "Tower of God - Berserker Bam", videoId = "BNZerdoRl_Q"),
 )
 
 val otherMusicList = listOf(

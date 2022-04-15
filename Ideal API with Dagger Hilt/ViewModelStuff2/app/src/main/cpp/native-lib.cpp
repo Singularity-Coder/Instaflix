@@ -25,6 +25,9 @@ Java_com_singularitycoder_viewmodelstuff2_helpers_JniDefinitions_getApIAuthToken
         case 1:
             authToken += "GITHUB_GRAPH_QL_API_AUTH_TOKEN";
             break;
+        case 2:
+            authToken += "YOUTUBE_API_AUTH_TOKEN";
+            break;
         default:
             break;
     }

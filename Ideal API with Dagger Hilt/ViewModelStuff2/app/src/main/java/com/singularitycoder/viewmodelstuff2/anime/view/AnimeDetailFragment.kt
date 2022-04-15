@@ -1,6 +1,7 @@
 package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
@@ -34,6 +35,8 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
+import com.singularitycoder.viewmodelstuff2.more.view.VIDEO_ID
+import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -70,6 +73,7 @@ class AnimeDetailFragment : BaseFragment() {
 
     var favoriteAnime: Favorite? = null
     var textToSpeech: TextToSpeech? = null
+    var animeFromApi: Anime? = null
 
     private lateinit var animeId: String
     private lateinit var nnContext: Context
@@ -139,6 +143,7 @@ class AnimeDetailFragment : BaseFragment() {
                     date = timeNow,
                     id = data?.data?.id ?: -1
                 )
+                animeFromApi = data
                 updateUI(anime = data)
             }
 
@@ -216,6 +221,14 @@ class AnimeDetailFragment : BaseFragment() {
             println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
             val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
             if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
+        }
+
+        binding.layoutTrailer.root.onSafeClick {
+            if (animeFromApi?.data?.trailerUrl?.contains("www.youtube.com") == true) {
+                val videoId = animeFromApi?.data?.trailerUrl?.substringAfterLast("/")
+                val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(VIDEO_ID, videoId) }
+                startActivity(intent)
+            }
         }
     }
 

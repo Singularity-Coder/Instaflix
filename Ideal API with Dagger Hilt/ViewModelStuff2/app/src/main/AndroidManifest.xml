@@ -35,10 +35,16 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="allowBackup">
         <activity
+            android:name=".more.view.YoutubeVideoActivity"
+            android:screenOrientation="landscape"
+            android:turnScreenOn="true"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -63,9 +69,11 @@
             android:lockTaskMode="normal"
             android:persistableMode="persistAcrossReboots"
             android:windowSoftInputMode="adjustNothing" />
+
         <service
             android:name=".helpers.service.AnimeForegroundService"
             android:exported="false" />
+
         <receiver
             android:name=".helpers.AnimeReceiver"
             android:enabled="true"
@@ -77,4 +85,9 @@
         </receiver>
     </application>
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
 </manifest>

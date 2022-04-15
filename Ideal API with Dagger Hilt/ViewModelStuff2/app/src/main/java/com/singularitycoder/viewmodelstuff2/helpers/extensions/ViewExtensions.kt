@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.*
@@ -198,4 +199,31 @@ fun SwipeRefreshLayout.setDefaultColors(context: Context) {
         context.color(R.color.purple_500),
         context.color(R.color.purple_700)
     )
+}
+
+fun AppCompatActivity.avoidScreenShots() {
+    window?.setFlags(
+        WindowManager.LayoutParams.FLAG_SECURE,
+        WindowManager.LayoutParams.FLAG_SECURE
+    )
+}
+
+fun AppCompatActivity.transparentStatusBar() {
+    window.setFlags(
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+    )
+}
+
+// https://stackoverflow.com/questions/2868047/fullscreen-activity-in-android
+fun AppCompatActivity.fullScreen() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        window.insetsController?.hide(WindowInsets.Type.statusBars())
+    } else {
+        @Suppress("DEPRECATION")
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+    }
 }

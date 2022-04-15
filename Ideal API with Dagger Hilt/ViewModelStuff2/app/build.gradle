@@ -28,6 +28,7 @@ android {
         // Add gradle.properties to the .gitignore file to avoid committing this field to avoid key leak
         buildConfigField("String", "ANI_API_AUTH_TOKEN", ani_api_auth_token)
         buildConfigField("String", "GITHUB_GRAPH_QL_API_AUTH_TOKEN", github_graph_ql_api_auth_token)
+        buildConfigField("String", "YOUTUBE_API_AUTH_TOKEN", youtube_api_auth_token)
     }
     buildTypes {
         release {
@@ -226,6 +227,12 @@ dependencies {
     // Like Button
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
+    // Palette
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     // Youtube APIs
     implementation fileTree(dir: 'libs', include: ['*.jar']) // Includes all jars in the libs path
     // implementation files('libs/YouTubeAndroidPlayerApi.jar')
@@ -234,10 +241,4 @@ dependencies {
     implementation ('com.google.apis:google-api-services-youtube:v3-rev181-1.22.0') {
         exclude group:'com.google.guava'
     }
-
-    // Palette
-    implementation 'androidx.palette:palette-ktx:1.0.0'
-
-    // Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
 }

@@ -27,5 +27,6 @@ object JniDefinitions {
 
 enum class ApIAuthToken(val value: Int) {
     ANI_API(value = 0),
-    GITHUB(value = 1)
+    GITHUB(value = 1),
+    YOUTUBE(value = 2)
 }
