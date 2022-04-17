@@ -157,10 +157,10 @@ private const val ARG_PARAM1 = "param1"
 class YoutubeVideoViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int = aboutMeTabsList.size
     override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> YoutubeVideoListFragment.newInstance(ArrayList(animeFightsList))
-        1 -> YoutubeVideoListFragment.newInstance(ArrayList(animeMusicList))
-        2 -> YoutubeVideoListFragment.newInstance(ArrayList(otherMusicList))
-        else -> YoutubeVideoListFragment.newInstance(ArrayList(epicAnimeMomentsList))
+        0 -> YoutubeVideoListFragment.newInstance(ArrayList(animeFightsList), aboutMeTabsList[0])
+        1 -> YoutubeVideoListFragment.newInstance(ArrayList(animeMusicList), aboutMeTabsList[1])
+        2 -> YoutubeVideoListFragment.newInstance(ArrayList(otherMusicList), aboutMeTabsList[2])
+        else -> YoutubeVideoListFragment.newInstance(ArrayList(epicAnimeMomentsList), aboutMeTabsList[3])
     }
 }
 

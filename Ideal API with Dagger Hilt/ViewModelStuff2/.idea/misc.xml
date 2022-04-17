@@ -64,7 +64,7 @@
         <entry key="app/src/main/res/layout/layout_anime_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_custom_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_custom_toast.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/layout_favorite_anime_item.xml" value="0.22088353413654618" />
+        <entry key="app/src/main/res/layout/layout_favorite_anime_item.xml" value="0.165" />
         <entry key="app/src/main/res/layout/layout_home_anime_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_home_anime_item_small.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_home_anime_item_spotlight.xml" value="0.18796296296296297" />

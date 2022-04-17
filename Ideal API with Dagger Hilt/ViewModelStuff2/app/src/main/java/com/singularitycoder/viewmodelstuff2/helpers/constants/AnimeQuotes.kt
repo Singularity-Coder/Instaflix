@@ -128,6 +128,13 @@ val animeQuoteList = listOf(
     AnimeQuote(
         quote = "Absolute power indeed trumps over any ploy!",
         author = "Magic Emperor"
+    ),
+    AnimeQuote(
+        quote = """
+            If you don't practice for a day, only you will know.
+            Two days, your peers will know.
+            Three days, the audience will know.
+        """.trimIndentsAndNewLines(),
+        author = "Dance Dance Danseur"
     )
-
 )

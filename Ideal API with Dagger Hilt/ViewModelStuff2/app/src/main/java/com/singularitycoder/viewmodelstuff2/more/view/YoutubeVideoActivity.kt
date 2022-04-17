@@ -8,11 +8,16 @@ import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityYoutubeVideoBinding
-import com.singularitycoder.viewmodelstuff2.helpers.constants.AuthToken
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.avoidScreenShots
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.fullScreen
+import com.singularitycoder.viewmodelstuff2.helpers.constants.*
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
+import okhttp3.internal.filterList
+import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
+// https://developers.google.com/youtube/android/player
+// https://guides.codepath.com/android/Streaming-Youtube-Videos-with-YouTubePlayerView
+// https://www.sitepoint.com/using-the-youtube-api-to-embed-video-in-an-android-app/
+// https://stackoverflow.com/questions/18175397/add-youtube-data-api-to-android-studio
 // https://stackoverflow.com/questions/5712849/how-do-i-keep-the-screen-on-in-my-app
 // https://guides.codepath.com/android/Streaming-Youtube-Videos-with-YouTubePlayerView
 // https://stackoverflow.com/questions/7818717/why-not-use-always-androidconfigchanges-keyboardhiddenorientation
@@ -67,9 +72,25 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
                 wasRestored: Boolean
             ) {
                 if (!wasRestored) {
-                    val videoId = intent.getStringExtra(VIDEO_ID)
-                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT) // Player styles: CHROMELESS, MINIMAL, DEFAULT
-                    youTubePlayer.loadVideo(videoId)
+                    val youtubeVideoId = intent.getStringExtra(KEY_YOUTUBE_VIDEO_ID)
+                    val youtubeVideoIdList = when (intent.getStringExtra(KEY_YOUTUBE_LIST_TYPE)) {
+                        aboutMeTabsList[0] -> animeFightsList.map { it.videoId }
+                        aboutMeTabsList[1] -> animeMusicList.map { it.videoId }
+                        aboutMeTabsList[2] -> epicAnimeMomentsList.map { it.videoId }
+                        aboutMeTabsList[3] -> otherMusicList.map { it.videoId }
+                        else -> emptyList()
+                    }
+                    if (youtubeVideoIdList.isNullOrEmpty() || youtubeVideoIdList.size == 1) {
+                        if (youtubeVideoId.isNullOrBlankOrNaOrNullString()) return
+                        youTubePlayer.loadVideo(youtubeVideoId) // Load Single Video
+                        return
+                    }
+                    youTubePlayer.apply {
+                        val start = youtubeVideoIdList.indexOf(youtubeVideoId)
+                        val end = youtubeVideoIdList.size
+                        setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT) // Player styles: CHROMELESS, MINIMAL, DEFAULT
+                        loadVideos(youtubeVideoIdList.subList(start, end)) // Set PlayList
+                    }
                 }
             }
 

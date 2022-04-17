@@ -18,14 +18,19 @@ import dagger.hilt.android.AndroidEntryPoint
 class YoutubeVideoListFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(videoList: ArrayList<YoutubeVideo>) = YoutubeVideoListFragment().apply {
+        fun newInstance(
+            videoList: ArrayList<YoutubeVideo>,
+            listType: String
+        ) = YoutubeVideoListFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArrayList(VIDEO_LIST, videoList)
+                putParcelableArrayList(KEY_YOUTUBE_VIDEO_LIST, videoList)
+                putString(KEY_YOUTUBE_LIST_TYPE, listType)
             }
         }
     }
 
     private var youtubeVideoList: List<YoutubeVideo> = listOf()
+    private var youtubeVideoListType: String = ""
 
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
@@ -41,7 +46,8 @@ class YoutubeVideoListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            youtubeVideoList = it.getParcelableArrayList<YoutubeVideo>(VIDEO_LIST) as ArrayList<YoutubeVideo>
+            youtubeVideoList = it.getParcelableArrayList<YoutubeVideo>(KEY_YOUTUBE_VIDEO_LIST) as ArrayList<YoutubeVideo>
+            youtubeVideoListType = it.getString(KEY_YOUTUBE_LIST_TYPE, "")
         }
     }
 
@@ -62,7 +68,10 @@ class YoutubeVideoListFragment : BaseFragment() {
             adapter = YoutubeVideoListAdapter(
                 youtubeVideoList = youtubeVideoList,
                 youtubeVideoClickListener = { videoId: String ->
-                    val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(VIDEO_ID, videoId) }
+                    val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply {
+                        putExtra(KEY_YOUTUBE_VIDEO_ID, videoId)
+                        putExtra(KEY_YOUTUBE_LIST_TYPE, youtubeVideoListType)
+                    }
                     startActivity(intent)
                 }
             )
@@ -71,7 +80,8 @@ class YoutubeVideoListFragment : BaseFragment() {
     }
 }
 
-private const val VIDEO_LIST = "VIDEO_LIST"
-const val VIDEO_ID = "VIDEO_ID"
+private const val KEY_YOUTUBE_VIDEO_LIST = "KEY_YOUTUBE_VIDEO_LIST"
+const val KEY_YOUTUBE_LIST_TYPE = "KEY_YOUTUBE_LIST_TYPE"
+const val KEY_YOUTUBE_VIDEO_ID = "KEY_YOUTUBE_VIDEO_ID"
 
 

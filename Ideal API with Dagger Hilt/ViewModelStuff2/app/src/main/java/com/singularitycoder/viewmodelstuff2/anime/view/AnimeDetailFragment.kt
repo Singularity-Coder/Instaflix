@@ -35,7 +35,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
-import com.singularitycoder.viewmodelstuff2.more.view.VIDEO_ID
+import com.singularitycoder.viewmodelstuff2.more.view.KEY_YOUTUBE_VIDEO_ID
 import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -226,7 +226,7 @@ class AnimeDetailFragment : BaseFragment() {
         binding.layoutTrailer.root.onSafeClick {
             if (animeFromApi?.data?.trailerUrl?.contains("www.youtube.com") == true) {
                 val videoId = animeFromApi?.data?.trailerUrl?.substringAfterLast("/")
-                val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(VIDEO_ID, videoId) }
+                val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(KEY_YOUTUBE_VIDEO_ID, videoId) }
                 startActivity(intent)
             }
         }
@@ -263,8 +263,8 @@ class AnimeDetailFragment : BaseFragment() {
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
             if (anime?.data?.trailerUrl?.contains("www.youtube.com") == true) {
-                val youtubeVideoId = anime.data.trailerUrl.substringAfterLast("/")
-                glide.load(youtubeVideoId.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
+                val youtubeVideoId = anime.data.trailerUrl?.substringAfterLast("/")
+                glide.load(youtubeVideoId?.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
             } else {
                 binding.layoutTrailer.root.gone()
                 binding.tvTrailerTitle.gone()

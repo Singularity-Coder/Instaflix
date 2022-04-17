@@ -34,7 +34,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            multiDexEnabled true
+            multiDexEnabled true // To prevent build errors for skd < 20
             crunchPngs true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -215,9 +215,6 @@ dependencies {
     // Root Check
     implementation 'com.scottyab:rootbeer-lib:0.1.0'
 
-    // Exo Player
-    implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
-
     // JSoup
     implementation 'org.jsoup:jsoup:1.13.1'
 
@@ -241,4 +238,10 @@ dependencies {
     implementation ('com.google.apis:google-api-services-youtube:v3-rev181-1.22.0') {
         exclude group:'com.google.guava'
     }
+
+    // Exo Player
+    implementation "com.google.android.exoplayer:exoplayer:$exo_player_version"
+//    implementation "com.google.android.exoplayer:exoplayer-core:$exo_player_version"
+//    implementation "com.google.android.exoplayer:exoplayer-ui:$exo_player_version"
+//    implementation "com.google.android.exoplayer:exoplayer-dash:$exo_player_version"
 }

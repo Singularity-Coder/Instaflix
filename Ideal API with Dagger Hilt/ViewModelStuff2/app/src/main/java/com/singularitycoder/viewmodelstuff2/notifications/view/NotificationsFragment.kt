@@ -176,8 +176,8 @@ class NotificationsFragment : BaseFragment() {
                         Notification(
                             aniListId = animeData.aniListId,
                             checkThisOut = checkThisOutList[secureRandom.nextInt(8)],
-                            title = animeData.titles.en,
-                            score = animeData.score,
+                            title = animeData.titles?.en,
+                            score = animeData.score ?: 0,
                             coverImage = animeData.coverImage
                         )
                     } ?: emptyList()

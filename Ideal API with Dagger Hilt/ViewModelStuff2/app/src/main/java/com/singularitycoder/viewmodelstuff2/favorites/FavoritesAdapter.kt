@@ -1,35 +1,20 @@
 package com.singularitycoder.viewmodelstuff2.favorites
 
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.drawable.toDrawable
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
-import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutFavoriteAnimeItemBinding
-import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemTopMarginBinding
 import com.singularitycoder.viewmodelstuff2.databinding.ListItemHeaderBinding
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.onSafeClick
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.toIntuitiveDateTime
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import jp.wasabeef.blurry.Blurry
-import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
@@ -48,7 +33,10 @@ class FavoritesAdapter @Inject constructor(val glide: RequestManager) : Recycler
     private val favoritesListDiffer = AsyncListDiffer(this, diffUtil)
     var favoritesList: List<Favorite>
         get() = favoritesListDiffer.currentList
-        set(value) = favoritesListDiffer.submitList(value)
+        set(value) {
+            val listWithDefaultValue = mutableListOf(Favorite()).also { it: MutableList<Favorite> -> it.addAll(value) }
+            favoritesListDiffer.submitList(listWithDefaultValue)
+        }
 
     private var favoritesClickListener: (id: String) -> Unit = {}
 

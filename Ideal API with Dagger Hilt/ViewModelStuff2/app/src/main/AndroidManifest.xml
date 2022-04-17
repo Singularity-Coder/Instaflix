@@ -17,6 +17,12 @@
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
 
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
     <application
         android:name=".AnimeApplication"
         android:allowBackup="false"
@@ -35,10 +41,13 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="allowBackup">
         <activity
-            android:name=".more.view.YoutubeVideoActivity"
-            android:screenOrientation="landscape"
-            android:turnScreenOn="true"
+            android:name=".anime.view.VideoAudioPlayerActivity"
             android:exported="false" />
+        <activity
+            android:name=".more.view.YoutubeVideoActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:turnScreenOn="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -85,9 +94,4 @@
         </receiver>
     </application>
 
-    <queries>
-        <intent>
-            <action android:name="com.google.android.youtube.api.service.START" />
-        </intent>
-    </queries>
 </manifest>

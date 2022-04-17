@@ -33,7 +33,10 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
     private val notificationsListDiffer = AsyncListDiffer(this, diffUtil)
     var notificationsList: List<Notification>
         get() = notificationsListDiffer.currentList
-        set(value) = notificationsListDiffer.submitList(value)
+        set(value) {
+            val listWithDefaultValue = mutableListOf(Notification()).also { it: MutableList<Notification> -> it.addAll(value) }
+            notificationsListDiffer.submitList(listWithDefaultValue)
+        }
 
     private var notificationClickListener: (animeId: String) -> Unit = {}
 

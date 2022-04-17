@@ -49,31 +49,31 @@ data class AnimeData(
     /*@Transient*/
     /*@Expose(serialize = false, deserialize = true)*/
     @Ignore @Skip(serialize = false, deserialize = true) @SerializedName("mal_id") val malId: Long,
-    var format: Int,
-    var status: Int,
-    @Embedded(prefix = "title_") var titles: Titles, // Embedding with a prefix in order to give a unique column name. We can also assign a unique column name in both the data classes but we have to assign it to every field manually. Inestead an embeded prefix is a more easy way to assign a unique prefix to the column name of a table
-    @Embedded(prefix = "desc_") var descriptions: Descriptions, // What Embedded does is attach all the columns of the Descriptions table and appends them to TABLE_ANIME_DATA instead of creating a new table
-    @SerializedName("start_date") var startDate: String,
-    @SerializedName("end_date") var endDate: String,
-    @SerializedName("season_period") var seasonPeriod: Int,
-    @SerializedName("season_year") var seasonYear: Int,
-    @SerializedName("episodes_count") var episodesCount: Int,
-    @SerializedName("episode_duration") var episodeDuration: Int,
-    @SerializedName("trailer_url") var trailerUrl: String,
-    @SerializedName("cover_color") var coverColor: String,
-    @SerializedName("cover_image") var coverImage: String,
-    @SerializedName("banner_image") var bannerImage: String,
-    @SerializedName("weekly_airing_day") var weeklyAiringDay: Int,
-    var genres: List<String>,   // This must have a type converter
-    var score: Int,
-    var id: Int,
-    var prequel: Long,
-    var sequel: Long,
-    var recommendations: List<Int>,
-    @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String = "",
-    @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String = "",
-    @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String = "",
-    @Skip @ColumnInfo(name = "myFavReasonDate", defaultValue = "") var myFavReasonDate: String = "",
+    var format: Int?,
+    var status: Int?,
+    @Embedded(prefix = "title_") var titles: Titles?, // Embedding with a prefix in order to give a unique column name. We can also assign a unique column name in both the data classes but we have to assign it to every field manually. Inestead an embeded prefix is a more easy way to assign a unique prefix to the column name of a table
+    @Embedded(prefix = "desc_") var descriptions: Descriptions?, // What Embedded does is attach all the columns of the Descriptions table and appends them to TABLE_ANIME_DATA instead of creating a new table
+    @SerializedName("start_date") var startDate: String?,
+    @SerializedName("end_date") var endDate: String?,
+    @SerializedName("season_period") var seasonPeriod: Int?,
+    @SerializedName("season_year") var seasonYear: Int?,
+    @SerializedName("episodes_count") var episodesCount: Int?,
+    @SerializedName("episode_duration") var episodeDuration: Int?,
+    @SerializedName("trailer_url") var trailerUrl: String?,
+    @SerializedName("cover_color") var coverColor: String?,
+    @SerializedName("cover_image") var coverImage: String?,
+    @SerializedName("banner_image") var bannerImage: String?,
+    @SerializedName("weekly_airing_day") var weeklyAiringDay: Int?,
+    var genres: List<String>?,   // This must have a type converter
+    var score: Int?,
+    var id: Int?,
+    var prequel: Long?,
+    var sequel: Long?,
+    var recommendations: List<Int>?,
+    @Skip @ColumnInfo(name = "coverImageBase64", defaultValue = "") var coverImageBase64: String? = "",
+    @Skip @ColumnInfo(name = "bannerImageBase64", defaultValue = "") var bannerImageBase64: String? = "",
+    @Skip @ColumnInfo(name = "myFavReason", defaultValue = "") var myFavReason: String? = "",
+    @Skip @ColumnInfo(name = "myFavReasonDate", defaultValue = "") var myFavReasonDate: String? = "",
     @Skip @ColumnInfo(name = "isFavourite", defaultValue = "") var isFav: Boolean = false
 ) : Parcelable {
 

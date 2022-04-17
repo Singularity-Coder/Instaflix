@@ -76,8 +76,8 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
     inner class HomeSpotLightViewHolder(val itemBinding: LayoutHomeAnimeItemSpotlightBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(anime: AnimeData) {
             itemBinding.apply {
-                tvTitle.text = anime.titles.en
-                glide.load(anime.bannerImage).into(ivBannerImage)
+                tvTitle.text = anime.titles?.en
+                glide.load(anime.bannerImage ?: anime.trailerUrl).into(ivBannerImage)
 
                 doAfter(3.seconds()) {
                     itemBinding.root.context ?: return@doAfter
@@ -92,11 +92,11 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
     inner class HomeStandardViewHolder(val itemBinding: LayoutHomeAnimeItemStandardBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(anime: AnimeData) {
             itemBinding.apply {
-                tvTitle.text = if (anime.titles.en.isNullOrBlankOrNaOrNullString()) anime.titles.rj ?: "No Title Available" else anime.titles.en
-                tvDesc.text = if (anime.descriptions.en.isNullOrBlankOrNaOrNullString()) {
-                    anime.descriptions.jp?.trimJunk() ?: "No Description Available"
-                } else anime.descriptions.en?.trimJunk()
-                val rating = (anime.score.div(10F)).div(2F)
+                tvTitle.text = if (anime.titles?.en.isNullOrBlankOrNaOrNullString()) anime.titles?.rj ?: "No Title Available" else anime.titles?.en
+                tvDesc.text = if (anime.descriptions?.en.isNullOrBlankOrNaOrNullString()) {
+                    anime.descriptions?.jp?.trimJunk() ?: "No Description Available"
+                } else anime.descriptions?.en?.trimJunk()
+                val rating = (anime.score?.div(10F))?.div(2F) ?: 0F
                 println("Converted Rating: $rating vs Actual Rating: ${anime.score}")
                 ratingAnime.rating = rating
 

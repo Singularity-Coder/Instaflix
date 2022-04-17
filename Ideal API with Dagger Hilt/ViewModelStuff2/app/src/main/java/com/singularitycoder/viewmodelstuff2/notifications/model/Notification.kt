@@ -17,6 +17,18 @@ data class Notification(
     var coverImageBase64: String = ""
 ) {
 
+    constructor() : this(
+        aniListId = 0L,
+        checkThisOut = "",
+        title = "",
+        score = 0,
+        coverImage = "",
+        date = 0L,
+        desc = "",
+        id = 0,
+        coverImageBase64 = ""
+    )
+
     override fun equals(other: Any?): Boolean {
         return aniListId == (other as? Notification)?.aniListId
     }
