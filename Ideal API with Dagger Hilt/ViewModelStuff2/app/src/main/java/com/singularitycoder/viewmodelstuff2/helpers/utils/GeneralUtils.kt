@@ -15,6 +15,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.SpannableStringBuilder
 import android.util.TimingLogger
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,6 +23,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.DrawableRes
+import androidx.core.text.bold
+import androidx.core.text.color
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,7 +42,9 @@ import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeErrorResponse
+import com.singularitycoder.viewmodelstuff2.anime.model.AnimeStatus
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutCustomToastBinding
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.color
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
 import com.singularitycoder.viewmodelstuff2.more.model.AboutMeErrorResponse
@@ -177,6 +182,7 @@ class GeneralUtils @Inject constructor(
     }
 
     private var toast: Toast? = null
+
     // https://stackoverflow.com/questions/32815407/is-it-normal-to-show-a-single-toast-multiple-times-on-android
     @ExperimentalCoroutinesApi
     fun showToast(
@@ -390,4 +396,19 @@ fun glideImageWithErrHandle(context: Context?, imgUrl: String?, imageView: Image
         })
         .transition(withCrossFade())
         .into(imageView)
+}
+
+// https://stackoverflow.com/questions/14371092/how-to-make-a-specific-text-on-textview-bold
+fun Context.getCustomText(key: String?, value: String?): SpannableStringBuilder {
+    return SpannableStringBuilder()
+        .color(
+            color = color(R.color.title_color),
+            builderAction = {
+                bold {
+                    append(key)
+                }
+            }
+        )
+        .append(" ")
+        .append(value)
 }

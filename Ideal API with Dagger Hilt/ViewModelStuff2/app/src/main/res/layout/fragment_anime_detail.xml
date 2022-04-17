@@ -62,6 +62,7 @@
                 android:text="Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/title_color"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_cover_image"
                 app:layout_constraintTop_toBottomOf="@+id/iv_banner_image" />
@@ -225,6 +226,7 @@
                 android:text="📜   Description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/title_color"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tv_read_desc"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_share" />
@@ -295,6 +297,7 @@
                 android:text="🎬   Trailer"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="@color/title_color"
+                android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_view_genres" />
 
             <include

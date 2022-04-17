@@ -5,11 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.core.text.bold
+import androidx.core.text.color
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.RequestManager
@@ -31,10 +34,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
-import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
-import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceHeight
-import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
-import com.singularitycoder.viewmodelstuff2.helpers.utils.timeNow
+import com.singularitycoder.viewmodelstuff2.helpers.utils.*
 import com.singularitycoder.viewmodelstuff2.more.view.KEY_YOUTUBE_VIDEO_ID
 import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +46,6 @@ import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
-
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -71,9 +70,9 @@ class AnimeDetailFragment : BaseFragment() {
     @Inject
     lateinit var secureRandom: SecureRandom
 
-    var favoriteAnime: Favorite? = null
-    var textToSpeech: TextToSpeech? = null
-    var animeFromApi: Anime? = null
+    private var favoriteAnime: Favorite? = null
+    private var textToSpeech: TextToSpeech? = null
+    private var animeFromApi: Anime? = null
 
     private lateinit var animeId: String
     private lateinit var nnContext: Context
@@ -270,41 +269,41 @@ class AnimeDetailFragment : BaseFragment() {
                 binding.tvTrailerTitle.gone()
             }
 
-            tvStatus.text = String.format(
-                getString(R.string.anime_detail_status_s),
-                AnimeStatus.getText(anime?.data?.status?.toByte()) ?: getString(R.string.na)
+            tvStatus.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_status),
+                value = AnimeStatus.getText(anime?.data?.status?.toByte()) ?: getString(R.string.na)
             )
-            tvFormat.text = String.format(
-                getString(R.string.anime_detail_format_s),
-                AnimeFormats.getText(anime?.data?.format?.toByte()) ?: getString(R.string.na)
+            tvFormat.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_format_s),
+                value = AnimeFormats.getText(anime?.data?.format?.toByte()) ?: getString(R.string.na)
             )
-            tvStartDate.text = String.format(
-                getString(R.string.anime_detail_start_date_s),
-                anime?.data?.startDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
+            tvStartDate.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_start_date_s),
+                value = anime?.data?.startDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
             )
-            tvEndDate.text = String.format(
-                getString(R.string.anime_detail_end_date_s),
-                anime?.data?.endDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
+            tvEndDate.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_end_date_s),
+                value = anime?.data?.endDate?.utcTimeTo(DateType.dd_MMM_yyyy) ?: getString(R.string.na)
             )
-            tvSeasonPeriod.text = String.format(
-                getString(R.string.anime_detail_season_period_s),
-                AnimeSeasonPeriod.getText(anime?.data?.seasonPeriod?.toByte()) ?: getString(R.string.na)
+            tvSeasonPeriod.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_season_period_s),
+                value = AnimeSeasonPeriod.getText(anime?.data?.seasonPeriod?.toByte()) ?: getString(R.string.na)
             )
-            tvSeasonYear.text = String.format(
-                getString(R.string.anime_detail_season_year_s),
-                anime?.data?.seasonYear ?: getString(R.string.na)
+            tvSeasonYear.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_season_year_s),
+                value = (anime?.data?.seasonYear ?: getString(R.string.na)).toString()
             )
-            tvEpisodeCount.text = String.format(
-                getString(R.string.anime_detail_episode_count_s),
-                anime?.data?.episodesCount ?: getString(R.string.na)
+            tvEpisodeCount.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_episode_count_s),
+                value = (anime?.data?.episodesCount ?: getString(R.string.na)).toString()
             )
-            tvEpisodeDuration.text = String.format(
-                getString(R.string.anime_detail_episode_duration_s),
-                anime?.data?.episodeDuration?.toString().plus(" minutes")
+            tvEpisodeDuration.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_episode_duration_s),
+                value = anime?.data?.episodeDuration?.toString().plus(" minutes")
             )
-            tvWeeklyAiringDate.text = String.format(
-                getString(R.string.anime_detail_weekly_airing_date_s),
-                AnimeWeeklyAiringDay.getText(anime?.data?.weeklyAiringDay?.toByte()) ?: getString(R.string.na)
+            tvWeeklyAiringDate.text = nnContext.getCustomText(
+                key = getString(R.string.anime_detail_weekly_airing_date_s),
+                value = AnimeWeeklyAiringDay.getText(anime?.data?.weeklyAiringDay?.toByte()) ?: getString(R.string.na)
             )
 
             anime?.data?.genres?.forEach {

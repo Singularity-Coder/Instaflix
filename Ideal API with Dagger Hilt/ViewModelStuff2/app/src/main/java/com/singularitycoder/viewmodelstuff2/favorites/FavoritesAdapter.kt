@@ -90,25 +90,10 @@ class FavoritesAdapter @Inject constructor(val glide: RequestManager) : Recycler
 
                 glide.load(favorite.coverImage).into(ivBannerImage)
 
-                /**
-                * Center crop scale type is what allows this view to expand to full dimensions. What an amazing fluke
-                 * */
-                glide.asBitmap().load(favorite.coverImage).into(object : CustomTarget<Bitmap>(2, 2) { // LOL. Tried so hard with Blurry to get blur n it was as simple as reducing bitmap size to get the blur.
+                /** Center crop scale type is what allows this view to expand to full dimensions. What an amazing fluke **/
+                glide.asBitmap().load(favorite.coverImage).into(object : CustomTarget<Bitmap>(2, 2) {
                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                         ivContentHolder.setImageDrawable(BitmapDrawable(itemBinding.root.context.resources, resource))
-//                        Palette.Builder(resource).generate { it: Palette? ->
-//                            it?.let { palette ->
-//                                val dominantColor = palette.getDominantColor(ContextCompat.getColor(itemBinding.root.context, R.color.purple_200))
-//                                ivContentHolder.setImageDrawable(dominantColor)
-//                                Blurry.with(itemBinding.root.context)
-//                                    .radius(25)
-//                                    .sampling(8)
-//                                    .color(dominantColor)
-//                                    .async()
-//                                    .capture(ivContentHolder)
-//                                    .into(ivContentHolder)
-//                            }
-//                        }
                     }
 
                     override fun onLoadCleared(placeholder: Drawable?) {
@@ -118,24 +103,6 @@ class FavoritesAdapter @Inject constructor(val glide: RequestManager) : Recycler
                         ivContentHolder.setImageDrawable(null)
                     }
                 })
-
-//                val bitmap = Blurry.with(itemBinding.root.context)
-//                    .radius(25)
-//                    .sampling(8)
-////                    .color(dominantColor)
-//                    .capture(ivContentHolder).get()
-//                ivContentHolder.setImageDrawable(BitmapDrawable(itemBinding.root.context.resources, bitmap))
-
-//                Picasso.get().load(favorite.coverImage)
-//                    .into(ivContentHolder, object : Callback {
-//                        override fun onSuccess() {
-//                        }
-//
-//                        override fun onError(e: Exception?) = Unit
-//                    })
-
-//                Blurry.with(itemBinding.root.context).from(favorite.blurredCoverBitmap).into(ivContentHolder)
-//                ivContentHolder.setImageDrawable(BitmapDrawable(itemBinding.root.context.resources, favorite.blurredCoverBitmap))
 
                 root.onSafeClick {
                     favoritesClickListener.invoke(favorite.id.toString())

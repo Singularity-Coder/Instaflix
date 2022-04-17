@@ -87,55 +87,6 @@ class FavoritesFragment : BaseFragment() {
     private fun subscribeToObservers() {
         favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
             it ?: return@observe
-//            val coverImageViewsList = it.map { it: Favorite ->
-//                val imageView = ImageView(nnContext)
-//                glide.load(it.coverImage).into(imageView)
-//                imageView
-//            }
-//
-//            CoroutineScope(Default).launch {
-//                val blurredBitmapsList = coverImageViewsList.map { it: ImageView ->
-//                    val bitmap = try {
-//                        Blurry.with(nnContext)
-//                            .radius(10)
-//                            .sampling(8)
-//                            .capture(it).get()
-//                    } catch (e: Exception) {
-//                        null
-//                    }
-//                    bitmap
-//                }
-//
-//                favoritesAdapter.favoritesList = it.mapIndexed { index: Int, favorite: Favorite ->
-//                    favorite.apply {
-//                        blurredCoverBitmap = blurredBitmapsList[index]
-//                    }
-//                }
-
-//                favoritesAdapter.favoritesList = it.map { it: Favorite ->
-//
-////                    withContext(Main) {
-////                        glide.load(it.coverImage).into(binding.ivBlur)
-////                    }
-//
-//                    val bitmap = try {
-//                        Blurry.with(nnContext)
-//                            .radius(10)
-//                            .sampling(8)
-//                            .capture(binding.ivBlur).get()
-//                    } catch (e: Exception) {
-//                        null
-//                    }
-//                    it.apply {
-//                        blurredCoverBitmap = bitmap
-//                    }
-//                }
-
-//                withContext(Main) {
-//                    binding.rvFavorites.adapter?.notifyDataSetChanged()
-//                }
-//            }
-
             favoritesAdapter.favoritesList = it.sortedBy { it.date }.reversed()
             binding.rvFavorites.adapter?.notifyDataSetChanged()
             binding.swipeRefreshFavorites.isRefreshing = false

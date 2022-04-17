@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.net.Uri
@@ -23,6 +24,7 @@ import androidx.annotation.RawRes
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.palette.graphics.Palette
 import com.google.gson.Gson
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.contacts.Contact
@@ -270,7 +272,7 @@ fun String?.utcTimeTo(type: DateType): String? {
                 timeZone = TimeZone.getTimeZone("UTC")
             }
             val outputFormat = SimpleDateFormat(type.value, Locale.getDefault())
-            val date = inputFormat.parse(this)
+            val date = inputFormat.parse(this ?: "")
             outputFormat.format(date!!)
         } catch (e: Exception) {
             Timber.i(e)
@@ -285,4 +287,12 @@ fun String.toYoutubeThumbnailUrl(): String {
     return imageUrl
 }
 
-
+fun Bitmap.getDominantColor(context: Context): Int? {
+    var dominantColor: Int? = null
+    Palette.Builder(this).generate { it: Palette? ->
+        it ?: return@generate
+        val defaultColor = ContextCompat.getColor(context, R.color.purple_200)
+        dominantColor = it.getDominantColor(defaultColor)
+    }
+    return dominantColor
+}

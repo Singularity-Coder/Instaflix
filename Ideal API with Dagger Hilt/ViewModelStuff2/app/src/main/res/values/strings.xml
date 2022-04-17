@@ -11,15 +11,15 @@
     <string name="no_desc_check_later">This anime doesn\'t seem to have any description right now. Check again later!</string>
     <string name="description">Description</string>
 
-    <string name="anime_detail_status_s"><strong>📣&#160;&#160;&#160;Status:</strong> %s</string>
-    <string name="anime_detail_format_s"><strong>📀&#160;&#160;&#160;Format:</strong>  %s</string>
-    <string name="anime_detail_start_date_s"><strong>🐣&#160;&#160;&#160;Start Date:</strong>  %s</string>
-    <string name="anime_detail_end_date_s"><strong>⚰️&#160;&#160;&#160;End Date:</strong>  %s</string>
-    <string name="anime_detail_season_period_s"><strong>⏳&#160;&#160;&#160;Season Period:</strong>  %s</string>
-    <string name="anime_detail_season_year_s"><strong>🗓&#160;&#160;&#160;Season Year:</strong>  %s</string>
-    <string name="anime_detail_episode_count_s"><strong>#️⃣&#160;&#160;&#160;Episode Count:</strong>  %s</string>
-    <string name="anime_detail_episode_duration_s"><strong>⏰&#160;&#160;&#160;Episode Duration:</strong>  %s</string>
-    <string name="anime_detail_weekly_airing_date_s"><strong>📅&#160;&#160;&#160;Weekly Airing Date:</strong>  %s</string>
+    <string name="anime_detail_status">📣&#160;&#160;&#160;Status:</string>
+    <string name="anime_detail_format_s">📀&#160;&#160;&#160;Format:</string>
+    <string name="anime_detail_start_date_s">🐣&#160;&#160;&#160;Start Date:</string>
+    <string name="anime_detail_end_date_s">⚰️&#160;&#160;&#160;End Date:</string>
+    <string name="anime_detail_season_period_s">⏳&#160;&#160;&#160;Season Period:</string>
+    <string name="anime_detail_season_year_s">🗓&#160;&#160;&#160;Season Year:</string>
+    <string name="anime_detail_episode_count_s">#️⃣&#160;&#160;&#160;Episode Count:</string>
+    <string name="anime_detail_episode_duration_s">⏰&#160;&#160;&#160;Episode Duration:</string>
+    <string name="anime_detail_weekly_airing_date_s">📅&#160;&#160;&#160;Weekly Airing Date:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

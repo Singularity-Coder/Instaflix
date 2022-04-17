@@ -227,9 +227,6 @@ dependencies {
     // Palette
     implementation 'androidx.palette:palette-ktx:1.0.0'
 
-    // Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
     // Youtube APIs
     implementation fileTree(dir: 'libs', include: ['*.jar']) // Includes all jars in the libs path
     // implementation files('libs/YouTubeAndroidPlayerApi.jar')
