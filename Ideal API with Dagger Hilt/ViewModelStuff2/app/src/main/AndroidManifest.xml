@@ -41,7 +41,7 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="allowBackup">
         <activity
-            android:name=".anime.view.VideoAudioPlayerActivity"
+            android:name=".anime.view.ExoPlayerActivity"
             android:exported="false" />
         <activity
             android:name=".more.view.YoutubeVideoActivity"

@@ -8,7 +8,8 @@
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="2dp"
     android:orientation="vertical"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,6 +21,31 @@
             android:layout_height="208dp"
             android:src="@color/black"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_trailer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:elevation="8dp"
+            android:paddingStart="16dp"
+            android:paddingBottom="16dp"
+            android:text="Trailer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail" />
+
+        <View
+            android:id="@+id/view_black_fade"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:alpha="0.6"
+            android:background="@drawable/background_black_gradient_fade"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_play"

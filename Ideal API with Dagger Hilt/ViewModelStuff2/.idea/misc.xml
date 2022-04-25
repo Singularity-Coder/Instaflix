@@ -9,6 +9,9 @@
         <entry key="app/src/main/res/drawable-v24/bottom_nav_color_states.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/account_multiple_plus_outline.xml" value="0.1135" />
+        <entry key="app/src/main/res/drawable/background_black_gradient_fade.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/background_round_view.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/background_rounded_bordered_share_icons.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/background_rounded_share_icons.xml" value="0.183" />
         <entry key="app/src/main/res/drawable/background_rounded_shimmer_view.xml" value="0.2075" />
         <entry key="app/src/main/res/drawable/background_rounded_toast.xml" value="0.125" />
@@ -28,12 +31,14 @@
         <entry key="app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_baseline_unlike_border.xml" value="0.183" />
+        <entry key="app/src/main/res/drawable/ic_baseline_unlike_border_white.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/ic_launcher.xml" value="0.1235" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_menu_selected.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_outline_home_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_round_favorite_24.xml" value="0.24375" />
+        <entry key="app/src/main/res/drawable/ic_round_favorite_white_24.xml" value="0.1335" />
         <entry key="app/src/main/res/drawable/ic_round_group_add_24.xml" value="0.1135" />
         <entry key="app/src/main/res/drawable/ic_round_home_24.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable/ic_round_menu_24.xml" value="0.24375" />
@@ -47,12 +52,13 @@
         <entry key="app/src/main/res/drawable/whatsapp.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
+        <entry key="app/src/main/res/layout/activity_video_audio_player.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_youtube_video.xml" value="0.11203703703703703" />
         <entry key="app/src/main/res/layout/fav_anime_fragment.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2386206364286118" />
         <entry key="app/src/main/res/layout/fragment_about_me.xml" value="0.22088353413654618" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
-        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.14881780250347706" />
+        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.1514497223935842" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_fav_anime.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.1" />
@@ -78,6 +84,7 @@
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loader.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loading.xml" value="0.375" />
         <entry key="app/src/main/res/layout/list_item_header.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_recommendation.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_video.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.22760416666666666" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1235" />
@@ -90,5 +97,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

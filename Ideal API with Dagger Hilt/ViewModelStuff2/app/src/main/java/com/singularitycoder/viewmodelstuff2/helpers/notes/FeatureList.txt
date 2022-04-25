@@ -7,11 +7,14 @@ Fav Anime App Features
 
 // TODO
 0. Search with filters, favorites, Youtube player
+Genres - horizontal list for each genre
+Discover - Vertical playlist of all anime episodes shuffled and autoplayed on scroll
 1. Github graph ql api views
 4. Tests
 8. Room Android doc - Room Foreign Key and Reationships
 12. Implement Timber
 13. Custom Views - heart icon, 5 stars
+
 
 status
 format

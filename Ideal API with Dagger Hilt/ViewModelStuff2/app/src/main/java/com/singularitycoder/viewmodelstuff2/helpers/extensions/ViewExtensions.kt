@@ -208,7 +208,7 @@ fun AppCompatActivity.avoidScreenShots() {
     )
 }
 
-fun AppCompatActivity.transparentStatusBar() {
+fun AppCompatActivity.setTransparentStatusBar() {
     window.setFlags(
         WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
         WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN

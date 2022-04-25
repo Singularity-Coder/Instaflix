@@ -9,6 +9,7 @@ import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -20,8 +21,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import com.scottyab.rootbeer.RootBeer
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
+import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
 import com.singularitycoder.viewmodelstuff2.anime.view.HomeFragment
-import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityMainBinding
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesFragment
 import com.singularitycoder.viewmodelstuff2.helpers.ShakeDetector
@@ -46,10 +47,10 @@ import kotlinx.coroutines.Dispatchers.Main
 import timber.log.Timber
 import javax.inject.Inject
 
+
 // Today
 // Fix Custom Rating
-// Setup broadcast receiver
-// Work Manager
+// Work Manager with result
 // Foreground Service with large notif
 // Tests
 
@@ -133,6 +134,15 @@ class MainActivity : AppCompatActivity() {
         setUpShakeDetectionSensor()
         startAnimeForegroundService()
         setUpBlurEffect()
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.fragments.lastOrNull() is AnimeDetailFragment) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                window.statusBarColor = Color.TRANSPARENT
+            } else {
+                window.decorView.systemUiVisibility = View.STATUS_BAR_VISIBLE
+                window.statusBarColor = color(R.color.purple_700)
+            }
+        }
     }
 
     override fun onResume() {

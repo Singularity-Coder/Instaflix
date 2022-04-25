@@ -22,30 +22,30 @@ import javax.inject.Inject
 
 class NetworkState @Inject constructor(val context: Context) {
 
-    private val conMan = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+    val conMan = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
 
-    private val oldActiveNet = conMan?.activeNetworkInfo
-    private val oldWifi = conMan?.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-    private val oldMobile = conMan?.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-    private val oldEthernet = conMan?.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET)
-    private val hasOldWifi = null != oldWifi && oldWifi.isConnected
-    private val hasOldCellular = null != oldMobile && oldMobile.isConnected
-    private val hasOldEthernet = null != oldEthernet && oldEthernet.isConnected
+    val oldActiveNet = conMan?.activeNetworkInfo
+    val oldWifi = conMan?.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+    val oldMobile = conMan?.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+    val oldEthernet = conMan?.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET)
+    val hasOldWifi = null != oldWifi && oldWifi.isConnected
+    val hasOldCellular = null != oldMobile && oldMobile.isConnected
+    val hasOldEthernet = null != oldEthernet && oldEthernet.isConnected
 
-    @RequiresApi(Build.VERSION_CODES.M) private val activeNet = conMan?.activeNetwork
-    @RequiresApi(Build.VERSION_CODES.M) private val netCap = conMan?.getNetworkCapabilities(activeNet)
-    @RequiresApi(Build.VERSION_CODES.M) private val hasWifi = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
-    @RequiresApi(Build.VERSION_CODES.M) private val hasCellular = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
-    @RequiresApi(Build.VERSION_CODES.M) private val hasEthernet = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ?: false
+    @RequiresApi(Build.VERSION_CODES.M) val activeNet = conMan?.activeNetwork
+    @RequiresApi(Build.VERSION_CODES.M) val netCap = conMan?.getNetworkCapabilities(activeNet)
+    @RequiresApi(Build.VERSION_CODES.M) val hasWifi = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
+    @RequiresApi(Build.VERSION_CODES.M) val hasCellular = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
+    @RequiresApi(Build.VERSION_CODES.M) val hasEthernet = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ?: false
 
-    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+    var networkCallback: ConnectivityManager.NetworkCallback? = null
 
-    fun listenToNetworkChangesAndDoWork(
-        onlineWork: () -> Unit = {},
-        onlineWifiWork: () -> Unit = {},
-        onlineCellularWork: () -> Unit = {},
-        onlineEthernetWork: () -> Unit = {},
-        offlineWork: () -> Unit
+    inline fun listenToNetworkChangesAndDoWork(
+        crossinline onlineWork: () -> Unit = {},
+        crossinline onlineWifiWork: () -> Unit = {},
+        crossinline onlineCellularWork: () -> Unit = {},
+        crossinline onlineEthernetWork: () -> Unit = {},
+        crossinline offlineWork: () -> Unit
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (null == activeNet || null == netCap) {
@@ -121,7 +121,7 @@ class NetworkState @Inject constructor(val context: Context) {
 
     // Referred https://stackoverflow.com/ a long time ago - Checks active internet connection by pinging to Google servers
     // TODO Do in background
-    private fun hasActiveInternet(): Boolean {
+    fun hasActiveInternet(): Boolean {
             if (isOffline()) return false
             try {
                 val url = URL("https://clients3.google.com/generate_204")

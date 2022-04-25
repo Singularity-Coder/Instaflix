@@ -232,8 +232,8 @@ dependencies {
     // implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
     // Youtube Service
-    implementation ('com.google.apis:google-api-services-youtube:v3-rev181-1.22.0') {
-        exclude group:'com.google.guava'
+    implementation('com.google.apis:google-api-services-youtube:v3-rev181-1.22.0') {
+        exclude group: 'com.google.guava'
     }
 
     // Exo Player
@@ -241,4 +241,22 @@ dependencies {
 //    implementation "com.google.android.exoplayer:exoplayer-core:$exo_player_version"
 //    implementation "com.google.android.exoplayer:exoplayer-ui:$exo_player_version"
 //    implementation "com.google.android.exoplayer:exoplayer-dash:$exo_player_version"
+
+    // exoplayer
+//    implementation "com.google.android.exoplayer:exoplayer:2.17.1"
+
+    // exoplayer core support
+//    implementation "com.google.android.exoplayer:exoplayer-core:2.17.1"
+
+    // dash support in our exoplayer.
+//    implementation "com.google.android.exoplayer:exoplayer-dash:2.17.1"
+
+    // hls support in exoplayer.
+//    implementation "com.google.android.exoplayer:exoplayer-hls:2.17.1"
+
+    // smooth streaming of video in our exoplayer.
+//    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:2.17.1"
+
+    // generating default ui of exoplayer
+//    implementation "com.google.android.exoplayer:exoplayer-ui:2.17.1"
 }

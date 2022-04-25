@@ -2,19 +2,18 @@ package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
-import androidx.core.text.bold
-import androidx.core.text.color
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +23,7 @@ import com.like.OnLikeListener
 import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
+import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
@@ -38,10 +38,13 @@ import com.singularitycoder.viewmodelstuff2.helpers.utils.*
 import com.singularitycoder.viewmodelstuff2.more.view.KEY_YOUTUBE_VIDEO_ID
 import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoActivity
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
@@ -69,6 +72,12 @@ class AnimeDetailFragment : BaseFragment() {
 
     @Inject
     lateinit var secureRandom: SecureRandom
+
+    @Inject
+    lateinit var animeDao: AnimeDao
+
+    @Inject
+    lateinit var recommendationsAdapter: RecommendationsAdapter
 
     private var favoriteAnime: Favorite? = null
     private var textToSpeech: TextToSpeech? = null
@@ -98,6 +107,7 @@ class AnimeDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         getIntentData()
         setUpDefaults()
+        setUpRecyclerView()
         subscribeToObservers()
         setUpUserActionListeners()
         loadAnime()
@@ -114,9 +124,29 @@ class AnimeDetailFragment : BaseFragment() {
         binding.tvDesc.maxLines = 4
         binding.layoutTrailer.apply {
             tvVideoTitle.gone()
+            ivContentHolder.gone()
             ivPlay.visible()
+            tvTrailer.visible()
+            viewBlackFade.visible()
             ivThumbnail.layoutParams.height = deviceWidth() / 2
             ivThumbnail.scaleType = ImageView.ScaleType.CENTER_CROP
+        }
+        binding.apply {
+            ivShare.layoutParams.width = deviceWidth() / 5
+            ivBarcode.layoutParams.width = deviceWidth() / 5
+            llLike.layoutParams.width = deviceWidth() / 5
+        }
+        binding.tvMoreLikeThis.text = "More like this"
+        binding.tvEpisodes.text = "Episodes"
+        binding.tvTrailerTitle.text = "Trailer"
+        binding.tvDescTitle.text = "Description"
+        nnActivity.findViewById<CardView>(R.id.card_bottom_nav).gone()
+    }
+
+    private fun setUpRecyclerView() {
+        binding.rvRecommendations.apply {
+            layoutManager = LinearLayoutManager(nnContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = recommendationsAdapter
         }
     }
 
@@ -166,15 +196,15 @@ class AnimeDetailFragment : BaseFragment() {
 
     private fun setUpUserActionListeners() {
         binding.apply {
-            ivContacts.onSafeClick {
-                nnContext.shareSmsToAll()
-            }
-            ivSms.onSafeClick {
-                nnContext.shareViaSms(phoneNum = "0000000000")
-            }
-            ivWhatsapp.onSafeClick {
-                nnContext.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
-            }
+//            ivContacts.onSafeClick {
+//                nnContext.shareSmsToAll()
+//            }
+//            ivSms.onSafeClick {
+//                nnContext.shareViaSms(phoneNum = "0000000000")
+//            }
+//            ivWhatsapp.onSafeClick {
+//                nnContext.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
+//            }
             ivShare.onSafeClick {
                 nnActivity.shareViaApps(
                     imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
@@ -183,9 +213,9 @@ class AnimeDetailFragment : BaseFragment() {
                     subtitle = "Fav Anime App"
                 )
             }
-            ivEmail.onSafeClick {
-                nnContext.shareViaEmail(email = "Friend's Email", subject = "Fav Anime App", desc = "Fav Anime App")
-            }
+//            ivEmail.onSafeClick {
+//                nnContext.shareViaEmail(email = "Friend's Email", subject = "Fav Anime App", desc = "Fav Anime App")
+//            }
         }
 
         binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
@@ -197,7 +227,11 @@ class AnimeDetailFragment : BaseFragment() {
             startTextToSpeech()
         }
 
-        binding.tvLikeState.onSafeClick {
+//        binding.tvLikeState.onSafeClick {
+//            binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
+//        }
+
+        binding.llLike.onSafeClick {
             binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
         }
 
@@ -205,22 +239,22 @@ class AnimeDetailFragment : BaseFragment() {
         // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
-                binding.tvLikeState.text = "Remove"
+//                binding.tvLikeState.text = "Remove"
                 favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
-                binding.tvLikeState.text = "Add to Favorites"
+//                binding.tvLikeState.text = "Add to Favorites"
                 favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }
         })
 
         // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
-        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
-            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
-            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
-        }
+//        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+//            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
+//            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
+//            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
+//        }
 
         binding.layoutTrailer.root.onSafeClick {
             if (animeFromApi?.data?.trailerUrl?.contains("www.youtube.com") == true) {
@@ -228,6 +262,10 @@ class AnimeDetailFragment : BaseFragment() {
                 val intent = Intent(nnActivity, YoutubeVideoActivity::class.java).apply { putExtra(KEY_YOUTUBE_VIDEO_ID, videoId) }
                 startActivity(intent)
             }
+        }
+
+        recommendationsAdapter.setRecommendationsItemClickListener { animeId: String ->
+            nnActivity.showAnimeDetailsOfThis(animeId)
         }
     }
 
@@ -247,17 +285,29 @@ class AnimeDetailFragment : BaseFragment() {
     private fun updateUI(anime: Anime?) {
         binding.apply {
             glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
-            if (anime?.data?.bannerImage.isNullOrBlankOrNaOrNullString()) {
-                binding.ivBannerImage.gone()
-                binding.cardCoverImage.setMargins(start = 16.dpToPx(), top = 16.dpToPx(), end = 0, bottom = 0)
-            } else {
-                glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
+
+            doAfter(1.seconds()) {
+                Blurry.with(nnContext)
+                    .radius(25)
+                    .sampling(4)
+                    .animate(500)
+                    .capture(binding.ivCoverImage)
+                    .getAsync {
+                        binding.ivBlurBackground.setImageDrawable(BitmapDrawable(resources, it))
+                    }
             }
-            if (binding.ivBannerImage.visibility == View.GONE) {
-                binding.viewBannerWhiteFade.gone()
-            } else binding.viewBannerWhiteFade.visible()
+//            if (anime?.data?.bannerImage.isNullOrBlankOrNaOrNullString()) {
+//                binding.ivBannerImage.gone()
+//                binding.cardCoverImage.setMargins(start = 16.dpToPx(), top = 16.dpToPx(), end = 0, bottom = 0)
+//            } else {
+//                glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
+//            }
+//            if (binding.ivBannerImage.visibility == View.GONE) {
+//                binding.viewBannerWhiteFade.gone()
+//            } else binding.viewBannerWhiteFade.visible()
             tvTitle.text = anime?.data?.titles?.en?.trimJunk() ?: anime?.data?.titles?.rj?.trimJunk() ?: getString(R.string.na)
             tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: anime?.data?.descriptions?.jp?.trimJunk() ?: getString(R.string.na)
+            if (anime?.data?.descriptions?.en?.isBlank() == true) cardDesc.gone()
             val rating = (anime?.data?.score?.div(10F))?.div(2F) ?: 0F
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
@@ -311,11 +361,32 @@ class AnimeDetailFragment : BaseFragment() {
                     text = it
                     isCheckable = false
                     isClickable = false
+//                    chipBackgroundColor = ColorStateList.valueOf(nnContext.color(R.color.white))
+//                    setTextColor(nnContext.color(R.color.purple_500))
+                    elevation = 4f
                     onSafeClick {
-                        // call filter api with grid view
+                        // call genres api with grid view 3 columns
                     }
                 }
                 binding.chipGroupGenre.addView(chip)
+            }
+
+            CoroutineScope(IO).launch {
+                val recommendationsList = ArrayList<AnimeData?>()
+                anime?.data?.recommendations?.forEach { animeId: Int ->
+                    recommendationsList.add(animeDao.getAnimeById(animeId.toString()))
+                }
+
+                withContext(Main) {
+                    recommendationsAdapter.recommendationsList = recommendationsList.toList().mapNotNull { it }
+                    if (recommendationsList.isNullOrEmpty()) {
+                        binding.rvRecommendations.gone()
+                        binding.tvMoreLikeThis.gone()
+                    } else {
+                        binding.rvRecommendations.visible()
+                        binding.tvMoreLikeThis.visible()
+                    }
+                }
             }
         }
     }
@@ -326,7 +397,7 @@ class AnimeDetailFragment : BaseFragment() {
             width = deviceWidth() / 3
             height = deviceHeight() / 4
         }
-        binding.ivBannerImage.layoutParams.height = (deviceHeight() / 3.5).toInt()
+//        binding.ivBannerImage.layoutParams.height = (deviceHeight() / 3.5).toInt()
     }
 
     private fun initTextToSpeech() {

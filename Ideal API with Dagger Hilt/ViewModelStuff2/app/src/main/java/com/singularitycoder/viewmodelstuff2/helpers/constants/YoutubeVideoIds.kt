@@ -32,9 +32,36 @@ val animeFightsList = listOf(
 )
 
 val animeMusicList = listOf(
+    YoutubeVideo(title = "Gundam Unicorn - 1ST MOV. :BANSHEE", videoId = "BUXh_AQ5xvI"),
+    YoutubeVideo(title = "Gundam Unicorn - MAD-NUG", videoId = "ZcLoj0qoe_g"),
+    YoutubeVideo(title = "Gundam Unicorn - MOBILE SUIT ＜W-REC MIX＞", videoId = "6Z1e-3dPiTk"),
+    YoutubeVideo(title = "Gundam Unicorn - U.C.0096", videoId = "xMMIiuefw8k"),
+    YoutubeVideo(title = "Gundam Unicorn - UNICORN", videoId = "hAqqAwhfet8"),
+    YoutubeVideo(title = "Gundam Unicorn - MOBILE SUIT", videoId = "afuVyoW15HM"),
+    YoutubeVideo(title = "Gundam Unicorn - LAPLACE", videoId = "fWjLln3W2xI"),
+    YoutubeVideo(title = "Gundam Unicorn - FULL-FRONTAL", videoId = "xnx2WLiLrDM"),
+    YoutubeVideo(title = "Gundam Unicorn - LIFE & DEATH", videoId = "s5UgiiI9u84"),
+    YoutubeVideo(title = "Gundam Unicorn - RX-0", videoId = "bokihr6DzIw"),
+    YoutubeVideo(title = "Gundam Unicorn - ZERO GRAVITY", videoId = "rq2qiODoKus"),
+    YoutubeVideo(title = "Gundam Unicorn - 2ND MOV. :PSYCHO-FIELD", videoId = "9uP_sNt5QGw"),
+    YoutubeVideo(title = "Gundam Unicorn - 3RD MOV. :ANGELO", videoId = "E7AqQLhQgdQ"),
+    YoutubeVideo(title = "Gundam Unicorn - 5TH MOV. :GUNDAM", videoId = "IbyeO2nkm9I"),
+    YoutubeVideo(title = "Gundam Unicorn - 1stMob. :2009522or0311", videoId = "HL78LkCCGcg"),
+    YoutubeVideo(title = "Gundam Unicorn - 2ndMob. :MSGUCEP7", videoId = "M5kv6tHHkIQ"),
+    YoutubeVideo(title = "Gundam Unicorn - 6thMob. :UNICORN GUNDAM", videoId = "4TgW2Lq9Wv8"),
+    YoutubeVideo(title = "Gundam Unicorn - 8thMob. :BEGINNING ＜ORCH-VER＞", videoId = "KyCuNKwxwlo"),
+    YoutubeVideo(title = "Sawano Hiroyuki Playlist - Avid, Tranquility, CRY, CRYst-Alise, e of s, ViEW, narrative, ninelie ＜cry-v＞, Binary Star, Unti-L, Cage, 0.vers, oldToday, mot1on, No differences, Till I, scaPEGoat", videoId = "PUSkqc1amgI"),
+    YoutubeVideo(title = "Sawano Hiroyuki 2nd Playlist", videoId = "388h287dOWc"),
+    YoutubeVideo(title = "Sirius the Jaeger - Definition of Fate", videoId = "3bhJ3DC789g"),
+    YoutubeVideo(title = "Sirius the Jaeger - Rare Occasions", videoId = "JdNB9sCQ_fo"),
     YoutubeVideo(title = "Ost Anne Happy - Michino Timothy Kimino Kimochi", videoId = "815kbvmNWNM"),
     YoutubeVideo(title = "Aimer - Am02:00", videoId = "-Hn6O-WvD7o"),
     YoutubeVideo(title = "Aimer - Even Heaven", videoId = "BOGoJYZWmuk"),
+    YoutubeVideo(title = "Aimer - Re I Am", videoId = "YyZdbDEgK50"),
+    YoutubeVideo(title = "Aimer - StarRingChild", videoId = "cmXW3qfhT60"),
+    YoutubeVideo(title = "Aimer - Higher Ground", videoId = "w_FeX0Z8JAo"),
+    YoutubeVideo(title = "Aimer - Kyoukara Omoide", videoId = "ImRjy0vgYoI"),
+    YoutubeVideo(title = "Aimer - Kataomoi(Unrequited Love)", videoId = "F_62fr-I3E4"),
     YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0"),
     YoutubeVideo(title = "Attack on Titan - Reiner and Bertholdt's Transformation Theme", videoId = "rdml5r6Y_g4"),
     YoutubeVideo(title = "The Seven Deadly Sins - Here Comes The Jikkai · KOHTA YAMAMOTO", videoId = "VMZTkvnRUPE"),
@@ -45,6 +72,13 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Tower of God - Irregular God", videoId = "ENCJrayjnjE"),
     YoutubeVideo(title = "Tower of God - Alita", videoId = "elGoXAIsddM"),
     YoutubeVideo(title = "Tower of God - Berserker Bam", videoId = "BNZerdoRl_Q"),
+    YoutubeVideo(title = "Megalo Box - MEGALOBOX", videoId = "Pxg9s9OD-qU"),
+    YoutubeVideo(title = "Megalo Box - Enter The Arena", videoId = "rqUCKw13D0Y"),
+    YoutubeVideo(title = "Uchouten Kazoku - Kakusanakute mo li ja nai ka", videoId = "thiLdlj0Oqk"),
+    YoutubeVideo(title = "Uchouten Kazoku - Suibun Okiniiri no You desu", videoId = "RJFwlHyGAsc"),
+    YoutubeVideo(title = "Uchouten Kazoku - Ebisugawa no Musume, Kaisei", videoId = "xplxAEr0xG0"),
+    YoutubeVideo(title = "Uchouten Kazoku - Hodo Hodo no Eikou are", videoId = "mIjOgDMpMkU"),
+    YoutubeVideo(title = "Uchouten Kazoku - Que Sera Sera (TV Size)", videoId = "9v2DACnQ7KE"),
 )
 
 val epicAnimeMomentsList = listOf(
@@ -58,6 +92,7 @@ val epicAnimeMomentsList = listOf(
     YoutubeVideo(title = "The Rumbling Begins - Attack on Titan Season 4 Episode 5", videoId = "Uwza8rHaPzw"),
     YoutubeVideo(title = "Shingeki no Kyojin - Eren blocks gate with boulder", videoId = "iaLJ1Jk35lU"),
     YoutubeVideo(title = "Shingeki no Kyojin - Eren Transforms - Willy Tybur Speech: The Final Season", videoId = "pR3KdTbbBoM"),
+    YoutubeVideo(title = "Monster - Tenma confronts Johan", videoId = "NMZVAN3UUmg"),
 )
 
 val otherMusicList = listOf(
@@ -77,6 +112,7 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "James Brown - Money Won't Change You", videoId = "8tJ6HyUmjqk"),
     YoutubeVideo(title = "James Brown - Get It Together (Boston) 1968", videoId = "RnO8sHmkbv4"),
     YoutubeVideo(title = "James Brown - I Got The Feeling - Live At The Boston Garden (1968)", videoId = "n0rOo8bX6P8"),
+    YoutubeVideo(title = "James Brown - Gonna Have A Funky Good Time", videoId = "P6iSL1dsShc"),
     YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
     YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
     YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
@@ -85,5 +121,11 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "Lamb of God - Descending", videoId = "_V_ZbJE5oLs"),
     YoutubeVideo(title = "Lamb of God - Blacken the Cursed Sun", videoId = "_oGY68hJbs4"),
     YoutubeVideo(title = "Lamb of God - As the Palaces Burn", videoId = "eWVrdFrpXHE"),
-    YoutubeVideo(title = "Louis Armstrong - What A Wonderful World (Lyrics)", videoId = "A3yCcXgbKrE")
+    YoutubeVideo(title = "Louis Armstrong - What A Wonderful World (Lyrics)", videoId = "A3yCcXgbKrE"),
+    YoutubeVideo(title = "Coldplay - Up&Up", videoId = "BPNTC7uZYrI"),
+    YoutubeVideo(title = "Coldplay - The Scientist", videoId = "RB-RcX5DS5A"),
+    YoutubeVideo(title = "GN Balasubramaniam - Manasu Swadhina", videoId = "IA5Oa6VJAyk"),
+    YoutubeVideo(title = "TM Krishna - Ragam Neelambari", videoId = "ovgWK5aQcpM"),
+    YoutubeVideo(title = "TM Krishna - Manavyalakinchara, Tyagaraja Smaranotsava Sabha Nellore", videoId = "ovgWK5aQcpM"),
+    YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc")
 )
