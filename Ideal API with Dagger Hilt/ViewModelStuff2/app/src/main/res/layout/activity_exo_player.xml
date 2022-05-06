@@ -6,7 +6,7 @@
     tools:context=".anime.view.ExoPlayerActivity">
 
     <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/idExoPlayerVIew"
+        android:id="@+id/exoPlayerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

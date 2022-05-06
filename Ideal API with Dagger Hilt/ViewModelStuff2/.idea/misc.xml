@@ -50,6 +50,7 @@
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/whatsapp.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_exo_player.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/layout/activity_video_audio_player.xml" value="0.1" />
@@ -58,7 +59,7 @@
         <entry key="app/src/main/res/layout/fragment_about.xml" value="0.2386206364286118" />
         <entry key="app/src/main/res/layout/fragment_about_me.xml" value="0.22088353413654618" />
         <entry key="app/src/main/res/layout/fragment_anime.xml" value="0.18796296296296297" />
-        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.1514497223935842" />
+        <entry key="app/src/main/res/layout/fragment_anime_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_fav_anime.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/fragment_favorites.xml" value="0.1" />
@@ -83,6 +84,7 @@
         <entry key="app/src/main/res/layout/layout_shimmer_notification_content_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loader.xml" value="0.19300911854103345" />
         <entry key="app/src/main/res/layout/layout_shimmer_notifications_loading.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/list_item_episode.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/list_item_header.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_recommendation.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_item_video.xml" value="0.19610507246376813" />

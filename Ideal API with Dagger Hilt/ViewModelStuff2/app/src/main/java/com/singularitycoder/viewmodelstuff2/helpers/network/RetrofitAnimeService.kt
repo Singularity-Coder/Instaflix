@@ -79,10 +79,10 @@ interface RetrofitAnimeService {
     )
 
     @GET("/v1/episode/")
-    fun getEpisodeList(
+    suspend fun getEpisodeList(
         @Query("anime_id") animeId: Int,
-        @Query("number") number: Int,
-        @Query("is_dub") isDub: Boolean,
-        @Query("locale") locale: String
-    )
+        @Query("number") number: Int? = null,
+        @Query("is_dub") isDub: Boolean? = null,
+        @Query("locale") locale: String? = null
+    ): Response<EpisodeList>
 }

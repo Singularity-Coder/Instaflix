@@ -1,22 +1,19 @@
 package com.singularitycoder.viewmodelstuff2.anime.view
 
-import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
-import com.google.android.exoplayer2.extractor.ExtractorsFactory
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.trackselection.TrackSelector
-import com.google.android.exoplayer2.upstream.BandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
+import com.google.android.exoplayer2.MediaItem
+import com.singularitycoder.viewmodelstuff2.anime.model.Episode
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityExoPlayerBinding
+import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
+import com.singularitycoder.viewmodelstuff2.more.view.KEY_YOUTUBE_VIDEO_ID
 import dagger.hilt.android.AndroidEntryPoint
 
-// https://www.geeksforgeeks.org/exoplayer-in-android-with-example/
+// https://developer.android.com/codelabs/exoplayer-intro#2
 // https://exoplayer.dev/
 
 // Exo player can do audio and video streaming
@@ -29,11 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ExoPlayerActivity : AppCompatActivity() {
 
-    // creating a variable for exoplayer
-    var exoPlayer: ExoPlayer? = null
-
     // url of video which we are loading.
-    var videoURL = "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
+    private val videoUrl = "https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4"
+    private val audioUrl = "https://storage.googleapis.com/exoplayer-test-media-0/play.mp3"
 
     private lateinit var binding: ActivityExoPlayerBinding
 
@@ -41,42 +36,47 @@ class ExoPlayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityExoPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        avoidScreenShots()
+        fullScreen()
         setUpExoPlayer()
     }
 
-    private fun setUpExoPlayer() {
-        try {
-            // bandwisthmeter is used for getting default bandwidth
-//            val bandwidthMeter: BandwidthMeter = DefaultBandwidthMeter()
-//
-//            // track selector is used to navigate between video using a default seekbar.
-//            val trackSelector: TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandwidthMeter))
-//
-//            // we are adding our track selector to exoplayer.
-//            exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector)
-//
-//            // we are parsing a video url and parsing its video uri.
-//            val videouri: Uri = Uri.parse(videoURL)
-//
-//            // we are creating a variable for datasource factory and setting its user agent as 'exoplayer_view'
-//            val dataSourceFactory = DefaultHttpDataSourceFactory("exoplayer_video")
-//
-//            // we are creating a variable for extractor factory and setting it to default extractor factory.
-//            val extractorsFactory: ExtractorsFactory = DefaultExtractorsFactory()
-//
-//            // we are creating a media source with above variables and passing our event handler as null,
-//            val mediaSource: MediaSource = ExtractorMediaSource(videouri, dataSourceFactory, extractorsFactory, null, null)
-//
-//            // inside our exoplayer view we are setting our player
-//            binding.idExoPlayerVIew.player = exoPlayer
-//
-//            // we are preparing our exoplayer with media source.
-//            exoPlayer!!.prepare(mediaSource)
-//
-//            // we are setting our exoplayer when it is ready.
-//            exoPlayer!!.playWhenReady = true
-        } catch (e: Exception) {
-            Log.e("TAG", "Error : $e")
+    override fun onResume() {
+        super.onResume()
+        binding.root.keepScreenOn = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.root.keepScreenOn = false
+    }
+
+    private fun avoidScreenShots() {
+        window?.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
+    }
+
+    private fun fullScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            @Suppress("DEPRECATION")
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
         }
+    }
+
+    private fun setUpExoPlayer() {
+        val videoUrl = intent.getParcelableArrayListExtra<Episode>(IntentKey.EPISODE_LIST)?.firstOrNull()?.video ?: ""
+        val mediaItem = MediaItem.fromUri(videoUrl)
+        val exoPlayer = ExoPlayer.Builder(this).build()
+        binding.exoPlayerView.player = exoPlayer
+        exoPlayer.addMediaItem(mediaItem)
+        exoPlayer.prepare()
+        exoPlayer.playWhenReady = true // Since we are loading from url, we cannot directly set play()
     }
 }

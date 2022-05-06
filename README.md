@@ -1,6 +1,6 @@
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/logo192.png)
-# Ideal-API-Call
-An opinionated version on the ideal way to call an API!
+# Instaflix
+A video and audio streaming app like Netflix and Spotify
 
 # Screenshots
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/s1.png)

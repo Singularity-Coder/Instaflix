@@ -36,7 +36,9 @@ object IntentKey {
     const val ACTION_NOTIFICATION_BADGE = "INTENT_ACTION_NOTIFICATION_BADGE"
     const val DATA_LOAD_RANDOM_ANIME = "INTENT_DATA_LOAD_RANDOM_ANIME"
     const val DATA_SHOW_NOTIFICATION_BADGE = "INTENT_DATA_SHOW_NOTIFICATION_BADGE"
+    const val ID_OF_ANIME = "INTENT_ID_OF_ANIME"
     const val ANIME_ID = "INTENT_ANIME_ID"
+    const val EPISODE_LIST = "EPISODE_LIST"
     const val NOTIF_WORKER_RANDOM_ANIME = "INTENT_NOTIF_WORKER_RANDOM_ANIME"
     const val NOTIF_FOREGROUND_SERVICE_RANDOM_ANIME = "INTENT_NOTIF_FOREGROUND_SERVICE_RANDOM_ANIME"
 }
@@ -110,10 +112,11 @@ enum class Gender(val value: String) {
 }
 
 //"Fav Anime Memes", "Fav Anime Walls"
-val aboutMeTabsList = listOf(
+val aboutMeTabNamesList = listOf(
     "Fav Anime Fights",
     "Fav Anime Music",
     "Fav Anime Moments",
+    "Fav Moments",
     "Fav Music"
 )
 

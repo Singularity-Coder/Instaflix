@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fav Anime</string>
+    <string name="app_name">Aniflix</string>
     <string name="something_is_wrong">Something is wrong! Please try again.</string>
     <string name="online">Online</string>
     <string name="offline">Offline</string>

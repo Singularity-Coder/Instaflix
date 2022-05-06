@@ -10,8 +10,6 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityYoutubeVideoBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.*
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
-import okhttp3.internal.filterList
-import okhttp3.internal.toImmutableList
 import timber.log.Timber
 
 // https://developers.google.com/youtube/android/player
@@ -74,10 +72,11 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
                 if (!wasRestored) {
                     val youtubeVideoId = intent.getStringExtra(KEY_YOUTUBE_VIDEO_ID)
                     val youtubeVideoIdList = when (intent.getStringExtra(KEY_YOUTUBE_LIST_TYPE)) {
-                        aboutMeTabsList[0] -> animeFightsList.map { it.videoId }
-                        aboutMeTabsList[1] -> animeMusicList.map { it.videoId }
-                        aboutMeTabsList[2] -> epicAnimeMomentsList.map { it.videoId }
-                        aboutMeTabsList[3] -> otherMusicList.map { it.videoId }
+                        aboutMeTabNamesList[0] -> animeFightsList.map { it.videoId }
+                        aboutMeTabNamesList[1] -> animeMusicList.map { it.videoId }
+                        aboutMeTabNamesList[2] -> epicAnimeMomentsList.map { it.videoId }
+                        aboutMeTabNamesList[3] -> otherEpicMomentsList.map { it.videoId }
+                        aboutMeTabNamesList[4] -> otherMusicList.map { it.videoId }
                         else -> emptyList()
                     }
                     if (youtubeVideoIdList.isNullOrEmpty() || youtubeVideoIdList.size == 1) {

@@ -64,6 +64,8 @@ class AnimeViewModel @Inject constructor(
 
     internal fun getFilteredAnimeList(): LiveData<NetRes<AnimeList?>> = filteredAnimeList
 
+    internal fun getEpisodesList(): LiveData<ApiState<EpisodeList?>> = repository.episodesList
+
     // -------------------------------------------------------------------------------------------------------------------------------------------
 
     internal fun loadAnimeList() = viewModelScope.launch {
@@ -172,5 +174,19 @@ class AnimeViewModel @Inject constructor(
 
     internal fun addToFavorites() = viewModelScope.launch {
         repository.getAnimeList()
+    }
+
+    internal fun getEpisodesList(
+        animeId: Int,
+        number: Int?,
+        isDub: Boolean?,
+        locale: String?
+    ) = viewModelScope.launch {
+        repository.getEpisodesList(
+            animeId = animeId,
+            number = number,
+            isDub = isDub,
+            locale = locale
+        )
     }
 }

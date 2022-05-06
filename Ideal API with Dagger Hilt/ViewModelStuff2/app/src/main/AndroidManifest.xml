@@ -42,7 +42,9 @@
         tools:replace="allowBackup">
         <activity
             android:name=".anime.view.ExoPlayerActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:turnScreenOn="true"/>
         <activity
             android:name=".more.view.YoutubeVideoActivity"
             android:exported="false"

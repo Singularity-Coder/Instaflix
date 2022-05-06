@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -18,6 +20,7 @@ import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAboutMeBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.*
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.visible
 import com.singularitycoder.viewmodelstuff2.helpers.network.ApiState
 import com.singularitycoder.viewmodelstuff2.helpers.network.LoadingState
 import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
@@ -96,16 +99,18 @@ class AboutMeFragment : BaseFragment() {
         setUpViewPager()
         subscribeToObservers()
         loadData()
+        setUpUserActionListeners()
     }
 
     private fun setUpViewPager() {
         binding.viewpagerAbout.adapter = YoutubeVideoViewPagerAdapter(fragmentManager = nnActivity.supportFragmentManager, lifecycle = lifecycle)
         TabLayoutMediator(binding.tabLayoutAbout, binding.viewpagerAbout) { tab, position ->
             tab.text = when (position) {
-                0 -> aboutMeTabsList[0]
-                1 -> aboutMeTabsList[1]
-                2 -> aboutMeTabsList[2]
-                3 -> aboutMeTabsList[3]
+                0 -> aboutMeTabNamesList[0]
+                1 -> aboutMeTabNamesList[1]
+                2 -> aboutMeTabNamesList[2]
+                3 -> aboutMeTabNamesList[3]
+                4 -> aboutMeTabNamesList[4]
                 else -> ""
             }
         }.attach()
@@ -139,6 +144,15 @@ class AboutMeFragment : BaseFragment() {
         /*if (null == moreViewModel.getAboutMe().value) */loadAboutMe()
     }
 
+    private fun setUpUserActionListeners() {
+        nnActivity.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                nnActivity.findViewById<CardView>(R.id.card_bottom_nav).visible()
+                nnActivity.supportFragmentManager.popBackStackImmediate()
+            }
+        })
+    }
+
     private fun loadAboutMe() {
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
@@ -155,12 +169,13 @@ class AboutMeFragment : BaseFragment() {
 private const val ARG_PARAM1 = "param1"
 
 class YoutubeVideoViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) : FragmentStateAdapter(fragmentManager, lifecycle) {
-    override fun getItemCount(): Int = aboutMeTabsList.size
+    override fun getItemCount(): Int = aboutMeTabNamesList.size
     override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> YoutubeVideoListFragment.newInstance(ArrayList(animeFightsList), aboutMeTabsList[0])
-        1 -> YoutubeVideoListFragment.newInstance(ArrayList(animeMusicList), aboutMeTabsList[1])
-        2 -> YoutubeVideoListFragment.newInstance(ArrayList(otherMusicList), aboutMeTabsList[2])
-        else -> YoutubeVideoListFragment.newInstance(ArrayList(epicAnimeMomentsList), aboutMeTabsList[3])
+        0 -> YoutubeVideoListFragment.newInstance(ArrayList(animeFightsList), aboutMeTabNamesList[0])
+        1 -> YoutubeVideoListFragment.newInstance(ArrayList(animeMusicList), aboutMeTabNamesList[1])
+        2 -> YoutubeVideoListFragment.newInstance(ArrayList(epicAnimeMomentsList), aboutMeTabNamesList[2])
+        3 -> YoutubeVideoListFragment.newInstance(ArrayList(otherEpicMomentsList), aboutMeTabNamesList[3])
+        else -> YoutubeVideoListFragment.newInstance(ArrayList(otherMusicList), aboutMeTabNamesList[4])
     }
 }
 

@@ -2,29 +2,23 @@ Fav Anime App Features
 
 // FIXME
 1. NetworkState doesnt listen to network changes immediately
-2. AboutMe viewpager tabs issue
 
 
 // TODO
-0. Search with filters, favorites, Youtube player
+0. Search with filters in home and sort filters in favorites
+Stream all episodes in exoplayer for now. Provide option to download and store locally. Encrypt directory
 Genres - horizontal list for each genre
 Discover - Vertical playlist of all anime episodes shuffled and autoplayed on scroll
+Get all youtube video ids from firestore for profile. Upload them in dev settings. Give option to add video id and video title
+Generate barcode for every anime id. Scan the bar code and navigate to same detail page for inbuilt scanner. For external scanners it should launch the app and take to detail page
+
+
 1. Github graph ql api views
 4. Tests
 8. Room Android doc - Room Foreign Key and Reationships
 12. Implement Timber
 13. Custom Views - heart icon, 5 stars
 
-
-status
-format
-start_date
-end_date
-season_period
-season_year
-episode_duration
-episodes_count
-weekly_airing_day
 
 Later
 Export favorites list to CSV, PDF, plain txt files

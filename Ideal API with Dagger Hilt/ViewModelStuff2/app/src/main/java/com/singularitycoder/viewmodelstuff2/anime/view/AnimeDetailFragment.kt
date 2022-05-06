@@ -2,9 +2,9 @@ package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.os.Parcelable
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.view.LayoutInflater
@@ -31,6 +31,7 @@ import com.singularitycoder.viewmodelstuff2.favorites.Favorite
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesViewModel
 import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
+import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey.EPISODE_LIST
 import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
@@ -49,6 +50,7 @@ import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -79,11 +81,14 @@ class AnimeDetailFragment : BaseFragment() {
     @Inject
     lateinit var recommendationsAdapter: RecommendationsAdapter
 
+    @Inject
+    lateinit var episodesAdapter: EpisodesAdapter
+
     private var favoriteAnime: Favorite? = null
     private var textToSpeech: TextToSpeech? = null
     private var animeFromApi: Anime? = null
 
-    private lateinit var animeId: String
+    private lateinit var idOfAnime: String
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
     private lateinit var binding: FragmentAnimeDetailBinding
@@ -114,13 +119,14 @@ class AnimeDetailFragment : BaseFragment() {
     }
 
     private fun getIntentData() {
-        animeId = arguments?.getString(IntentKey.ANIME_ID, "") ?: ""
-        println("Anime Id received: $animeId")
+        idOfAnime = arguments?.getString(IntentKey.ID_OF_ANIME, "") ?: ""
+        println("Anime Id received: $idOfAnime")
     }
 
     private fun setUpDefaults() {
         setViewsBasedOnDeviceDimensions()
         initTextToSpeech()
+        binding.btnPlayEpisodes.disable()
         binding.tvDesc.maxLines = 4
         binding.layoutTrailer.apply {
             tvVideoTitle.gone()
@@ -148,6 +154,11 @@ class AnimeDetailFragment : BaseFragment() {
             layoutManager = LinearLayoutManager(nnContext, LinearLayoutManager.HORIZONTAL, false)
             adapter = recommendationsAdapter
         }
+
+        binding.rvEpisodes.apply {
+            layoutManager = LinearLayoutManager(nnContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = episodesAdapter
+        }
     }
 
     private fun subscribeToObservers() {
@@ -174,10 +185,32 @@ class AnimeDetailFragment : BaseFragment() {
                 )
                 animeFromApi = data
                 updateUI(anime = data)
+                loadEpisodes()
             }
 
             it onFailure { data: Anime?, message: String ->
                 utils.showToast(message = if ("NA" == message) getString(R.string.something_is_wrong) else message, context = nnContext)
+            }
+
+            it onLoading { loadingState: LoadingState ->
+                when (loadingState) {
+                    LoadingState.SHOW -> Unit
+                    LoadingState.HIDE -> Unit
+                }
+            }
+        }
+
+        animeViewModel.getEpisodesList().observe(viewLifecycleOwner) { it: ApiState<EpisodeList?>? ->
+            it ?: return@observe
+
+            it onSuccess { data: EpisodeList?, message: String ->
+                utils.asyncLog(message = "Episode List chan: %s", data)
+                episodesAdapter.episodesList = data?.data?.documents ?: emptyList()
+                binding.btnPlayEpisodes.enable()
+            }
+
+            it onFailure { data: EpisodeList?, message: String ->
+                utils.showToast(message = message, context = nnContext)
             }
 
             it onLoading { loadingState: LoadingState ->
@@ -267,24 +300,56 @@ class AnimeDetailFragment : BaseFragment() {
         recommendationsAdapter.setRecommendationsItemClickListener { animeId: String ->
             nnActivity.showAnimeDetailsOfThis(animeId)
         }
+
+        binding.btnPlayEpisodes.onSafeClick {
+            val intent = Intent(nnActivity, ExoPlayerActivity::class.java).apply {
+                putParcelableArrayListExtra(EPISODE_LIST, ArrayList<Parcelable?>(episodesAdapter.episodesList))
+            }
+            startActivity(intent)
+        }
+
+        episodesAdapter.setEpisodeItemClickListener { episode: Episode ->
+            val intent = Intent(nnActivity, ExoPlayerActivity::class.java).apply {
+                putParcelableArrayListExtra(EPISODE_LIST, ArrayList<Parcelable?>().apply { add(episode) })
+            }
+            startActivity(intent)
+        }
     }
 
     private fun loadAnime() {
         if (null != animeViewModel.getAnime().value) return
         networkState.listenToNetworkChangesAndDoWork(
             onlineWork = {
-                animeViewModel.loadAnime(animeId)
+                animeViewModel.loadAnime(idOfAnime)
             },
             offlineWork = {
-                animeViewModel.loadAnime(animeId)
+                animeViewModel.loadAnime(idOfAnime)
             }
         )
         favoritesViewModel.getFavoritesList()
     }
 
+    private fun loadEpisodes() {
+        if (null != animeViewModel.getEpisodesList().value) return
+        val animeId = try {
+            idOfAnime.toInt()
+        } catch (e: Exception) {
+            0
+        }
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = {
+                animeViewModel.getEpisodesList(animeId = animeId, number = null, isDub = null, locale = null)
+            },
+            offlineWork = {
+                animeViewModel.getEpisodesList(animeId = animeId, number = null, isDub = null, locale = null)
+            }
+        )
+    }
+
     private fun updateUI(anime: Anime?) {
         binding.apply {
-            glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
+            episodesAdapter.bannerImage = anime?.data?.bannerImage ?: anime?.data?.coverImage ?: ""
+                glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
 
             doAfter(1.seconds()) {
                 Blurry.with(nnContext)

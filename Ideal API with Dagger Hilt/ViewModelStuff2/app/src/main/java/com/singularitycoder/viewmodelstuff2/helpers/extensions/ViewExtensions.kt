@@ -118,7 +118,7 @@ fun AppCompatActivity.showScreen(
 
 fun AppCompatActivity.showAnimeDetailsOfThis(animeId: String) {
     println("Anime Id: $animeId")
-    val bundle = Bundle().apply { putString(IntentKey.ANIME_ID, animeId) }
+    val bundle = Bundle().apply { putString(IntentKey.ID_OF_ANIME, animeId) }
     val fragment = AnimeDetailFragment().apply { arguments = bundle }
     showScreen(fragment = fragment, tag = FragmentsTags.ANIME_DETAIL.value, isAdd = true)
 }

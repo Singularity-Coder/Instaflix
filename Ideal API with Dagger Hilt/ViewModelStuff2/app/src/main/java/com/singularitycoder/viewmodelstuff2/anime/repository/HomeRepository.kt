@@ -8,14 +8,14 @@ import com.singularitycoder.viewmodelstuff2.BaseRepository
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
-import com.singularitycoder.viewmodelstuff2.helpers.network.ApiState
-import com.singularitycoder.viewmodelstuff2.helpers.network.LoadingState
-import com.singularitycoder.viewmodelstuff2.helpers.network.NetworkState
-import com.singularitycoder.viewmodelstuff2.helpers.network.RetrofitAnimeService
+import com.singularitycoder.viewmodelstuff2.helpers.constants.GRAPH_QL_GITHUB_PROFILE_QUERY
+import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.GeneralUtils
 import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
 import io.reactivex.Single
+import retrofit2.HttpException
 import retrofit2.Response
+import retrofit2.http.Query
 import timber.log.Timber
 import java.net.HttpURLConnection
 import javax.inject.Inject
@@ -29,6 +29,8 @@ class HomeRepository @Inject constructor(
     private val networkState: NetworkState
 ) : BaseRepository() {
     val animeList = MutableLiveData<ApiState<AnimeList?>>()
+    val episodesList = MutableLiveData<ApiState<EpisodeList?>>()
+
     val sortedAnimeList = MutableLiveData<ApiState<AnimeList?>>()
     val mediatedAnimeList = MediatorLiveData<ApiState<AnimeList?>>()
 
@@ -115,5 +117,33 @@ class HomeRepository @Inject constructor(
             genres = genres,
             nsfw = nsfw
         )
+    }
+
+    suspend fun getEpisodesList(
+        animeId: Int,
+        number: Int?,
+        isDub: Boolean?,
+        locale: String?
+    ) {
+        val response = retrofit.getEpisodeList(
+            animeId = animeId,
+            number = number,
+            isDub = isDub,
+            locale = locale
+        )
+
+        try {
+            if (response.isSuccessful) {
+                episodesList.postValue(ApiState.Success(data = response.body()))
+            } else {
+                episodesList.postValue(ApiState.Error(message = response.errorBody().toString()))
+            }
+        } catch (e: HttpException) {
+            Timber.e("Something went wrong while fetching episode list data: ${e.message}")
+            episodesList.postValue(ApiState.Error(message = e.message()))
+        } catch (e: Exception) {
+            Timber.e("Something went wrong while fetching episode list data: ${e.message}")
+            episodesList.postValue(ApiState.Error(message = e.message ?: context.getString(R.string.something_is_wrong)))
+        }
     }
 }

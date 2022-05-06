@@ -3,6 +3,9 @@ package com.singularitycoder.viewmodelstuff2.helpers.constants
 import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
 
 val animeFightsList = listOf(
+    YoutubeVideo(title = "Fate/Apocrypha - Siegfried VS Karna [60FPS]", videoId = "i_kPukc6bkE"),
+    YoutubeVideo(title = "Ruler and Lancer of black vs Archer of black", videoId = "JDGR9JIBz-M"),
+    YoutubeVideo(title = "Fate/Apocrypha - Achilles vs Chiron", videoId = "h_fyu3pwJxY"),
     YoutubeVideo(title = "Shingeki No Kyojin - Eren Rage Mode (Berserk) vs Annie Episode 25", videoId = "w-QxK1I7Va8"),
     YoutubeVideo(title = "Shingeki no Kyojin HD (EPISODE 24) - Eren Titan Transformation vs Annie Scene", videoId = "GLff3_jPZIM"),
     YoutubeVideo(title = "Fog Hill of the Five Elements", videoId = "0OoKXPUvVbo"),
@@ -12,7 +15,6 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Attack on Titan - Levi vs Kenny Squad - (Full Fight) HD", videoId = "MyJk2YWhfoU"),
     YoutubeVideo(title = "Attack on Titan - Levi vs. The Beast Titan", videoId = "ceQ4nhyuX2k"),
     YoutubeVideo(title = "Attack On Titan - Floch vs ALL (60 fps)", videoId = "hzp1AeiEIMg"),
-    YoutubeVideo(title = "Attack On Titan - The true form of Eren's rumbling titan that destroyed world civilization", videoId = "1-WVczhtXTw"),
     YoutubeVideo(title = "Attack On Titan - Eren's first transformation and first fight scenes", videoId = "p2FKMB_sImg"),
     YoutubeVideo(title = "Attack On Titan - Levi vs The Female Titan", videoId = "QMf_Z-Fl7_w"),
     YoutubeVideo(title = "Attack On Titan - Titan Eren vs Female Titan - 60FPS", videoId = "k2u1nTvBYx0"),
@@ -29,9 +31,44 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Mob Psycho 100 - Shimazaki Fight", videoId = "Ar7fHWRMNoE"),
     YoutubeVideo(title = "Mob Psycho 100 - MOB VS Toichiro Final Fight", videoId = "wRG7Er6qlvk"),
     YoutubeVideo(title = "Mob Psycho 100 - Mob vs Koyama Full Fight (60fps)", videoId = "nJlmcQA_dVQ"),
-)
+    YoutubeVideo(title = "Fate/Grand Order-Noble Phantasm's attacking", videoId = "pApAiZymeu0"),
+).shuffled()
 
+// Absolutely every OST in Fate/Apocrypha is amazing. Kudos to Masaru Yokoyama
 val animeMusicList = listOf(
+    YoutubeVideo(title = "Fate/Apocrypha - Fate/Apocrypha", videoId = "Ql42kdD-KlQ"),
+    YoutubeVideo(title = "Fate/Apocrypha - Confronting", videoId = "uuxfvgXReVc"),
+    YoutubeVideo(title = "Fate/Apocrypha - The knight of rebelion", videoId = "yprW-4ie-gk"),
+    YoutubeVideo(title = "Fate/Apocrypha - Invasion", videoId = "ORoHW9zGdI8"),
+    YoutubeVideo(title = "Fate/Apocrypha - Savior", videoId = "KlNYFPOetpE"),
+    YoutubeVideo(title = "Fate/Apocrypha - Amakusa Shirou Tokisada", videoId = "0F1ZyyqxhH0"),
+    YoutubeVideo(title = "Fate/Apocrypha - The Great Holy Grail War", videoId = "ZOzuV2W0ZWU"),
+    YoutubeVideo(title = "Fate/Apocrypha - La Pucelle", videoId = "RqUE8r-hJBU"),
+    YoutubeVideo(title = "Fate/Apocrypha - Love", videoId = "Njua-wiQKFE"),
+    YoutubeVideo(title = "Fate/Apocrypha - Thoughts flows on", videoId = "2ki9W4hjnog"),
+    YoutubeVideo(title = "Fate/Apocrypha - Ruler: Prayer", videoId = "Nlx1_GzFVWA"),
+    YoutubeVideo(title = "Fate/Apocrypha - Ruler: Execution", videoId = "ud9vdD7UX2Q"),
+    YoutubeVideo(title = "Fate/Apocrypha - Battle", videoId = "V3646EiXljc"),
+    YoutubeVideo(title = "Fate/Apocrypha - Grand War", videoId = "NLW9WkX38Wc"),
+    YoutubeVideo(title = "Fate/Apocrypha - Battle: Red Faction", videoId = "EiDzO5zvyFs"),
+    YoutubeVideo(title = "Fate/Apocrypha - Rising", videoId = "8deiDDhqVMk"),
+    YoutubeVideo(title = "Fate/Apocrypha - Before Dawn", videoId = "0EnTiSG8vcg"),
+    YoutubeVideo(title = "Fate/Apocrypha - Freedom", videoId = "Ii1fEBLbiaw"),
+    YoutubeVideo(title = "Fate/Apocrypha - Affection", videoId = "aI5jHIwMSJ0"),
+    YoutubeVideo(title = "Fate/Apocrypha - Sieg: Alive", videoId = "Noy_NieI0Gc"),
+    YoutubeVideo(title = "Fate/Apocrypha - In the Dream", videoId = "lIjrk76k1Ao"),
+    YoutubeVideo(title = "Fate/Apocrypha - Insanity of Dominator", videoId = "uPM3CONLfjI"),
+    YoutubeVideo(title = "Fate/Apocrypha - Glory of the King", videoId = "mMexy1uu7HM"),
+    YoutubeVideo(title = "Fate/Apocrypha - Intensity of Lord", videoId = "w4XdHnAETDU"),
+    YoutubeVideo(title = "Fate/Apocrypha - Say Goodbye", videoId = "V8tviWes0nM"),
+    YoutubeVideo(title = "Fate/Apocrypha - Requiem", videoId = "2hZ6G1vVZwM"),
+    YoutubeVideo(title = "Fate/Apocrypha - Sieg: Will", videoId = "NqOJUy98hX0"),
+    YoutubeVideo(title = "Fate/Apocrypha - Sieg: Despair", videoId = "Mnuhq6n5_XU"),
+    YoutubeVideo(title = "Fate/Apocrypha - Fearless Smile", videoId = "b46HzltbbSg"),
+    YoutubeVideo(title = "Fate/Apocrypha - Apocrypha", videoId = "ibXmpHqarPw"),
+    YoutubeVideo(title = "Fate/Apocrypha - Bloody Soul", videoId = "8CvRkGgITjA"),
+    YoutubeVideo(title = "Fate/Apocrypha - Afterglow", videoId = "H1tVYKwoQ30"),
+    YoutubeVideo(title = "Fate/Apocrypha - Justeaze", videoId = "zA4abm6D5NY"),
     YoutubeVideo(title = "Gundam Unicorn - 1ST MOV. :BANSHEE", videoId = "BUXh_AQ5xvI"),
     YoutubeVideo(title = "Gundam Unicorn - MAD-NUG", videoId = "ZcLoj0qoe_g"),
     YoutubeVideo(title = "Gundam Unicorn - MOBILE SUIT ＜W-REC MIX＞", videoId = "6Z1e-3dPiTk"),
@@ -79,7 +116,7 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Uchouten Kazoku - Ebisugawa no Musume, Kaisei", videoId = "xplxAEr0xG0"),
     YoutubeVideo(title = "Uchouten Kazoku - Hodo Hodo no Eikou are", videoId = "mIjOgDMpMkU"),
     YoutubeVideo(title = "Uchouten Kazoku - Que Sera Sera (TV Size)", videoId = "9v2DACnQ7KE"),
-)
+).shuffled()
 
 val epicAnimeMomentsList = listOf(
     YoutubeVideo(title = "Code Geass, Best Anime Ever, Ending! 1080p", videoId = "rS-FBuWG_zQ"),
@@ -89,14 +126,49 @@ val epicAnimeMomentsList = listOf(
     YoutubeVideo(title = "Attack on Titan - Colossal & Armored Titan REVEALED", videoId = "3v_561hRxs4"),
     YoutubeVideo(title = "Attack on Titan - Annie Leonhardt/Female Titan - Powers & Fight Scenes (AOT)", videoId = "IZdNJJueKfU"),
     YoutubeVideo(title = "Kizumonogatari Part 2: Nekketsu - Koyomi Araragi vs. Guillotine Cutter", videoId = "yl7ldmQPwIM"),
-    YoutubeVideo(title = "The Rumbling Begins - Attack on Titan Season 4 Episode 5", videoId = "Uwza8rHaPzw"),
+    YoutubeVideo(title = "The Rumbling arrives on Marley - Eren Founding Titan | Attack on Titan Season 4 Part 2 EP 12 FINAL", videoId = "wT2H68kEmi8"),
     YoutubeVideo(title = "Shingeki no Kyojin - Eren blocks gate with boulder", videoId = "iaLJ1Jk35lU"),
     YoutubeVideo(title = "Shingeki no Kyojin - Eren Transforms - Willy Tybur Speech: The Final Season", videoId = "pR3KdTbbBoM"),
     YoutubeVideo(title = "Monster - Tenma confronts Johan", videoId = "NMZVAN3UUmg"),
-)
+).shuffled()
 
+// King Arthur's OSTs are just a work of art. Super creative. Again every OST is good.
 val otherMusicList = listOf(
     YoutubeVideo(title = "Pandit Jasraj - Vraje Vasantam", videoId = "ItAnTZjopAM"),
+    YoutubeVideo(title = "King Arthur - The Devil and The Huntsman", videoId = "yGnfFW-vyzU"),
+    YoutubeVideo(title = "King Arthur - The Devil & The Daughter Bonus Track", videoId = "XTLfmMyRKYo"),
+    YoutubeVideo(title = "King Arthur - The Darklands", videoId = "WkNYkwMbl0U"),
+    YoutubeVideo(title = "King Arthur - The Lady In The Lake", videoId = "ewSjRtNJ7W8"),
+    YoutubeVideo(title = "King Arthur - Riot & Flames Bonus Track", videoId = "ZNGqIEIGrYE"),
+    YoutubeVideo(title = "King Arthur - Assassins Breathe", videoId = "1oaxmVk8ir8"),
+    YoutubeVideo(title = "King Arthur - Growing Up Londinium", videoId = "e2LLS33eQvk"),
+    YoutubeVideo(title = "King Arthur - From Nothing Comes A King", videoId = "U5hE3GLSnTo"),
+    YoutubeVideo(title = "King Arthur - Legend Of The Sword", videoId = "QjWDBEz_6p4"),
+    YoutubeVideo(title = "King Arthur - Jackseye's Tale", videoId = "ApvDXCluFSc"),
+    YoutubeVideo(title = "King Arthur - The Story Of Mordred", videoId = "Fmm1btzQf9M"),
+    YoutubeVideo(title = "King Arthur - The Legend Of Excalibur", videoId = "lw0TGTxqtZU"),
+    YoutubeVideo(title = "King Arthur - Seasoned Oak", videoId = "JGV95hAHqqs"),
+    YoutubeVideo(title = "King Arthur - The Power Of Excalibur", videoId = "fFTtUrXPBqk"),
+    YoutubeVideo(title = "King Arthur - The Vikings & The Barons", videoId = "7obz77H_YN4"),
+    YoutubeVideo(title = "King Arthur - The Politics & The Life", videoId = "56cnOkQFRwo"),
+    YoutubeVideo(title = "King Arthur - Tower & Power", videoId = "xNTuhoHKts4"),
+    YoutubeVideo(title = "King Arthur - The Born King", videoId = "FRZPqunSnNg"),
+    YoutubeVideo(title = "King Arthur - Run Londinium", videoId = "OLVtqVxZgYI"),
+    YoutubeVideo(title = "King Arthur - Fireball", videoId = "DRNhJyoD128"),
+    YoutubeVideo(title = "King Arthur - Journey To The Caves", videoId = "tX9VKlL-yOk"),
+    YoutubeVideo(title = "King Arthur - The Wolf & The Hanged Men", videoId = "m7LzDCyb9yY"),
+    YoutubeVideo(title = "King Arthur - Revelation", videoId = "EaY3nuRvdqk"),
+    YoutubeVideo(title = "King Arthur - Destiny Of The Sword", videoId = "VQH-LWB1Jnc"),
+    YoutubeVideo(title = "King Arthur - Knights Of The Round Table", videoId = "HxxzLygGLQ0"),
+    YoutubeVideo(title = "King Arthur - The Coronation", videoId = "AsCvIT2t_RU"),
+    YoutubeVideo(title = "King Arthur - The Ballad Of Londinium Bonus Track", videoId = "iAfKL6XbrdE"),
+    YoutubeVideo(title = "King Arthur - Anger Bonus Track", videoId = "O8aRJpaPH0U"),
+    YoutubeVideo(title = "King Arthur - Cave Fight Bonus Track", videoId = "67o8mFU7t2w"),
+    YoutubeVideo(title = "King Arthur - Confrontation With The Common Man Bonus Track", videoId = "B4k1A3_GOIs"),
+    YoutubeVideo(title = "X-Men: First Class - Frankenstein's Monster", videoId = "diMNV6A3_x0"),
+    YoutubeVideo(title = "X-Men: First Class - First Class", videoId = "b_zN9VsPffY"),
+    YoutubeVideo(title = "X-Men: First Class - Magneto", videoId = "zFmBIRS7yoU"),
+    YoutubeVideo(title = "X-Men: First Class - Sub Lift", videoId = "vYFxv8rQOCQ"),
     YoutubeVideo(title = "James Brown - I Got The Feelin' (Extended Version)", videoId = "Cda0twzCMC4"),
     YoutubeVideo(title = "James Brown - People Get Up And Drive Your Funky Soul (Remix)", videoId = "Nl-RVIdTUVI"),
     YoutubeVideo(title = "James Brown - Ain't It Funky Now (Live At The Olympia, Paris / 1971)", videoId = "NKloz_wR6n4"),
@@ -125,7 +197,19 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "Coldplay - Up&Up", videoId = "BPNTC7uZYrI"),
     YoutubeVideo(title = "Coldplay - The Scientist", videoId = "RB-RcX5DS5A"),
     YoutubeVideo(title = "GN Balasubramaniam - Manasu Swadhina", videoId = "IA5Oa6VJAyk"),
+    YoutubeVideo(title = "GN Balasubramaniam - Raga Tana Pallavi - Raga Shanmukhapriya", videoId = "h3SINDPqtEg"),
+    YoutubeVideo(title = "GN Balasubramaniam - RTP SHANMUKHAPRIYA", videoId = "SjwTTnK1ha0"),
+    YoutubeVideo(title = "GN Balasubramaniam - Saketa Nagara ~ Harikambhoji", videoId = "Q1rQMuhxhtQ"),
+    YoutubeVideo(title = "GN Balasubramaniam - Saketha Nagra Nadha", videoId = "0ptGsgILmPU"),
     YoutubeVideo(title = "TM Krishna - Ragam Neelambari", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Manavyalakinchara, Tyagaraja Smaranotsava Sabha Nellore", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc")
-)
+).shuffled()
+
+// King Arthur - Legend of The Sword is just super epic movie.
+val otherEpicMomentsList = listOf(
+    YoutubeVideo(title = "King Arthur - Opening Scene FHD - Giant Elephant", videoId = "cRIbbxdGATs"),
+    YoutubeVideo(title = "King Arthur - All Powers from King Arthur: Legend of the Sword", videoId = "_nQqIxdsI0o"),
+    YoutubeVideo(title = "Rocky Vs Garuda - KGF Chapter 1", videoId = "LecLq_-OpTU"),
+    YoutubeVideo(title = "The Statue Reveal - KGF Chapter 1", videoId = "HsXpoTM2N8o"),
+).shuffled()

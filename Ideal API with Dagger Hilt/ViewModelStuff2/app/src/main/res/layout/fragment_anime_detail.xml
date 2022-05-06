@@ -241,7 +241,7 @@
                     <!--                    </HorizontalScrollView>-->
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/textButton"
+                        android:id="@+id/btn_play_episodes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="48dp"
@@ -316,7 +316,6 @@
                         android:gravity="center"
                         android:paddingStart="12dp"
                         android:paddingTop="4dp"
-                        android:paddingEnd="12dp"
                         android:paddingBottom="4dp"
                         android:text="Read"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"

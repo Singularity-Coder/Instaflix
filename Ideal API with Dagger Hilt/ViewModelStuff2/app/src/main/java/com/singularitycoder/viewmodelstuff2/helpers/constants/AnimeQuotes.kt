@@ -136,5 +136,36 @@ val animeQuoteList = listOf(
             Three days, the audience will know.
         """.trimIndentsAndNewLines(),
         author = "Dance Dance Danseur"
+    ),
+    AnimeQuote(
+        quote = "Time is what we want most, but what we use worst.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "The wise control others, while the strong get controlled by others.",
+        author = "Magic Emperor"
+    ),
+    AnimeQuote(
+        quote = "If you learn a day late, you'll be 10 days late in understanding it.",
+        author = "Peerless Dad"
+    ),
+    AnimeQuote(
+        quote = """
+            It's the difference between doing things when you understand why its being done
+            and doing things when you don't understand it.
+        """.trimIndentsAndNewLines(),
+        author = "Peerless Dad"
+    ),
+    AnimeQuote(
+        quote = "No matter how busy you are, you must take time to make other person feel important.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "If you spend too much time thinking about a thing, you'll never get it done.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Time is what we want most, but what we use worst.",
+        author = "Unknown"
     )
 )

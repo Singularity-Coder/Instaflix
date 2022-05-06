@@ -1,6 +1,7 @@
 package com.singularitycoder.viewmodelstuff2.helpers.di
 
 import com.bumptech.glide.RequestManager
+import com.singularitycoder.viewmodelstuff2.anime.view.EpisodesAdapter
 import com.singularitycoder.viewmodelstuff2.anime.view.HomeAdapter
 import com.singularitycoder.viewmodelstuff2.anime.view.RecommendationsAdapter
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesAdapter
@@ -30,4 +31,8 @@ object AdapterModule {
     @Singleton
     @Provides
     fun injectRecommendationsAdapter(requestManager: RequestManager): RecommendationsAdapter = RecommendationsAdapter(requestManager)
+
+    @Singleton
+    @Provides
+    fun injectEpisodesAdapter(requestManager: RequestManager): EpisodesAdapter = EpisodesAdapter(requestManager)
 }
