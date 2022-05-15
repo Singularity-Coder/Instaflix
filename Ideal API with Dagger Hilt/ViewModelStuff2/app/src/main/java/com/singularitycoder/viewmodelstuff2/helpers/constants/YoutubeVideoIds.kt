@@ -32,6 +32,10 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Mob Psycho 100 - MOB VS Toichiro Final Fight", videoId = "wRG7Er6qlvk"),
     YoutubeVideo(title = "Mob Psycho 100 - Mob vs Koyama Full Fight (60fps)", videoId = "nJlmcQA_dVQ"),
     YoutubeVideo(title = "Fate/Grand Order-Noble Phantasm's attacking", videoId = "pApAiZymeu0"),
+    YoutubeVideo(title = "Kung Fu Panda (2008) - Tai Lung's Escape", videoId = "UsZNj9srzR8"),
+    YoutubeVideo(title = "Kung Fu Panda (2008) - Our Battle Will Be Legendary", videoId = "Jy2_J5WCzDY"),
+    YoutubeVideo(title = "Kung Fu Panda (2008) - Tai Lung's Revenge Scene", videoId = "GQM4dSjjQuE"),
+    YoutubeVideo(title = "Kung Fu Panda (2008) - Fight for the Dragon Scroll", videoId = "AhbCYVILusc"),
 ).shuffled()
 
 // Absolutely every OST in Fate/Apocrypha is amazing. Kudos to Masaru Yokoyama
@@ -116,6 +120,9 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Uchouten Kazoku - Ebisugawa no Musume, Kaisei", videoId = "xplxAEr0xG0"),
     YoutubeVideo(title = "Uchouten Kazoku - Hodo Hodo no Eikou are", videoId = "mIjOgDMpMkU"),
     YoutubeVideo(title = "Uchouten Kazoku - Que Sera Sera (TV Size)", videoId = "9v2DACnQ7KE"),
+    YoutubeVideo(title = "Your Name - Sparkle - Movie Ver", videoId = "a2GujJZfXpg"),
+    YoutubeVideo(title = "Your Name - Sparkle", videoId = "-pHfPJGatgE"),
+    YoutubeVideo(title = "Your Name - Nandemonaiya - Movie Ver", videoId = "n89SKAymNfA"),
 ).shuffled()
 
 val epicAnimeMomentsList = listOf(
@@ -135,6 +142,8 @@ val epicAnimeMomentsList = listOf(
 // King Arthur's OSTs are just a work of art. Super creative. Again every OST is good.
 val otherMusicList = listOf(
     YoutubeVideo(title = "Pandit Jasraj - Vraje Vasantam", videoId = "ItAnTZjopAM"),
+    YoutubeVideo(title = "Parur Sundaram Iyer & MSG_Manavyala", videoId = "823uFFoaLGc"),
+    YoutubeVideo(title = "MS Gopalakrishnan- Violin- Manavyalakinchara", videoId = "m7lKOttZR7g"),
     YoutubeVideo(title = "King Arthur - The Devil and The Huntsman", videoId = "yGnfFW-vyzU"),
     YoutubeVideo(title = "King Arthur - The Devil & The Daughter Bonus Track", videoId = "XTLfmMyRKYo"),
     YoutubeVideo(title = "King Arthur - The Darklands", videoId = "WkNYkwMbl0U"),
@@ -185,6 +194,8 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "James Brown - Get It Together (Boston) 1968", videoId = "RnO8sHmkbv4"),
     YoutubeVideo(title = "James Brown - I Got The Feeling - Live At The Boston Garden (1968)", videoId = "n0rOo8bX6P8"),
     YoutubeVideo(title = "James Brown - Gonna Have A Funky Good Time", videoId = "P6iSL1dsShc"),
+    YoutubeVideo(title = "James Brown - Funky Drummer (Pt. 1 & 2)", videoId = "QXw6YZltKJk"),
+    YoutubeVideo(title = "James Brown - Funky Drummer (Bonus Beat Reprise)", videoId = "7dtpj8qa1hQ"),
     YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
     YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
     YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
@@ -203,7 +214,13 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "GN Balasubramaniam - Saketha Nagra Nadha", videoId = "0ptGsgILmPU"),
     YoutubeVideo(title = "TM Krishna - Ragam Neelambari", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Manavyalakinchara, Tyagaraja Smaranotsava Sabha Nellore", videoId = "ovgWK5aQcpM"),
-    YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc")
+    YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc"),
+    YoutubeVideo(title = "André Rieu - The Beautiful Blue Danube", videoId = "IDaJ7rFg66A"),
+    YoutubeVideo(title = "Yanni - Prelude and Nostalgia", videoId = "tKVzm0SBYtQ"),
+    YoutubeVideo(title = "Yanni - Into The Deep Blue", videoId = "t5dOFdllgnM"),
+    YoutubeVideo(title = "Death Note - Kyrie, Kyrie II And Kyrie Orchestra", videoId = "UaIoK3Bf6lk"),
+    YoutubeVideo(title = "Kyrie: Orbis Factor, medieval chant of the Gradual of Eleanor of Brittany", videoId = "E8Mf-1A6YtE"),
+    YoutubeVideo(title = "Roman Kim - W.A.Mozart-Eine kleine Nachtmusik [Violin Solo]", videoId = "KsxY3WL1cP8"),
 ).shuffled()
 
 // King Arthur - Legend of The Sword is just super epic movie.

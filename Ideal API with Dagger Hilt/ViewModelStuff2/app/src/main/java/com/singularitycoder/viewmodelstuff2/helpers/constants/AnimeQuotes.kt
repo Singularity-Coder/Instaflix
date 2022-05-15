@@ -95,10 +95,6 @@ val animeQuoteList = listOf(
         author = "Peerless Dad"
     ),
     AnimeQuote(
-        quote = "You can only see as much as you know!",
-        author = "Peerless Dad"
-    ),
-    AnimeQuote(
         quote = """
             In the past, someone tried to avenge his father by sleeping on firewood and suffering.
             Did he do it because it helped in getting his revenge? Fool! How would that help?
@@ -167,5 +163,17 @@ val animeQuoteList = listOf(
     AnimeQuote(
         quote = "Time is what we want most, but what we use worst.",
         author = "Unknown"
-    )
+    ),
+    AnimeQuote(
+        quote = "With tolerance comes greatness.",
+        author = "Magic Emperor"
+    ),
+    AnimeQuote(
+        quote = "Patience and time do more than strength or passion.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Time is the most valuable thing a man can spend.",
+        author = "Unknown"
+    ),
 )
