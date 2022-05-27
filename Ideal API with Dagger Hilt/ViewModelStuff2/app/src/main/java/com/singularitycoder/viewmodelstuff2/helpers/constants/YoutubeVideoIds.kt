@@ -21,7 +21,7 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Attack On Titan - Eren vs Warhammer Titan", videoId = "Rv0085ZOIsg"),
     YoutubeVideo(title = "Saber Alter vs Rider - Fate/stay night: Heaven’s Feel lll", videoId = "8W7x_-mMOtU"),
     YoutubeVideo(title = "Saber Alter Excalibur Morgan [4K 60fps]", videoId = "f1JT8z-3cV0"),
-    YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "IOkz2ld1-Kk"),
+    YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "GFLVTjAw7Zc"),
     YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki", videoId = "CZJBkQQTiCo"),
     YoutubeVideo(title = "Meliodas vs Ten Commandments", videoId = "92Gvvh0UKjk"),
     YoutubeVideo(title = "Parasyte The Maxim - Fights from anime compilation", videoId = "r_JH_oOkhmk"),
@@ -36,6 +36,7 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Kung Fu Panda (2008) - Our Battle Will Be Legendary", videoId = "Jy2_J5WCzDY"),
     YoutubeVideo(title = "Kung Fu Panda (2008) - Tai Lung's Revenge Scene", videoId = "GQM4dSjjQuE"),
     YoutubeVideo(title = "Kung Fu Panda (2008) - Fight for the Dragon Scroll", videoId = "AhbCYVILusc"),
+    YoutubeVideo(title = "Arcane: League of Legends - All Fight Scenes", videoId = "vnYoxXYZN5g"),
 ).shuffled()
 
 // Absolutely every OST in Fate/Apocrypha is amazing. Kudos to Masaru Yokoyama
@@ -123,6 +124,7 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Your Name - Sparkle - Movie Ver", videoId = "a2GujJZfXpg"),
     YoutubeVideo(title = "Your Name - Sparkle", videoId = "-pHfPJGatgE"),
     YoutubeVideo(title = "Your Name - Nandemonaiya - Movie Ver", videoId = "n89SKAymNfA"),
+    YoutubeVideo(title = "Death Note - Kyrie, Kyrie II And Kyrie Orchestra", videoId = "UaIoK3Bf6lk"),
 ).shuffled()
 
 val epicAnimeMomentsList = listOf(
@@ -212,21 +214,29 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "GN Balasubramaniam - RTP SHANMUKHAPRIYA", videoId = "SjwTTnK1ha0"),
     YoutubeVideo(title = "GN Balasubramaniam - Saketa Nagara ~ Harikambhoji", videoId = "Q1rQMuhxhtQ"),
     YoutubeVideo(title = "GN Balasubramaniam - Saketha Nagra Nadha", videoId = "0ptGsgILmPU"),
+    YoutubeVideo(title = "GN Balasubramaniam - Brochevarevarura (Full 36 min version)", videoId = "VqVb0xmEGFQ"),
+    YoutubeVideo(title = "Madurai Mani Iyer - Brochevarevarura", videoId = "lgdwg2KmjN4"),
     YoutubeVideo(title = "TM Krishna - Ragam Neelambari", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Manavyalakinchara, Tyagaraja Smaranotsava Sabha Nellore", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc"),
     YoutubeVideo(title = "André Rieu - The Beautiful Blue Danube", videoId = "IDaJ7rFg66A"),
     YoutubeVideo(title = "Yanni - Prelude and Nostalgia", videoId = "tKVzm0SBYtQ"),
     YoutubeVideo(title = "Yanni - Into The Deep Blue", videoId = "t5dOFdllgnM"),
-    YoutubeVideo(title = "Death Note - Kyrie, Kyrie II And Kyrie Orchestra", videoId = "UaIoK3Bf6lk"),
     YoutubeVideo(title = "Kyrie: Orbis Factor, medieval chant of the Gradual of Eleanor of Brittany", videoId = "E8Mf-1A6YtE"),
     YoutubeVideo(title = "Roman Kim - W.A.Mozart-Eine kleine Nachtmusik [Violin Solo]", videoId = "KsxY3WL1cP8"),
+    YoutubeVideo(title = "Bijan Mortazavi 1994 Dance of Fire (Concert)", videoId = "HoCe3mmb4nc"),
+    YoutubeVideo(title = "Craig David - Walking Away", videoId = "Dbb7xeZGR-U"),
+    YoutubeVideo(title = "Craig David - Unbelievable", videoId = "oRGbxfTiEaE"),
 ).shuffled()
 
 // King Arthur - Legend of The Sword is just super epic movie.
 val otherEpicMomentsList = listOf(
+    YoutubeVideo(title = "Astartes Project by Syama Pedersen", videoId = "O7hgjuFfn3A"),
     YoutubeVideo(title = "King Arthur - Opening Scene FHD - Giant Elephant", videoId = "cRIbbxdGATs"),
     YoutubeVideo(title = "King Arthur - All Powers from King Arthur: Legend of the Sword", videoId = "_nQqIxdsI0o"),
     YoutubeVideo(title = "Rocky Vs Garuda - KGF Chapter 1", videoId = "LecLq_-OpTU"),
     YoutubeVideo(title = "The Statue Reveal - KGF Chapter 1", videoId = "HsXpoTM2N8o"),
+    YoutubeVideo(title = "Arcane: League of Legends - Powder's Monkey Bomb Explodes", videoId = "Tz1THyAhx8E"),
+    YoutubeVideo(title = "Love, Death & Robots - Season 3 Episode 9 - JIBARO", videoId = "w140SKkoRDw"),
+    YoutubeVideo(title = "Love, Death & Robots - Jibaro | Death Dance Opening Scene", videoId = "j6fRCupGH2Q"),
 ).shuffled()

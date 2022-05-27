@@ -13,11 +13,11 @@ data class Favorite(
     var title: String? = "",
     var score: Int,
     var coverImage: String? = "",
+    var bannerImage: String? = "",
     var date: Long = 0L,
     var desc: String? = "",
     var coverImageBase64: String = "",
-    @Ignore var blurredCoverBitmap: Bitmap? = null,
-    @Ignore var blurredBannerBitmap: Bitmap? = null
+    var bannerImageBase64: String = ""
 ) {
     // This is for Room - Entities and POJOs must have a usable public constructor. You can have an empty constructor or a constructor whose parameters match the fields (by name and type).
     constructor() : this(
@@ -26,8 +26,10 @@ data class Favorite(
         title = "",
         score = 0,
         coverImage = "",
+        bannerImage = "",
         date = 0L,
         desc = "",
-        coverImageBase64 = ""
+        coverImageBase64 = "",
+        bannerImageBase64 = ""
     )
 }

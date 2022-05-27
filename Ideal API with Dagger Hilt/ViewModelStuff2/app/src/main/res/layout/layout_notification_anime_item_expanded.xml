@@ -163,6 +163,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider">
 
+            <ImageView
+                android:id="@+id/iv_info"
+                android:layout_width="96dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:contentDescription="Anime Details"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="12dp"
+                android:src="@drawable/ic_outline_info_24"
+                app:tint="@color/purple_500" />
+
             <!--https://materialdesignicons.com/icon/whatsapp-->
             <ImageView
                 android:id="@+id/iv_whatsapp"
@@ -174,18 +186,6 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="12dp"
                 android:src="@drawable/whatsapp"
-                app:tint="@color/purple_500" />
-
-            <ImageView
-                android:id="@+id/iv_message"
-                android:layout_width="96dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:contentDescription="Message"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:padding="12dp"
-                android:src="@drawable/ic_outline_textsms_24"
                 app:tint="@color/purple_500" />
 
             <ImageView

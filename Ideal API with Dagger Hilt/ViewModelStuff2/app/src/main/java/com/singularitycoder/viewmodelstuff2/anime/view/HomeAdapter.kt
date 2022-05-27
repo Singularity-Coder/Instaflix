@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
+import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeData
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemSpotlightBinding
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutHomeAnimeItemStandardBinding
@@ -92,10 +93,16 @@ class HomeAdapter @Inject constructor(val glide: RequestManager) : RecyclerView.
     inner class HomeStandardViewHolder(val itemBinding: LayoutHomeAnimeItemStandardBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(anime: AnimeData) {
             itemBinding.apply {
-                tvTitle.text = if (anime.titles?.en.isNullOrBlankOrNaOrNullString()) anime.titles?.rj ?: "No Title Available" else anime.titles?.en
-                tvDesc.text = if (anime.descriptions?.en.isNullOrBlankOrNaOrNullString()) {
-                    anime.descriptions?.jp?.trimJunk() ?: "No Description Available"
-                } else anime.descriptions?.en?.trimJunk()
+                tvTitle.text = when {
+                    anime.titles?.en.isNullOrBlankOrNaOrNullString() -> anime.titles?.rj ?: root.context.getString(R.string.no_title_available)
+                    anime.titles?.rj.isNullOrBlankOrNaOrNullString() -> anime.titles?.en ?: root.context.getString(R.string.no_title_available)
+                    else -> anime.titles?.rj
+                }
+                tvDesc.text = when {
+                    anime.descriptions?.en.isNullOrBlankOrNaOrNullString() -> anime.descriptions?.jp?.trimJunk() ?: root.context.getString(R.string.no_desc_available)
+                    anime.descriptions?.jp.isNullOrBlankOrNaOrNullString() -> anime.descriptions?.en?.trimJunk() ?: root.context.getString(R.string.no_desc_available)
+                    else -> anime.descriptions?.en
+                }
                 val rating = (anime.score?.div(10F))?.div(2F) ?: 0F
                 println("Converted Rating: $rating vs Actual Rating: ${anime.score}")
                 ratingAnime.rating = rating

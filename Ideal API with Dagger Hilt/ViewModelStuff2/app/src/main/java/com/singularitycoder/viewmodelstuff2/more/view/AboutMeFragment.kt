@@ -20,6 +20,7 @@ import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAboutMeBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.*
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.drawable
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.visible
 import com.singularitycoder.viewmodelstuff2.helpers.network.ApiState
 import com.singularitycoder.viewmodelstuff2.helpers.network.LoadingState
@@ -124,9 +125,10 @@ class AboutMeFragment : BaseFragment() {
                         utils.showSnackBar(view = binding.root, message = getString(R.string.offline), duration = Snackbar.LENGTH_LONG, actionBtnText = this.getString(R.string.ok))
                     }
                     utils.asyncLog(message = "Github chan: %s", it.data)
-                    glide.load(it.data?.data?.repositoryOwner?.avatarUrl).into(binding.ivProfilePic)
-                    binding.tvName.text = it.data?.data?.repositoryOwner?.name ?: getString(R.string.na)
-                    binding.tvProfileDesc.text = "Github: @${it.data?.data?.repositoryOwner?.login ?: getString(R.string.na)}"
+                    val profileImage = it.data?.data?.repositoryOwner?.avatarUrl ?: nnContext.drawable(R.drawable.hitheshvurjana)
+                    glide.load(profileImage).into(binding.ivProfilePic)
+                    binding.tvName.text = it.data?.data?.repositoryOwner?.name ?: "Hithesh Vurjana"
+                    binding.tvProfileDesc.text = "Github: @${it.data?.data?.repositoryOwner?.login ?: "Singularity-Coder"}"
                 }
                 is ApiState.Loading -> when (it.loadingState) {
                     LoadingState.SHOW -> Unit

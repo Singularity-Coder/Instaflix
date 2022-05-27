@@ -176,4 +176,29 @@ val animeQuoteList = listOf(
         quote = "Time is the most valuable thing a man can spend.",
         author = "Unknown"
     ),
+    AnimeQuote(
+        quote = "Lost time is never found again.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Ignorance isn't bliss. Ignorance is weakness. Ignorance is a sin.",
+        author = "Spy X Family"
+    ),
+    AnimeQuote(
+        quote = "Information. The strongest and most essential weapon among all weapons.",
+        author = "Spy X Family"
+    ),
+    AnimeQuote(
+        quote = """
+            A university research went like this. The researchers showed the test subjects a film of a guy getting slapped.
+            The test subjects showed signs of discomfort cuz their brains empathized with the guy's pain.
+            And that means it's human nature to want to avoid violence. But the thing is, they ran the experiment again,
+            and this time they told the subjects, "The guy's getting slapped by his lover because he cheated on her."
+            So what do you think happened? When they watched it, the subject's brains showed signs of pleasure!
+            I mean, doesn't it freak you out? They have no idea if they are being told the truth.
+            But once the idea is in their heads, they do a complete 180. Weird right? Aren't wars waged in the same fashion.
+            They tell us to hate each other by giving us a reason. So we fight. And then we die. It's the most pointless thing in the world.
+        """.trimIndent(),
+        author = "Spy X Family"
+    ),
 )

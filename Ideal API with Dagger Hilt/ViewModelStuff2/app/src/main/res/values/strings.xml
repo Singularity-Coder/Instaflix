@@ -4,10 +4,16 @@
     <string name="online">Online</string>
     <string name="offline">Offline</string>
     <string name="offline_try_again">You are offline.</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
     <string name="ok">OK</string>
     <string name="try_again">Try Again</string>
     <string name="nothing_to_show">Nothing to show</string>
+
     <string name="na">Not Available</string>
+    <string name="no_desc_available">No Description Available</string>
+    <string name="no_title_available">No Title Available</string>
+
     <string name="no_desc_check_later">This anime doesn\'t seem to have any description right now. Check again later!</string>
     <string name="description">Description</string>
 

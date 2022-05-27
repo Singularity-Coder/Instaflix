@@ -29,88 +29,93 @@
                 android:layout_height="144dp"
                 android:scaleType="centerCrop"
                 android:src="@color/purple_200"
-                app:layout_constraintBottom_toTopOf="@+id/iv_content_holder"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--Center crop scale type is allows this view to expand to full dimensions-->
-            <ImageView
-                android:id="@+id/iv_content_holder"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
-                android:scaleType="centerCrop"
-                android:src="@color/purple_700"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_title"
-                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:elevation="8dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="Title"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@+id/iv_rating"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_content_holder" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_banner_image">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_date_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:elevation="8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Date Time"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_rating"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+                <!--Center crop scale type is allows this view to expand to full dimensions-->
+                <ImageView
+                    android:id="@+id/iv_content_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/purple_700"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/iv_rating"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:contentDescription="Share with WhatsApp"
-                android:elevation="8dp"
-                android:src="@drawable/star_on"
-                app:layout_constraintEnd_toStartOf="@+id/tv_rating"
-                app:layout_constraintTop_toTopOf="@+id/tv_title"
-                app:tint="@color/white" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:elevation="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Title"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_rating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_rating"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:elevation="8dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="0"
-                android:fontFamily="sans-serif-light"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_rating"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_rating" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_date_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingBottom="12dp"
+                    android:text="Date Time"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_rating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
+                <ImageView
+                    android:id="@+id/iv_rating"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Share with WhatsApp"
+                    android:elevation="8dp"
+                    android:src="@drawable/star_on"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_rating"
+                    app:layout_constraintTop_toTopOf="@+id/tv_title"
+                    app:tint="@color/white" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-light"
+                    android:maxLines="2"
+                    android:text="0"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_rating"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_rating" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

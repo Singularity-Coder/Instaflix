@@ -16,3 +16,4 @@ A video and audio streaming app like Netflix and Spotify
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/s11.png)
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/s12.png)
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/s13.png)
+![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/s14.png)

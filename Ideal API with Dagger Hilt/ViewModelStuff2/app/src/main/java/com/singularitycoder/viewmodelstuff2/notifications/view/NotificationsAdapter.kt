@@ -146,8 +146,8 @@ class NotificationsAdapter @Inject constructor(val glide: RequestManager) : Recy
                         )
                     }
                 }
-                ivMessage.onSafeClick {
-                    root.context.shareViaSms(phoneNum = "0000000000")
+                ivInfo.onSafeClick {
+                    notificationClickListener.invoke(notification.id.toString())
                 }
             }
         }

@@ -13,6 +13,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutFavoriteAnimeItemBinding
 import com.singularitycoder.viewmodelstuff2.databinding.ListItemHeaderBinding
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.gone
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.onSafeClick
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.toIntuitiveDateTime
 import java.util.*
@@ -78,35 +79,37 @@ class FavoritesAdapter @Inject constructor(val glide: RequestManager) : Recycler
 
     inner class FavoriteViewHolder(val itemBinding: LayoutFavoriteAnimeItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
         fun setData(favorite: Favorite) {
-            itemBinding.apply {
+            val bannerImage = if (favorite.bannerImage.isNullOrBlank()) {
+                favorite.coverImage
+            } else {
+                favorite.bannerImage
+            }
+            val rating = (favorite.score.div(10F)).div(2F)
+            if (rating == 0.0F) {
+                itemBinding.ivRating.gone()
+                itemBinding.tvRating.gone()
+            }
+            println("Converted Rating: $rating vs Actual Rating: ${favorite.score}")
 
-                tvTitle.text = favorite.title ?: "Title Not Available"
-                val rating = (favorite.score.div(10F)).div(2F)
-                println("Converted Rating: $rating vs Actual Rating: ${favorite.score}")
-
-                // https://stackoverflow.com/questions/2538787/how-to-print-a-float-with-2-decimal-places-in-java
-                tvRating.text = String.format(Locale.US, "%.1f", rating)
-                tvDateTime.text = favorite.date.toIntuitiveDateTime()
-
-                glide.load(favorite.coverImage).into(ivBannerImage)
-
-                /** Center crop scale type is what allows this view to expand to full dimensions. What an amazing fluke **/
-                glide.asBitmap().load(favorite.coverImage).into(object : CustomTarget<Bitmap>(2, 2) {
-                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                        ivContentHolder.setImageDrawable(BitmapDrawable(itemBinding.root.context.resources, resource))
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // this is called when imageView is cleared on lifecycle call or for some other reason.
-                        // if you are referencing the bitmap somewhere else too other than this imageView
-                        // clear it here as you can no longer have the bitmap
-                        ivContentHolder.setImageDrawable(null)
-                    }
-                })
-
-                root.onSafeClick {
-                    favoritesClickListener.invoke(favorite.id.toString())
+            itemBinding.tvTitle.text = favorite.title ?: "Title Not Available"
+            itemBinding.tvRating.text = String.format(Locale.US, "%.1f", rating) // https://stackoverflow.com/questions/2538787/how-to-print-a-float-with-2-decimal-places-in-java
+            itemBinding.tvDateTime.text = favorite.date.toIntuitiveDateTime()
+            glide.load(bannerImage).into(itemBinding.ivBannerImage)
+            glide.asBitmap().load(bannerImage).into(object : CustomTarget<Bitmap>(2, 2) {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    /** Center crop scale type is what allows this view to expand to full dimensions. What an amazing fluke **/
+                    itemBinding.ivContentHolder.setImageDrawable(BitmapDrawable(itemBinding.root.context.resources, resource))
                 }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // this is called when imageView is cleared on lifecycle call or for some other reason.
+                    // if you are referencing the bitmap somewhere else too other than this imageView clear it here as you can no longer have the bitmap.
+                    itemBinding.ivContentHolder.setImageDrawable(null)
+                }
+            })
+
+            itemBinding.root.onSafeClick {
+                favoritesClickListener.invoke(favorite.id.toString())
             }
         }
     }

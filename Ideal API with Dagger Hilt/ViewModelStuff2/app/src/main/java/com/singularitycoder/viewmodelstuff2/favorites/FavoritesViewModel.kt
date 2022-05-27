@@ -25,9 +25,13 @@ class FavoritesViewModel @Inject constructor(
 
     // Provide access to immutable value only to views. Functions are good as they are temporary in call stack than permanently allocating space with another variable
 
-    internal fun getFavoritesList(): LiveData<List<Favorite>> = repository.getFavoritesLiveList()
+    internal fun getFavoritesLiveList(): LiveData<List<Favorite>> = repository.getFavoritesLiveList()
 
     // -------------------------------------------------------------------------------------------------------------------------------------------
+
+    internal fun loadFavoriteAnimeListFromDb() = viewModelScope.launch {
+        repository.getFavoritesLiveList()
+    }
 
     internal fun addToFavorites(favorite: Favorite) = viewModelScope.launch {
         repository.addToFavorites(favorite)

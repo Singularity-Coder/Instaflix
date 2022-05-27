@@ -46,11 +46,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 // Workmanager 15 min random anime recom - control it to launch it just once
-// Reverese the anime list to reverse chron order
-// Date must be latest date
-// Launch notification
+// Handle large image notif
 // On click of notification launch main activity and paas it to detail fragment
-// Foreground service
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint

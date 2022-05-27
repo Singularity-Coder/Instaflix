@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Port this to a separate screen
-    private val mainActivityPermissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: MutableMap<String, Boolean>? ->
+    private val mainActivityPermissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: Map<String, @JvmSuppressWildcards Boolean>? ->
         permissions ?: return@registerForActivityResult
         permissions.entries.forEach { it: Map.Entry<String, @JvmSuppressWildcards Boolean> ->
             Timber.i("Permission status: ", "${it.key} = ${it.value}")
@@ -138,9 +139,11 @@ class MainActivity : AppCompatActivity() {
             if (supportFragmentManager.fragments.lastOrNull() is AnimeDetailFragment) {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 window.statusBarColor = Color.TRANSPARENT
+                binding.cardBottomNav.gone()
             } else {
                 window.decorView.systemUiVisibility = View.STATUS_BAR_VISIBLE
                 window.statusBarColor = color(R.color.purple_700)
+                binding.cardBottomNav.visible()
             }
         }
     }

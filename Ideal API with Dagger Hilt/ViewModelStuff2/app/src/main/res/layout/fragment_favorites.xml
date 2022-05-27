@@ -7,21 +7,12 @@
     android:background="@color/screen_background"
     tools:context=".anime.view.HomeFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_favorites"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_favorites"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_favorites"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scrollbars="none"
-            tools:listitem="@layout/layout_home_anime_item_spotlight" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:listitem="@layout/layout_favorite_anime_item" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_empty_list"
@@ -51,10 +42,4 @@
         app:lottie_rawRes="@raw/lottie_empty_search"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_blur"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -196,12 +196,25 @@ class GeneralUtils @Inject constructor(
             if (message.isBlank()) return
             if (null != toast) toast?.cancel()
 
-            val binding = LayoutCustomToastBinding.inflate(LayoutInflater.from(context)).apply {
-                tvCustomToastText.apply {
-                    text = message
-                    setCompoundDrawablesWithIntrinsicBounds(textImage, 0, 0, 0)
-                    compoundDrawablePadding = 12
-                }
+            val binding = LayoutCustomToastBinding.inflate(LayoutInflater.from(context))
+
+            binding.ivCustomToast.apply {
+                val toastImageList = listOf(
+                    R.drawable.saitama,
+                    R.drawable.saitama1,
+                    R.drawable.saitama2,
+                    R.drawable.saitama4,
+                    R.drawable.saitamabig1,
+                    R.drawable.saitamabig2,
+                    R.drawable.saitamabig3,
+                )
+                setImageResource(toastImageList.shuffled().first())
+            }
+
+            binding.tvCustomToast.apply {
+                text = message
+                setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
+                compoundDrawablePadding = 12
             }
 
             toast = Toast(context).apply {

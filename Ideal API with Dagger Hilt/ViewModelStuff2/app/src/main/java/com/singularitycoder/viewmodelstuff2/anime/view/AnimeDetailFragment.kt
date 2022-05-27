@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -180,12 +181,14 @@ class AnimeDetailFragment : BaseFragment() {
                     desc = data?.data?.descriptions?.en?.trimJunk() ?: data?.data?.descriptions?.jp?.trimJunk(),
                     score = data?.data?.score ?: 0,
                     coverImage = data?.data?.coverImage,
+                    bannerImage = data?.data?.bannerImage,
                     date = timeNow,
                     id = data?.data?.id ?: -1
                 )
                 animeFromApi = data
                 updateUI(anime = data)
-                loadEpisodes()
+                // TODO fix episodes
+//                loadEpisodes()
             }
 
             it onFailure { data: Anime?, message: String ->
@@ -221,34 +224,29 @@ class AnimeDetailFragment : BaseFragment() {
             }
         }
 
-        favoritesViewModel.getFavoritesList().observe(viewLifecycleOwner) { it: List<Favorite>? ->
-            it ?: return@observe
-            binding.btnLike.isLiked = it.any { it.id == favoriteAnime?.id } == true
-        }
+//        favoritesViewModel.getFavoritesLiveList().observe(viewLifecycleOwner) { favoritesList: List<Favorite>? ->
+//            favoritesList ?: return@observe
+//            binding.btnLike.isLiked = favoritesList.any { it.id == favoriteAnime?.id } == true
+//        }
     }
 
     private fun setUpUserActionListeners() {
-        binding.apply {
-//            ivContacts.onSafeClick {
-//                nnContext.shareSmsToAll()
-//            }
-//            ivSms.onSafeClick {
-//                nnContext.shareViaSms(phoneNum = "0000000000")
-//            }
-//            ivWhatsapp.onSafeClick {
-//                nnContext.shareViaWhatsApp(whatsAppPhoneNum = "0000000000")
-//            }
-            ivShare.onSafeClick {
-                nnActivity.shareViaApps(
-                    imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
-                    imageView = binding.ivCoverImage,
-                    title = "Fav Anime App",
-                    subtitle = "Fav Anime App"
-                )
+        nnActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!isEnabled) return
+                isEnabled = false
+                nnActivity.findViewById<CardView>(R.id.card_bottom_nav).visible()
+                nnActivity.supportFragmentManager.popBackStackImmediate()
             }
-//            ivEmail.onSafeClick {
-//                nnContext.shareViaEmail(email = "Friend's Email", subject = "Fav Anime App", desc = "Fav Anime App")
-//            }
+        })
+
+        binding.ivShare.onSafeClick {
+            nnActivity.shareViaApps(
+                imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
+                imageView = binding.ivCoverImage,
+                title = "Fav Anime App",
+                subtitle = "Fav Anime App"
+            )
         }
 
         binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
@@ -260,10 +258,6 @@ class AnimeDetailFragment : BaseFragment() {
             startTextToSpeech()
         }
 
-//        binding.tvLikeState.onSafeClick {
-//            binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
-//        }
-
         binding.llLike.onSafeClick {
             binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
         }
@@ -272,12 +266,12 @@ class AnimeDetailFragment : BaseFragment() {
         // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
-//                binding.tvLikeState.text = "Remove"
+                utils.showSnackBar(view = binding.root, message = getString(R.string.added_to_favorites))
                 favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
-//                binding.tvLikeState.text = "Add to Favorites"
+                utils.showSnackBar(view = binding.root, message = getString(R.string.removed_from_favorites))
                 favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }
         })
@@ -326,7 +320,6 @@ class AnimeDetailFragment : BaseFragment() {
                 animeViewModel.loadAnime(idOfAnime)
             }
         )
-        favoritesViewModel.getFavoritesList()
     }
 
     private fun loadEpisodes() {
@@ -347,10 +340,14 @@ class AnimeDetailFragment : BaseFragment() {
     }
 
     private fun updateUI(anime: Anime?) {
+        favoritesViewModel.getFavoritesLiveList().observe(viewLifecycleOwner) { favoritesList: List<Favorite>? ->
+            favoritesList ?: return@observe
+            binding.btnLike.isLiked = favoritesList.any { it.id == favoriteAnime?.id } == true
+        }
+        favoritesViewModel.loadFavoriteAnimeListFromDb()
         binding.apply {
             episodesAdapter.bannerImage = anime?.data?.bannerImage ?: anime?.data?.coverImage ?: ""
-                glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
-
+            glide.load(anime?.data?.coverImage).into(binding.ivCoverImage)
             doAfter(1.seconds()) {
                 Blurry.with(nnContext)
                     .radius(25)
@@ -361,29 +358,23 @@ class AnimeDetailFragment : BaseFragment() {
                         binding.ivBlurBackground.setImageDrawable(BitmapDrawable(resources, it))
                     }
             }
-//            if (anime?.data?.bannerImage.isNullOrBlankOrNaOrNullString()) {
-//                binding.ivBannerImage.gone()
-//                binding.cardCoverImage.setMargins(start = 16.dpToPx(), top = 16.dpToPx(), end = 0, bottom = 0)
-//            } else {
-//                glide.load(anime?.data?.bannerImage).into(binding.ivBannerImage)
-//            }
-//            if (binding.ivBannerImage.visibility == View.GONE) {
-//                binding.viewBannerWhiteFade.gone()
-//            } else binding.viewBannerWhiteFade.visible()
+        }
+        binding.apply {
             tvTitle.text = anime?.data?.titles?.en?.trimJunk() ?: anime?.data?.titles?.rj?.trimJunk() ?: getString(R.string.na)
-            tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: anime?.data?.descriptions?.jp?.trimJunk() ?: getString(R.string.na)
-            if (anime?.data?.descriptions?.en?.isBlank() == true) cardDesc.gone()
+            tvDesc.text = anime?.data?.descriptions?.en?.trimJunk() ?: anime?.data?.descriptions?.jp?.trimJunk()
+            if (tvDesc.text.isBlank()) cardDesc.gone()
             val rating = (anime?.data?.score?.div(10F))?.div(2F) ?: 0F
             println("Converted Rating: $rating vs Actual Rating: ${anime?.data?.score}")
             ratingAnimeDetail.rating = rating
-            if (anime?.data?.trailerUrl?.contains("www.youtube.com") == true) {
-                val youtubeVideoId = anime.data.trailerUrl?.substringAfterLast("/")
-                glide.load(youtubeVideoId?.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
-            } else {
-                binding.layoutTrailer.root.gone()
-                binding.tvTrailerTitle.gone()
-            }
-
+        }
+        if (anime?.data?.trailerUrl?.contains("www.youtube.com") == true) {
+            val youtubeVideoId = anime.data.trailerUrl?.substringAfterLast("/")
+            glide.load(youtubeVideoId?.toYoutubeThumbnailUrl()).into(binding.layoutTrailer.ivThumbnail)
+        } else {
+            binding.layoutTrailer.root.gone()
+            binding.tvTrailerTitle.gone()
+        }
+        binding.apply {
             tvStatus.text = nnContext.getCustomText(
                 key = getString(R.string.anime_detail_status),
                 value = AnimeStatus.getText(anime?.data?.status?.toByte()) ?: getString(R.string.na)
@@ -420,37 +411,36 @@ class AnimeDetailFragment : BaseFragment() {
                 key = getString(R.string.anime_detail_weekly_airing_date_s),
                 value = AnimeWeeklyAiringDay.getText(anime?.data?.weeklyAiringDay?.toByte()) ?: getString(R.string.na)
             )
-
-            anime?.data?.genres?.forEach {
-                val chip = Chip(nnContext).apply {
-                    text = it
-                    isCheckable = false
-                    isClickable = false
+        }
+        anime?.data?.genres?.forEach {
+            val chip = Chip(nnContext).apply {
+                text = it
+                isCheckable = false
+                isClickable = false
 //                    chipBackgroundColor = ColorStateList.valueOf(nnContext.color(R.color.white))
 //                    setTextColor(nnContext.color(R.color.purple_500))
-                    elevation = 4f
-                    onSafeClick {
-                        // call genres api with grid view 3 columns
-                    }
+                elevation = 4f
+                onSafeClick {
+                    // call genres api with grid view 3 columns
                 }
-                binding.chipGroupGenre.addView(chip)
+            }
+            binding.chipGroupGenre.addView(chip)
+        }
+        if (anime?.data?.genres.isNullOrEmpty()) binding.scrollViewGenres.gone()
+        CoroutineScope(IO).launch {
+            val recommendationsList = ArrayList<AnimeData?>()
+            anime?.data?.recommendations?.forEach { animeId: Int ->
+                recommendationsList.add(animeDao.getAnimeById(animeId.toString()))
             }
 
-            CoroutineScope(IO).launch {
-                val recommendationsList = ArrayList<AnimeData?>()
-                anime?.data?.recommendations?.forEach { animeId: Int ->
-                    recommendationsList.add(animeDao.getAnimeById(animeId.toString()))
-                }
-
-                withContext(Main) {
-                    recommendationsAdapter.recommendationsList = recommendationsList.toList().mapNotNull { it }
-                    if (recommendationsList.isNullOrEmpty()) {
-                        binding.rvRecommendations.gone()
-                        binding.tvMoreLikeThis.gone()
-                    } else {
-                        binding.rvRecommendations.visible()
-                        binding.tvMoreLikeThis.visible()
-                    }
+            withContext(Main) {
+                recommendationsAdapter.recommendationsList = recommendationsList.toList().mapNotNull { it }
+                if (recommendationsList.isEmpty()) {
+                    binding.rvRecommendations.gone()
+                    binding.tvMoreLikeThis.gone()
+                } else {
+                    binding.rvRecommendations.visible()
+                    binding.tvMoreLikeThis.visible()
                 }
             }
         }

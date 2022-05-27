@@ -39,7 +39,7 @@ object GeneralModule {
     @Provides
     fun injectGlide(@ApplicationContext context: Context): RequestManager {
         return Glide.with(context).setDefaultRequestOptions(
-            RequestOptions().placeholder(R.color.purple_100).error(android.R.color.holo_red_dark)
+            RequestOptions().placeholder(R.color.black).error(android.R.color.holo_red_dark)
         )
     }
 
