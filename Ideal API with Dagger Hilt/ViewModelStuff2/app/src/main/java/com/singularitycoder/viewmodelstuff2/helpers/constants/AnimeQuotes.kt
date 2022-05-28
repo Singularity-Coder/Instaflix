@@ -205,4 +205,8 @@ val animeQuoteList = listOf(
         quote = "Talent is something you bloom, Instinct is something you polish.",
         author = "Haikyuu"
     ),
+    AnimeQuote(
+        quote = "When two fight, the third wins.",
+        author = "Magic Emperor"
+    ),
 )

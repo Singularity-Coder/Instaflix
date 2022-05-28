@@ -257,11 +257,13 @@ class AnimeDetailFragment : BaseFragment() {
         // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
+                activity.vibrate(positiveAction = true)
                 utils.showSnackBar(view = binding.root, message = getString(R.string.added_to_favorites))
                 favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
+                activity.vibrate(positiveAction = false)
                 utils.showSnackBar(view = binding.root, message = getString(R.string.removed_from_favorites))
                 favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }

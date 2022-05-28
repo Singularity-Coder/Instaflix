@@ -31,7 +31,11 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun setUpVideoView() {
-        val splashList = listOf(R.raw.splash, R.raw.splash2)
+        val splashList = listOf(
+            R.raw.splash,
+            R.raw.splash2,
+            R.raw.splash3
+        )
         val rawVideoPath = getRawPathOf(video = splashList.shuffled().first())
         binding.videoView.apply {
             setVideoURI(Uri.parse(rawVideoPath))

@@ -2,7 +2,10 @@ package com.singularitycoder.viewmodelstuff2.helpers.extensions
 
 import android.Manifest
 import android.app.Activity
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.ContentUris
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -10,9 +13,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import android.provider.ContactsContract
 import android.provider.Settings
-import android.speech.RecognizerIntent
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
@@ -23,7 +28,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RawRes
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.palette.graphics.Palette
@@ -317,5 +321,25 @@ fun Activity?.fullScreen() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+    }
+}
+
+fun Activity?.vibrate(positiveAction: Boolean) {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val vibratorManager = this?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        vibratorManager.defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        this?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (positiveAction) {
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(100L, 200L), 0))
+        } else {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        }
+    } else {
+        vibrator.vibrate(200)
     }
 }
