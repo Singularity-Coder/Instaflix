@@ -139,6 +139,8 @@ val epicAnimeMomentsList = listOf(
     YoutubeVideo(title = "Shingeki no Kyojin - Eren blocks gate with boulder", videoId = "iaLJ1Jk35lU"),
     YoutubeVideo(title = "Shingeki no Kyojin - Eren Transforms - Willy Tybur Speech: The Final Season", videoId = "pR3KdTbbBoM"),
     YoutubeVideo(title = "Monster - Tenma confronts Johan", videoId = "NMZVAN3UUmg"),
+    YoutubeVideo(title = "Haikyuu - Oikawa’s DIABOLICAL SERVE", videoId = "FpCm7fV-LSY"),
+    YoutubeVideo(title = "Haikyuu - Oikawa Super Long Set to Iwaizumi against Karasuno", videoId = "fVyGOb4FcV8"),
 ).shuffled()
 
 // King Arthur's OSTs are just a work of art. Super creative. Again every OST is good.

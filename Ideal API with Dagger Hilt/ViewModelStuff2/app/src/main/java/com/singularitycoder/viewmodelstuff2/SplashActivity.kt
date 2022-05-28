@@ -7,9 +7,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.singularitycoder.viewmodelstuff2.databinding.ActivitySplashBinding
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.avoidScreenShots
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.fullScreen
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.getRawPathOf
-import com.singularitycoder.viewmodelstuff2.helpers.extensions.seconds
-import com.singularitycoder.viewmodelstuff2.helpers.utils.doAfter
 
 // TODO - Do splash the right way
 // https://stackoverflow.com/questions/35837197/i-want-to-add-auto-play-media-in-android
@@ -25,6 +25,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        avoidScreenShots()
+        fullScreen()
+        setUpVideoView()
+    }
+
+    private fun setUpVideoView() {
         val splashList = listOf(R.raw.splash, R.raw.splash2)
         val rawVideoPath = getRawPathOf(video = splashList.shuffled().first())
         binding.videoView.apply {

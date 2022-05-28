@@ -53,12 +53,12 @@ class EpisodesAdapter @Inject constructor(val glide: RequestManager) : RecyclerV
         fun setData(episode: Episode) {
             itemBinding.apply {
                 root.layoutParams.apply {
-                    width = deviceWidth() / 3
-                    height = deviceHeight() / 10
+                    width = (deviceWidth() / 2.5).toInt()
+                    height = deviceHeight() / 9
                 }
                 ivThumbnail.layoutParams.apply {
-                    width = deviceWidth() / 3
-                    height = deviceHeight() / 10
+                    width = (deviceWidth() / 2.5).toInt()
+                    height = deviceHeight() / 9
                 }
                 glide.asBitmap().load(bannerImage).into(ivThumbnail)
                 tvEpisodeTitle.text = "Episode ${episode.number}"

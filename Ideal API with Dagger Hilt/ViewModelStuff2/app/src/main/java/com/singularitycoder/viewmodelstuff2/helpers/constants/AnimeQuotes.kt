@@ -201,4 +201,8 @@ val animeQuoteList = listOf(
         """.trimIndent(),
         author = "Spy X Family"
     ),
+    AnimeQuote(
+        quote = "Talent is something you bloom, Instinct is something you polish.",
+        author = "Haikyuu"
+    ),
 )

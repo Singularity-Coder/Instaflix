@@ -17,6 +17,8 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -295,4 +297,25 @@ fun Bitmap.getDominantColor(context: Context): Int? {
         dominantColor = it.getDominantColor(defaultColor)
     }
     return dominantColor
+}
+
+fun Activity?.avoidScreenShots() {
+    this ?: return
+    window?.setFlags(
+        WindowManager.LayoutParams.FLAG_SECURE,
+        WindowManager.LayoutParams.FLAG_SECURE
+    )
+}
+
+fun Activity?.fullScreen() {
+    this ?: return
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        window.insetsController?.hide(WindowInsets.Type.statusBars())
+    } else {
+        @Suppress("DEPRECATION")
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+    }
 }

@@ -1,14 +1,13 @@
 package com.singularitycoder.viewmodelstuff2.more.view
 
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
-import android.view.WindowManager
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.singularitycoder.viewmodelstuff2.databinding.ActivityYoutubeVideoBinding
 import com.singularitycoder.viewmodelstuff2.helpers.constants.*
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.avoidScreenShots
+import com.singularitycoder.viewmodelstuff2.helpers.extensions.fullScreen
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
 import timber.log.Timber
 
@@ -40,25 +39,6 @@ class YoutubeVideoActivity : YouTubeBaseActivity() {
     override fun onPause() {
         super.onPause()
         binding.root.keepScreenOn = false
-    }
-
-    private fun avoidScreenShots() {
-        window?.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
-    }
-
-    private fun fullScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            @Suppress("DEPRECATION")
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
     }
 
     private fun initYoutubePlayer() = binding.youtubePlayerView.initialize(

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
@@ -32,7 +33,6 @@ import com.singularitycoder.viewmodelstuff2.favorites.Favorite
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesViewModel
 import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
-import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey.EPISODE_LIST
 import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
@@ -51,7 +51,6 @@ import timber.log.Timber
 import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -147,7 +146,6 @@ class AnimeDetailFragment : BaseFragment() {
         binding.tvEpisodes.text = "Episodes"
         binding.tvTrailerTitle.text = "Trailer"
         binding.tvDescTitle.text = "Description"
-        nnActivity.findViewById<CardView>(R.id.card_bottom_nav).gone()
     }
 
     private fun setUpRecyclerView() {
@@ -187,8 +185,6 @@ class AnimeDetailFragment : BaseFragment() {
                 )
                 animeFromApi = data
                 updateUI(anime = data)
-                // TODO fix episodes
-//                loadEpisodes()
             }
 
             it onFailure { data: Anime?, message: String ->
@@ -209,6 +205,7 @@ class AnimeDetailFragment : BaseFragment() {
             it onSuccess { data: EpisodeList?, message: String ->
                 utils.asyncLog(message = "Episode List chan: %s", data)
                 episodesAdapter.episodesList = data?.data?.documents ?: emptyList()
+                episodesAdapter.notifyDataSetChanged()
                 binding.btnPlayEpisodes.enable()
             }
 
@@ -223,11 +220,6 @@ class AnimeDetailFragment : BaseFragment() {
                 }
             }
         }
-
-//        favoritesViewModel.getFavoritesLiveList().observe(viewLifecycleOwner) { favoritesList: List<Favorite>? ->
-//            favoritesList ?: return@observe
-//            binding.btnLike.isLiked = favoritesList.any { it.id == favoriteAnime?.id } == true
-//        }
     }
 
     private fun setUpUserActionListeners() {
@@ -235,7 +227,6 @@ class AnimeDetailFragment : BaseFragment() {
             override fun handleOnBackPressed() {
                 if (!isEnabled) return
                 isEnabled = false
-                nnActivity.findViewById<CardView>(R.id.card_bottom_nav).visible()
                 nnActivity.supportFragmentManager.popBackStackImmediate()
             }
         })
@@ -277,11 +268,9 @@ class AnimeDetailFragment : BaseFragment() {
         })
 
         // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
-//        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-//            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
-//            val bottomNav = nnActivity.findViewById<CardView>(R.id.card_bottom_nav)
-//            if (scrollY > 0) bottomNav.gone() else bottomNav.visible()
-//        }
+        binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            println("Scrolled to $scrollX, $scrollY from $oldScrollX, $oldScrollY")
+        }
 
         binding.layoutTrailer.root.onSafeClick {
             if (animeFromApi?.data?.trailerUrl?.contains("www.youtube.com") == true) {
@@ -297,14 +286,14 @@ class AnimeDetailFragment : BaseFragment() {
 
         binding.btnPlayEpisodes.onSafeClick {
             val intent = Intent(nnActivity, ExoPlayerActivity::class.java).apply {
-                putParcelableArrayListExtra(EPISODE_LIST, ArrayList<Parcelable?>(episodesAdapter.episodesList))
+                putParcelableArrayListExtra(IntentKey.EPISODE_LIST, ArrayList<Episode?>(episodesAdapter.episodesList))
             }
             startActivity(intent)
         }
 
         episodesAdapter.setEpisodeItemClickListener { episode: Episode ->
             val intent = Intent(nnActivity, ExoPlayerActivity::class.java).apply {
-                putParcelableArrayListExtra(EPISODE_LIST, ArrayList<Parcelable?>().apply { add(episode) })
+                putParcelableArrayListExtra(IntentKey.EPISODE_LIST, ArrayList<Episode?>().apply { add(episode) })
             }
             startActivity(intent)
         }
@@ -318,23 +307,6 @@ class AnimeDetailFragment : BaseFragment() {
             },
             offlineWork = {
                 animeViewModel.loadAnime(idOfAnime)
-            }
-        )
-    }
-
-    private fun loadEpisodes() {
-        if (null != animeViewModel.getEpisodesList().value) return
-        val animeId = try {
-            idOfAnime.toInt()
-        } catch (e: Exception) {
-            0
-        }
-        networkState.listenToNetworkChangesAndDoWork(
-            onlineWork = {
-                animeViewModel.getEpisodesList(animeId = animeId, number = null, isDub = null, locale = null)
-            },
-            offlineWork = {
-                animeViewModel.getEpisodesList(animeId = animeId, number = null, isDub = null, locale = null)
             }
         )
     }
@@ -412,35 +384,48 @@ class AnimeDetailFragment : BaseFragment() {
                 value = AnimeWeeklyAiringDay.getText(anime?.data?.weeklyAiringDay?.toByte()) ?: getString(R.string.na)
             )
         }
-        anime?.data?.genres?.forEach {
+        anime?.data?.genres?.forEach { it: String ->
             val chip = Chip(nnContext).apply {
                 text = it
                 isCheckable = false
                 isClickable = false
-//                    chipBackgroundColor = ColorStateList.valueOf(nnContext.color(R.color.white))
-//                    setTextColor(nnContext.color(R.color.purple_500))
+//                chipBackgroundColor = ColorStateList.valueOf(nnContext.color(R.color.white))
+//                setTextColor(nnContext.color(R.color.purple_500))
                 elevation = 4f
                 onSafeClick {
-                    // call genres api with grid view 3 columns
+                    // TODO call genres api with grid view 3 columns
                 }
             }
             binding.chipGroupGenre.addView(chip)
         }
         if (anime?.data?.genres.isNullOrEmpty()) binding.scrollViewGenres.gone()
+        loadEpisodes()
+        loadRecommendations(anime)
+        nnActivity.findViewById<CardView>(R.id.card_bottom_nav).gone()
+    }
+
+    private fun loadEpisodes() {
+        if (null != animeViewModel.getEpisodesList().value) return
+        val animeId = idOfAnime.toIntOrNull() ?: 0
+        fun getEpisodeListFromApi() = animeViewModel.getEpisodesList(animeId = animeId, number = null, isDub = null, locale = null)
+        networkState.listenToNetworkChangesAndDoWork(
+            onlineWork = { getEpisodeListFromApi() },
+            offlineWork = { getEpisodeListFromApi() }
+        )
+    }
+
+    private fun loadRecommendations(anime: Anime?) {
+        // TODO call api for every aniem id
         CoroutineScope(IO).launch {
-            val recommendationsList = ArrayList<AnimeData?>()
-            anime?.data?.recommendations?.forEach { animeId: Int ->
-                recommendationsList.add(animeDao.getAnimeById(animeId.toString()))
-            }
+            val recommendationsList = anime?.data?.recommendations?.mapNotNull { animeId: Int ->
+                animeDao.getAnimeById(animeId.toString())
+            } ?: emptyList()
 
             withContext(Main) {
-                recommendationsAdapter.recommendationsList = recommendationsList.toList().mapNotNull { it }
-                if (recommendationsList.isEmpty()) {
+                recommendationsAdapter.recommendationsList = recommendationsList
+                if (recommendationsAdapter.recommendationsList.isEmpty()) {
                     binding.rvRecommendations.gone()
                     binding.tvMoreLikeThis.gone()
-                } else {
-                    binding.rvRecommendations.visible()
-                    binding.tvMoreLikeThis.visible()
                 }
             }
         }
@@ -452,7 +437,6 @@ class AnimeDetailFragment : BaseFragment() {
             width = deviceWidth() / 3
             height = deviceHeight() / 4
         }
-//        binding.ivBannerImage.layoutParams.height = (deviceHeight() / 3.5).toInt()
     }
 
     private fun initTextToSpeech() {

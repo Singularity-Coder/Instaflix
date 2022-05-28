@@ -24,7 +24,7 @@ class RecommendationsAdapter @Inject constructor(val glide: RequestManager) : Re
     }
 
     private val recommendationsListDiffer = AsyncListDiffer(this, diffUtil)
-    var recommendationsList: List<AnimeData>
+    var recommendationsList: List<AnimeData?>
         get() = recommendationsListDiffer.currentList
         set(value) = recommendationsListDiffer.submitList(value)
 
@@ -36,7 +36,7 @@ class RecommendationsAdapter @Inject constructor(val glide: RequestManager) : Re
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RecommendationsViewHolder) holder.setData(recommendationsList[position])
+        if (holder is RecommendationsViewHolder) holder.setData(recommendationsList?.get(position))
     }
 
     override fun getItemCount(): Int = recommendationsList.size
@@ -48,10 +48,15 @@ class RecommendationsAdapter @Inject constructor(val glide: RequestManager) : Re
     }
 
     inner class RecommendationsViewHolder(val itemBinding: ListItemRecommendationBinding) : RecyclerView.ViewHolder(itemBinding.root) {
-        fun setData(anime: AnimeData) {
+        fun setData(anime: AnimeData?) {
             itemBinding.apply {
-                glide.load(anime.coverImage).into(ivRecommendation)
-                root.onSafeClick { itemClickListener.invoke(anime.id.toString()) }
+                val imageUrl = if (anime?.coverImage.isNullOrBlankOrNaOrNullString()) {
+                    anime?.bannerImage
+                } else {
+                    anime?.coverImage
+                }
+                glide.load(imageUrl).into(ivRecommendation)
+                root.onSafeClick { itemClickListener.invoke(anime?.id.toString()) }
             }
         }
     }

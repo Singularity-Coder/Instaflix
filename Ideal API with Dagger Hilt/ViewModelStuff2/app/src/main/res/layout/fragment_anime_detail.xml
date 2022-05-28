@@ -533,4 +533,6 @@
                 tools:listitem="@layout/list_item_recommendation" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
