@@ -243,8 +243,11 @@ dependencies {
     // AndroidX Activity - need this for registerForActivityResult else wont work on Samsung and OnePlus
     implementation "androidx.activity:activity-ktx:1.4.0"
 
-    // Barcode generator
+    // Barcode Generator - 3.3.0 for api < 24 compatibility with barcode scanner
     implementation "com.google.zxing:core:3.3.0"
+
+    // Barcode Scanner
+    implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
 
     // Exo Player
     implementation "com.google.android.exoplayer:exoplayer:$exo_player_version"

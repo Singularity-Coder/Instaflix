@@ -20,6 +20,8 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.view.AnimeDetailFragment
 import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
@@ -228,5 +230,20 @@ fun AppCompatActivity.fullScreen() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+    }
+}
+
+fun View.showSnackBar(
+    message: String,
+    anchorView: View? = null,
+    duration: Int = Snackbar.LENGTH_SHORT,
+    actionBtnText: String = "NA",
+    action: () -> Unit = {}
+) {
+    Snackbar.make(this, message, duration).apply {
+        this.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
+        if (null != anchorView) this.anchorView = anchorView
+        if ("NA" != actionBtnText) setAction(actionBtnText) { action.invoke() }
+        this.show()
     }
 }

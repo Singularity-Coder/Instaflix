@@ -40,6 +40,9 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="allowBackup">
         <activity
+            android:name=".BarcodeScanActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -73,12 +76,18 @@
             android:name=".anime.view.ExoPlayerActivity"
             android:exported="false"
             android:screenOrientation="landscape"
-            android:turnScreenOn="true"/>
+            android:turnScreenOn="true" />
         <activity
             android:name=".more.view.YoutubeVideoActivity"
             android:exported="false"
             android:screenOrientation="landscape"
             android:turnScreenOn="true" />
+        <activity
+            android:name=".helpers.BarcodeScanActivity"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <service
             android:name=".helpers.service.AnimeForegroundService"

@@ -298,29 +298,31 @@ class AnimeDetailFragment : BaseFragment() {
             )
         }
 
-        binding.llLike.onSafeClick {
-            binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
-        }
-
         // https://github.com/jd-alexander/LikeButton
         // https://www.studytonight.com/post/implement-twitter-heart-button-like-animation-in-android-app
-        binding.btnLike.setOnLikeListener(object : OnLikeListener {
-            override fun liked(likeButton: LikeButton) {
-                activity.vibrate(positiveAction = true)
-                val favoriteSoundsList = listOf(R.raw.favorite, R.raw.favorite2, R.raw.favorite3)
-                context.playSound(favoriteSoundsList.shuffled().first())
-                utils.showSnackBar(view = binding.root, message = getString(R.string.added_to_favorites))
-                favoritesViewModel.addToFavorites(favoriteAnime ?: return)
+        binding.apply {
+            llLike.onSafeClick {
+                binding.btnLike.performClick() // So when u click tvLikeState it inturn clicks btnLike which performs its action
             }
 
-            override fun unLiked(likeButton: LikeButton) {
-                activity.vibrate(positiveAction = false)
-                val unFavoriteSoundsList = listOf(R.raw.unfavorite, R.raw.unfavorite2, R.raw.unfavorite3)
-                context.playSound(unFavoriteSoundsList.shuffled().first())
-                utils.showSnackBar(view = binding.root, message = getString(R.string.removed_from_favorites))
-                favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
-            }
-        })
+            btnLike.setOnLikeListener(object : OnLikeListener {
+                override fun liked(likeButton: LikeButton) {
+                    activity.vibrate(positiveAction = true)
+                    val favoriteSoundsList = listOf(R.raw.favorite, R.raw.favorite2, R.raw.favorite3)
+                    context.playSound(favoriteSoundsList.shuffled().first())
+                    utils.showSnackBar(view = binding.root, message = getString(R.string.added_to_favorites))
+                    favoritesViewModel.addToFavorites(favoriteAnime ?: return)
+                }
+
+                override fun unLiked(likeButton: LikeButton) {
+                    activity.vibrate(positiveAction = false)
+                    val unFavoriteSoundsList = listOf(R.raw.unfavorite, R.raw.unfavorite2, R.raw.unfavorite3)
+                    context.playSound(unFavoriteSoundsList.shuffled().first())
+                    utils.showSnackBar(view = binding.root, message = getString(R.string.removed_from_favorites))
+                    favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
+                }
+            })
+        }
 
         binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
             if (it.second) binding.tvDesc.maxLines = 50
@@ -344,15 +346,15 @@ class AnimeDetailFragment : BaseFragment() {
             }
         }
 
-        recommendationsAdapter.setRecommendationsItemClickListener { animeId: String ->
-            nnActivity.showAnimeDetailsOfThis(animeId)
-        }
-
         binding.btnPlayEpisodes.onSafeClick {
             val intent = Intent(nnActivity, ExoPlayerActivity::class.java).apply {
                 putParcelableArrayListExtra(IntentKey.EPISODE_LIST, ArrayList<Episode?>(episodesAdapter.episodesList))
             }
             startActivity(intent)
+        }
+
+        recommendationsAdapter.setRecommendationsItemClickListener { animeId: String ->
+            nnActivity.showAnimeDetailsOfThis(animeId)
         }
 
         episodesAdapter.setEpisodeItemClickListener { episode: Episode ->

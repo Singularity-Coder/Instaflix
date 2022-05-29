@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.singularitycoder.viewmodelstuff2.BaseFragment
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentMoreBinding
+import com.singularitycoder.viewmodelstuff2.helpers.BarcodeScanActivity
 import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Gender
 import com.singularitycoder.viewmodelstuff2.helpers.constants.animeQuoteList
@@ -33,6 +38,17 @@ class MoreFragment : BaseFragment() {
     private lateinit var nnContext: Context
     private lateinit var nnActivity: MainActivity
     private lateinit var binding: FragmentMoreBinding
+
+    private val barcodeScanLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
+        if (result.contents == null) {
+            binding.root.showSnackBar(getString(R.string.something_is_wrong))
+        } else {
+            Timber.i("Scanned result a.k.a animeId: ${result.contents}")
+            val animeId = result.contents
+            if (animeId.isNullOrBlankOrNaOrNullString()) return@registerForActivityResult
+            nnActivity.showAnimeDetailsOfThis(animeId)
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -71,6 +87,20 @@ class MoreFragment : BaseFragment() {
 
     private fun setUpUserActionListeners() {
         binding.clAnimeQuotes.setOnClickListener { setUpAnimeQuotes() }
+
+        // https://github.com/journeyapps/zxing-android-embedded
+        // https://github.com/journeyapps/zxing-android-embedded/releases
+        binding.cardScanBarcode.onSafeClick {
+            val scanOptions = ScanOptions().apply {
+                setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+                setPrompt("Scan Aniflix Barcode")
+                captureActivity = BarcodeScanActivity::class.java
+                setTorchEnabled(true)
+                setOrientationLocked(true)
+                setBeepEnabled(true)
+            }
+            barcodeScanLauncher.launch(scanOptions)
+        }
 
         binding.apply {
             switchRandomWorker.setOnCheckedChangeListener { buttonView, isChecked ->
