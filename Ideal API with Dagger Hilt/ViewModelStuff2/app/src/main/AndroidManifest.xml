@@ -40,16 +40,6 @@
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute,LockedOrientationActivity"
         tools:replace="allowBackup">
         <activity
-            android:name=".anime.view.ExoPlayerActivity"
-            android:exported="false"
-            android:screenOrientation="landscape"
-            android:turnScreenOn="true"/>
-        <activity
-            android:name=".more.view.YoutubeVideoActivity"
-            android:exported="false"
-            android:screenOrientation="landscape"
-            android:turnScreenOn="true" />
-        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -79,6 +69,16 @@
             android:lockTaskMode="normal"
             android:persistableMode="persistAcrossReboots"
             android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".anime.view.ExoPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:turnScreenOn="true"/>
+        <activity
+            android:name=".more.view.YoutubeVideoActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:turnScreenOn="true" />
 
         <service
             android:name=".helpers.service.AnimeForegroundService"

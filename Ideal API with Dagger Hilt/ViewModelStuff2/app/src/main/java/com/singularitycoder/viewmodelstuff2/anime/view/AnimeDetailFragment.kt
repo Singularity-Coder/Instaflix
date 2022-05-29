@@ -2,9 +2,9 @@ package com.singularitycoder.viewmodelstuff2.anime.view
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.os.Parcelable
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.RawRes
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
@@ -21,6 +21,9 @@ import com.bumptech.glide.RequestManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
 import com.like.LikeButton
 import com.like.OnLikeListener
 import com.singularitycoder.viewmodelstuff2.BaseFragment
@@ -29,6 +32,7 @@ import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.dao.AnimeDao
 import com.singularitycoder.viewmodelstuff2.anime.model.*
 import com.singularitycoder.viewmodelstuff2.anime.viewmodel.AnimeViewModel
+import com.singularitycoder.viewmodelstuff2.databinding.DialogGeneratedBarcodeBinding
 import com.singularitycoder.viewmodelstuff2.databinding.FragmentAnimeDetailBinding
 import com.singularitycoder.viewmodelstuff2.favorites.Favorite
 import com.singularitycoder.viewmodelstuff2.favorites.FavoritesViewModel
@@ -43,6 +47,7 @@ import com.singularitycoder.viewmodelstuff2.more.view.YoutubeVideoActivity
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -119,6 +124,11 @@ class AnimeDetailFragment : BaseFragment() {
         loadAnime()
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (textToSpeech?.isSpeaking == true) textToSpeech = null
+    }
+
     private fun getIntentData() {
         idOfAnime = arguments?.getString(IntentKey.ID_OF_ANIME, "") ?: ""
         println("Anime Id received: $idOfAnime")
@@ -140,7 +150,7 @@ class AnimeDetailFragment : BaseFragment() {
         }
         binding.apply {
             ivShare.layoutParams.width = deviceWidth() / 5
-            ivBarcode.layoutParams.width = deviceWidth() / 5
+            ivGenerateBarcode.layoutParams.width = deviceWidth() / 5
             llLike.layoutParams.width = deviceWidth() / 5
         }
         binding.tvMoreLikeThis.text = "More like this"
@@ -232,6 +242,53 @@ class AnimeDetailFragment : BaseFragment() {
             }
         })
 
+        // https://github.com/zxing/zxing
+        // https://github.com/JiashuWu/Android-Barcode
+        // https://github.com/journeyapps/zxing-android-embedded
+        binding.ivGenerateBarcode.onSafeClick {
+            if (idOfAnime.isNullOrBlankOrNaOrNullString()) return@onSafeClick
+            CoroutineScope(Default).launch {
+                val barcodeBitmap = try {
+                    val bitMatrix = MultiFormatWriter().encode(idOfAnime, BarcodeFormat.QR_CODE, 660, 660)
+                    val width = bitMatrix.width
+                    val height = bitMatrix.height
+                    val pixels = IntArray(width * height)
+                    for (i in 0 until height) {
+                        for (j in 0 until width) {
+                            if (bitMatrix[j, i]) {
+                                pixels[i * width + j] = -0x1000000
+                            } else {
+                                pixels[i * width + j] = -0x1
+                            }
+                        }
+                    }
+                    val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                    bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
+                    bitmap
+                } catch (e: WriterException) {
+                    Timber.e(e)
+                    null
+                } catch (e: Exception) {
+                    Timber.e(e)
+                    null
+                }
+
+                withContext(Main) {
+                    val dialogBinding = DialogGeneratedBarcodeBinding.inflate(LayoutInflater.from(context), binding.root, false).apply {
+                        ivGeneratedBarcode.setImageBitmap(barcodeBitmap ?: return@withContext)
+                    }
+                    AlertDialog.Builder(nnContext).apply {
+                        setTitle("Scan")
+                        setCancelable(false)
+                        setView(dialogBinding.root)
+                        setPositiveButton("Done") { dialog, which -> }
+                        create()
+                        show()
+                    }
+                }
+            }
+        }
+
         binding.ivShare.onSafeClick {
             nnActivity.shareViaApps(
                 imageDrawableOrUrl = nnContext.drawable(R.drawable.saitama),
@@ -239,15 +296,6 @@ class AnimeDetailFragment : BaseFragment() {
                 title = "Fav Anime App",
                 subtitle = "Fav Anime App"
             )
-        }
-
-        binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
-            if (it.second) binding.tvDesc.maxLines = 50
-            else binding.tvDesc.maxLines = 4
-        }
-
-        binding.tvReadDesc.onSafeClick {
-            startTextToSpeech()
         }
 
         binding.llLike.onSafeClick {
@@ -273,6 +321,15 @@ class AnimeDetailFragment : BaseFragment() {
                 favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }
         })
+
+        binding.tvDesc.onSafeClick { it: Pair<View?, Boolean> ->
+            if (it.second) binding.tvDesc.maxLines = 50
+            else binding.tvDesc.maxLines = 4
+        }
+
+        binding.tvReadDesc.onSafeClick {
+            startTextToSpeech()
+        }
 
         // https://stackoverflow.com/questions/10713312/can-i-have-onscrolllistener-for-a-scrollview
         binding.scrollViewAnimeDetail.setOnScrollChangeListener { view: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->

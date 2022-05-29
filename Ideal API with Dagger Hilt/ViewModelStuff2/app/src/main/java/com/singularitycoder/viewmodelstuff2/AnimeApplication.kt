@@ -42,8 +42,14 @@ class AnimeApplication : Application() {
         }
     }
 
+    /** Called when the overall system is running low on memory */
     override fun onLowMemory() {
         super.onLowMemory()
-        Timber.i("Phone ran out of memory")
+        Timber.i("Device ran out of memory. Dumping cache and other temp stuff!")
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        Timber.i("Device ran out of memory")
     }
 }

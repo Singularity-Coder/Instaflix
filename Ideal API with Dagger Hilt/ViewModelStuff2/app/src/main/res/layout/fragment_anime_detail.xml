@@ -125,7 +125,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/rating_anime_detail">
 
                         <ImageView
-                            android:id="@+id/iv_barcode"
+                            android:id="@+id/iv_generate_barcode"
                             android:layout_width="wrap_content"
                             android:layout_height="42dp"
                             android:layout_marginStart="32dp"

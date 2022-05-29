@@ -243,6 +243,9 @@ dependencies {
     // AndroidX Activity - need this for registerForActivityResult else wont work on Samsung and OnePlus
     implementation "androidx.activity:activity-ktx:1.4.0"
 
+    // Barcode generator
+    implementation "com.google.zxing:core:3.3.0"
+
     // Exo Player
     implementation "com.google.android.exoplayer:exoplayer:$exo_player_version"
 //    implementation "com.google.android.exoplayer:exoplayer-core:$exo_player_version"
