@@ -11,6 +11,7 @@ import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
@@ -335,11 +336,16 @@ fun Activity?.vibrate(positiveAction: Boolean) {
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         if (positiveAction) {
-            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(100L, 200L), 0))
+            vibrator.vibrate(VibrationEffect.createWaveform(longArrayOf(10L, 20L), -1))
         } else {
             vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
         }
     } else {
         vibrator.vibrate(200)
     }
+}
+
+fun Context?.playSound(@RawRes sound: Int) = try {
+    MediaPlayer.create(this, sound).start()
+} catch (e: Exception) {
 }

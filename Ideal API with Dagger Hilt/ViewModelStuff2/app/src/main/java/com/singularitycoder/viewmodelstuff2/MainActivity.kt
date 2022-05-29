@@ -247,6 +247,7 @@ class MainActivity : AppCompatActivity() {
             val notificationsCount = getOrCreateBadge(R.id.nav_notifications).number
             removeBadge(R.id.nav_notifications) // to avoid adding duplicate views
             getOrCreateBadge(R.id.nav_notifications).number = notificationsCount + 1
+            playSound(R.raw.notification)
         }
     }
 

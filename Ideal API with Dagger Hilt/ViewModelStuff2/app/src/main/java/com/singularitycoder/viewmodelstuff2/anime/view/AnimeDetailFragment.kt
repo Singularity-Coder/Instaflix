@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RawRes
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
@@ -258,12 +259,16 @@ class AnimeDetailFragment : BaseFragment() {
         binding.btnLike.setOnLikeListener(object : OnLikeListener {
             override fun liked(likeButton: LikeButton) {
                 activity.vibrate(positiveAction = true)
+                val favoriteSoundsList = listOf(R.raw.favorite, R.raw.favorite2, R.raw.favorite3)
+                context.playSound(favoriteSoundsList.shuffled().first())
                 utils.showSnackBar(view = binding.root, message = getString(R.string.added_to_favorites))
                 favoritesViewModel.addToFavorites(favoriteAnime ?: return)
             }
 
             override fun unLiked(likeButton: LikeButton) {
                 activity.vibrate(positiveAction = false)
+                val unFavoriteSoundsList = listOf(R.raw.unfavorite, R.raw.unfavorite2, R.raw.unfavorite3)
+                context.playSound(unFavoriteSoundsList.shuffled().first())
                 utils.showSnackBar(view = binding.root, message = getString(R.string.removed_from_favorites))
                 favoritesViewModel.removeFromFavorites(favoriteAnime ?: return)
             }

@@ -140,6 +140,9 @@ class OnSafeClickListener(
     private var isClicked = false
 
     override fun onClick(v: View?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            v?.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+        }
         val elapsedRealtime = SystemClock.elapsedRealtime()
         if (elapsedRealtime - lastClickTime < delayAfterClick) return
         lastClickTime = elapsedRealtime

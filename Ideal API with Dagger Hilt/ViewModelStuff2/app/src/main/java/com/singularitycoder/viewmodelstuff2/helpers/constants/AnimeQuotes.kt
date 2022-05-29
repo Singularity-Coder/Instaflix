@@ -209,4 +209,8 @@ val animeQuoteList = listOf(
         quote = "When two fight, the third wins.",
         author = "Magic Emperor"
     ),
+    AnimeQuote(
+        quote = "Better three hours too soon than a minute too late.",
+        author = "Unknown"
+    ),
 )
