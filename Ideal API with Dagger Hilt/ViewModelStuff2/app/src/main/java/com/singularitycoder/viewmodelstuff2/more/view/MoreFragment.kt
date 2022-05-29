@@ -21,6 +21,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.BarcodeScanActivity
 import com.singularitycoder.viewmodelstuff2.helpers.constants.FragmentsTags
 import com.singularitycoder.viewmodelstuff2.helpers.constants.Gender
 import com.singularitycoder.viewmodelstuff2.helpers.constants.animeQuoteList
+import com.singularitycoder.viewmodelstuff2.helpers.decode
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,12 +42,16 @@ class MoreFragment : BaseFragment() {
 
     private val barcodeScanLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
         if (result.contents == null) {
-            binding.root.showSnackBar(getString(R.string.something_is_wrong))
+            binding.root.showSnackBar(message = getString(R.string.something_is_wrong), anchorView = activity?.findViewById(R.id.bottom_nav))
         } else {
-            Timber.i("Scanned result a.k.a animeId: ${result.contents}")
-            val animeId = result.contents
-            if (animeId.isNullOrBlankOrNaOrNullString()) return@registerForActivityResult
-            nnActivity.showAnimeDetailsOfThis(animeId)
+            if (result.contents.isNullOrBlankOrNaOrNullString()) return@registerForActivityResult
+            val encryptedIdOdAnime = result.contents
+            val idOfAnime = decode(encryptedIdOdAnime)
+            Timber.i("""
+                Scanned result a.k.a Encrypted animeId: ${result.contents}
+                Decrypted Anime Id: $idOfAnime
+            """.trimIndent())
+            nnActivity.showAnimeDetailsOfThis(idOfAnime)
         }
     }
 

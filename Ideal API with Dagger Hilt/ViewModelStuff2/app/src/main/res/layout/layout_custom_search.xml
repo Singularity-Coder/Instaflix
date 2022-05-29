@@ -54,7 +54,7 @@
                 android:layout_marginEnd="6dp"
                 android:background="@null"
                 android:enabled="true"
-                android:hint="Search Anime"
+                android:hint="Search Aniflix"
                 android:inputType="textCapWords"
                 android:maxLines="1"
                 android:textAlignment="center"

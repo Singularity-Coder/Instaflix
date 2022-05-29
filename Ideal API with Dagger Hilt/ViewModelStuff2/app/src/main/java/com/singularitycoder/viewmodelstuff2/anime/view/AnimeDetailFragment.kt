@@ -39,6 +39,7 @@ import com.singularitycoder.viewmodelstuff2.favorites.FavoritesViewModel
 import com.singularitycoder.viewmodelstuff2.helpers.constants.DateType
 import com.singularitycoder.viewmodelstuff2.helpers.constants.IntentKey
 import com.singularitycoder.viewmodelstuff2.helpers.constants.checkThisOutList
+import com.singularitycoder.viewmodelstuff2.helpers.encode
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import com.singularitycoder.viewmodelstuff2.helpers.network.*
 import com.singularitycoder.viewmodelstuff2.helpers.utils.*
@@ -245,11 +246,13 @@ class AnimeDetailFragment : BaseFragment() {
         // https://github.com/zxing/zxing
         // https://github.com/JiashuWu/Android-Barcode
         // https://github.com/journeyapps/zxing-android-embedded
+        /** Since any qr code scanner can read this, its good to encrypt [idOfAnime] and generate barcode */
         binding.ivGenerateBarcode.onSafeClick {
             if (idOfAnime.isNullOrBlankOrNaOrNullString()) return@onSafeClick
+            val encryptedIdOfAnime = encode(idOfAnime)
             CoroutineScope(Default).launch {
                 val barcodeBitmap = try {
-                    val bitMatrix = MultiFormatWriter().encode(idOfAnime, BarcodeFormat.QR_CODE, 660, 660)
+                    val bitMatrix = MultiFormatWriter().encode(encryptedIdOfAnime, BarcodeFormat.QR_CODE, 660, 660)
                     val width = bitMatrix.width
                     val height = bitMatrix.height
                     val pixels = IntArray(width * height)
