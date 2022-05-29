@@ -48,8 +48,8 @@ class MoreFragment : BaseFragment() {
             val encryptedIdOdAnime = result.contents
             val idOfAnime = decode(encryptedIdOdAnime)
             Timber.i("""
-                Scanned result a.k.a Encrypted animeId: ${result.contents}
-                Decrypted Anime Id: $idOfAnime
+                Scanned result a.k.a Encrypted Id of anime: ${result.contents}
+                Decrypted Id of anime: $idOfAnime
             """.trimIndent())
             nnActivity.showAnimeDetailsOfThis(idOfAnime)
         }
