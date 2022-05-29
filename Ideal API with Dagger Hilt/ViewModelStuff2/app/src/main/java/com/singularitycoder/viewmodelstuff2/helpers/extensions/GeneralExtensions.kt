@@ -12,6 +12,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.media.MediaPlayer
+import android.media.MediaPlayer.OnCompletionListener
 import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
@@ -325,6 +326,7 @@ fun Activity?.fullScreen() {
     }
 }
 
+// Short haptic feedback is 5 mills
 fun Activity?.vibrate(positiveAction: Boolean) {
     val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager = this?.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
@@ -345,7 +347,15 @@ fun Activity?.vibrate(positiveAction: Boolean) {
     }
 }
 
-fun Context?.playSound(@RawRes sound: Int) = try {
-    MediaPlayer.create(this, sound).start()
-} catch (e: Exception) {
+fun Context?.playSound(@RawRes sound: Int) {
+    try {
+        MediaPlayer.create(this, sound).apply {
+            setOnCompletionListener { it: MediaPlayer? ->
+                it?.reset()
+                it?.release()
+            }
+            start()
+        }
+    } catch (e: Exception) {
+    }
 }
