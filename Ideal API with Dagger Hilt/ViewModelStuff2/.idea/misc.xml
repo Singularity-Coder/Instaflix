@@ -50,6 +50,7 @@
         <entry key="app/src/main/res/drawable/splash_image.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/whatsapp.xml" value="0.1" />
+        <entry key="app/src/main/res/font/font_gilroy_family.xml" value="0.15648148148148147" />
         <entry key="app/src/main/res/layout/activity_exo_player.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19074074074074074" />

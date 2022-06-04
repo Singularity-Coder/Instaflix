@@ -213,4 +213,20 @@ val animeQuoteList = listOf(
         quote = "Better three hours too soon than a minute too late.",
         author = "Unknown"
     ),
+    AnimeQuote(
+        quote = "Talent is not something you are born with, but something you train and polish.",
+        author = "Ya Boy Kongming!"
+    ),
+    AnimeQuote(
+        quote = "Friction turns stones into jewels.",
+        author = "Ya Boy Kongming!"
+    ),
+    AnimeQuote(
+        quote = "Letting your enemy set the terms of engagement is akin to entering your enemy's territory.",
+        author = "Ya Boy Kongming!"
+    ),
+    AnimeQuote(
+        quote = "Decide first and act to make it happen.",
+        author = "Peerless Dad"
+    ),
 )

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,7 +23,12 @@ import com.singularitycoder.viewmodelstuff2.helpers.constants.animeQuoteList
 import com.singularitycoder.viewmodelstuff2.helpers.decode
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 @ExperimentalCoroutinesApi
@@ -41,17 +45,24 @@ class MoreFragment : BaseFragment() {
     private lateinit var binding: FragmentMoreBinding
 
     private val barcodeScanLauncher = registerForActivityResult(ScanContract()) { result: ScanIntentResult ->
-        if (result.contents == null) {
+        if (result.contents.isNullOrBlankOrNaOrNullString()) {
             binding.root.showSnackBar(message = getString(R.string.something_is_wrong), anchorView = activity?.findViewById(R.id.bottom_nav))
-        } else {
-            if (result.contents.isNullOrBlankOrNaOrNullString()) return@registerForActivityResult
-            val encryptedIdOdAnime = result.contents
-            val idOfAnime = decode(encryptedIdOdAnime)
-            Timber.i("""
+            return@registerForActivityResult
+        }
+
+        CoroutineScope(Default).launch {
+            val encryptedIdOfAnime = result.contents
+            val idOfAnime = decode(encryptedIdOfAnime)
+            Timber.i(
+                """
                 Scanned result a.k.a Encrypted Id of anime: ${result.contents}
                 Decrypted Id of anime: $idOfAnime
-            """.trimIndent())
-            nnActivity.showAnimeDetailsOfThis(idOfAnime)
+            """.trimIndent()
+            )
+
+            withContext(Main) {
+                nnActivity.showAnimeDetailsOfThis(idOfAnime)
+            }
         }
     }
 

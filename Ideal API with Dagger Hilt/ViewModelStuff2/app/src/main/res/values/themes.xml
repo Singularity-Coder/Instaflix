@@ -14,7 +14,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+<!--https://stackoverflow.com/questions/12128331/how-to-change-fontfamily-of-textview-in-android-->
+<!--        <item name="android:fontFamily">@font/comfortaa_bold</item>-->
 <!--        <item name="fontFamily">@font/comfortaa_bold</item>-->
+
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
