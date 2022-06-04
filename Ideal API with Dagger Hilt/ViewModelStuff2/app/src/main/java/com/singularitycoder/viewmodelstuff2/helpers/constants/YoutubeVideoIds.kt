@@ -37,6 +37,13 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Kung Fu Panda (2008) - Tai Lung's Revenge Scene", videoId = "GQM4dSjjQuE"),
     YoutubeVideo(title = "Kung Fu Panda (2008) - Fight for the Dragon Scroll", videoId = "AhbCYVILusc"),
     YoutubeVideo(title = "Arcane: League of Legends - All Fight Scenes", videoId = "vnYoxXYZN5g"),
+    YoutubeVideo(title = "Gundum Thunderbolt - Snowland Battle", videoId = "wF1dsJnloMo"),
+    YoutubeVideo(title = "Gundum Thunderbolt - Full Armor Gundam Io Fleming vs Psycho Zaku Daryl Lorenz", videoId = "dpcruxAuKJU"),
+    YoutubeVideo(title = "Gundam 00 - Raiser Battle Scene", videoId = "nYHG_5TVTjU"),
+    YoutubeVideo(title = "Megalobox 2 - Fight", videoId = "BYB-o0m5llE"),
+    YoutubeVideo(title = "Afro Samurai - first battle (massacre)", videoId = "HykZmVBylrc"),
+    YoutubeVideo(title = "Afro Samurai: Resurrection - Bridge Scene", videoId = "RP0yOW6FpEM"),
+    YoutubeVideo(title = "Kizumonogatari I: Tekketsu-hen - Koyomi Araragi vs Kiss Shot", videoId = "XCYWiGUXQ-I"),
 ).shuffled()
 
 // Absolutely every OST in Fate/Apocrypha is amazing. Kudos to Masaru Yokoyama
@@ -125,6 +132,9 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Your Name - Sparkle", videoId = "-pHfPJGatgE"),
     YoutubeVideo(title = "Your Name - Nandemonaiya - Movie Ver", videoId = "n89SKAymNfA"),
     YoutubeVideo(title = "Death Note - Kyrie, Kyrie II And Kyrie Orchestra", videoId = "UaIoK3Bf6lk"),
+    YoutubeVideo(title = "Mobile Suit Gundam 00 ED2 - Friends", videoId = "nD9LwQHc1ik"),
+    YoutubeVideo(title = "Mobile Suit Gundam 00 ED4 - Trust You", videoId = "j8aecF5HXm4"),
+    YoutubeVideo(title = "Mobile Suit Gundam 00 ED4 - Trust You - Video", videoId = "uORNCAyviK4"),
 ).shuffled()
 
 val epicAnimeMomentsList = listOf(
@@ -141,6 +151,7 @@ val epicAnimeMomentsList = listOf(
     YoutubeVideo(title = "Monster - Tenma confronts Johan", videoId = "NMZVAN3UUmg"),
     YoutubeVideo(title = "Haikyuu - Oikawa’s DIABOLICAL SERVE", videoId = "FpCm7fV-LSY"),
     YoutubeVideo(title = "Haikyuu - Oikawa Super Long Set to Iwaizumi against Karasuno", videoId = "fVyGOb4FcV8"),
+    YoutubeVideo(title = "Redline - Intro - First Yellowline Race HD", videoId = "rRLPdgcGPRg"),
 ).shuffled()
 
 // King Arthur's OSTs are just a work of art. Super creative. Again every OST is good.
