@@ -476,7 +476,11 @@ fun Context.externalFilesDir(
     fileName: String? = null,
 ): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))
 
-fun deleteAllFilesFrom(directory: File?, withName: String, onDone: () -> Unit = {}) {
+inline fun deleteAllFilesFrom(
+    directory: File?,
+    withName: String,
+    crossinline onDone: () -> Unit = {}
+) {
     CoroutineScope(IO).launch {
         directory?.listFiles()?.forEach files@{ it: File? ->
             it ?: return@files
