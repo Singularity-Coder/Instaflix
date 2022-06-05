@@ -49,7 +49,6 @@ import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNa
 import com.singularitycoder.viewmodelstuff2.more.model.AboutMeErrorResponse
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -463,13 +462,13 @@ fun File?.customPath(directory: String?, fileName: String?): String {
     return path ?: ""
 }
 
-/** /data/user/0/com.example.androidstoragemadness/files */
+/** /data/user/0/com.singularitycoder.aniflix/files */
 fun Context.internalFilesDir(
     directory: String? = null,
     fileName: String? = null,
 ): File = File(filesDir.customPath(directory, fileName))
 
-/** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
+/** /storage/emulated/0/Android/data/com.singularitycoder.aniflix/files */
 fun Context.externalFilesDir(
     rootDir: String = "",
     subDir: String? = null,
@@ -481,7 +480,7 @@ inline fun deleteAllFilesFrom(
     withName: String,
     crossinline onDone: () -> Unit = {}
 ) {
-    CoroutineScope(IO).launch {
+    CoroutineScope(Default).launch {
         directory?.listFiles()?.forEach files@{ it: File? ->
             it ?: return@files
             if (it.name.contains(withName)) {
