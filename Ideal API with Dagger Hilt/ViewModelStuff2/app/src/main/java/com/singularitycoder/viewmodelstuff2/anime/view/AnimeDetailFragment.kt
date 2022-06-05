@@ -60,6 +60,7 @@ import java.security.SecureRandom
 import java.util.*
 import javax.inject.Inject
 
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class AnimeDetailFragment : BaseFragment() {
@@ -137,6 +138,7 @@ class AnimeDetailFragment : BaseFragment() {
     }
 
     private fun setUpDefaults() {
+        deleteAllFilesFrom(directory = nnContext.internalFilesDir(), withName = "barcode_")
         setViewsBasedOnDeviceDimensions()
         initTextToSpeech()
         binding.btnPlayEpisodes.disable()
@@ -277,15 +279,22 @@ class AnimeDetailFragment : BaseFragment() {
                 } catch (e: Exception) {
                     Timber.e(e)
                     null
+                } ?: kotlin.run {
+                    withContext(Main) { binding.root.showSnackBar(getString(R.string.something_is_wrong)) }
+                    return@launch
+                }
+                val fileToShare = barcodeBitmap.toFile(fileName = "barcode_${System.currentTimeMillis()}", context = nnContext)
+                if (!fileToShare.exists()) {
+                    withContext(Main) { binding.root.showSnackBar(getString(R.string.something_is_wrong)) }
+                    return@launch
                 }
 
                 withContext(Main) {
                     val dialogBinding = DialogGeneratedBarcodeBinding.inflate(LayoutInflater.from(context), binding.root, false).apply {
-                        ivGeneratedBarcode.setImageBitmap(barcodeBitmap ?: return@withContext)
+                        ivGeneratedBarcode.setImageBitmap(barcodeBitmap)
                         btnShare.setOnClickListener {
                             progressHorizontal.visible()
                             btnShare.gone()
-                            val fileToShare = barcodeBitmap.toFile(fileName = "barcode_${System.currentTimeMillis()}", context = nnContext)
                             nnActivity.shareImageAndTextViaApps(
                                 uri = fileToShare.toUri(),
                                 title = getString(R.string.app_name),
@@ -300,7 +309,9 @@ class AnimeDetailFragment : BaseFragment() {
                         setTitle("Scan")
                         setCancelable(false)
                         setView(dialogBinding.root)
-                        setPositiveButton("Done") { dialog, which -> }
+                        setPositiveButton("Done") { dialog, which ->
+                            CoroutineScope(IO).launch { if (fileToShare.exists()) fileToShare.delete() }
+                        }
                         create()
                         show()
                     }

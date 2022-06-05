@@ -47,11 +47,10 @@ import com.singularitycoder.viewmodelstuff2.helpers.extensions.color
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.isNullOrBlankOrNaOrNullString
 import com.singularitycoder.viewmodelstuff2.more.model.AboutMeErrorResponse
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Retrofit
@@ -431,7 +430,7 @@ fun Bitmap.toFile(
     context: Context,
 ): File {
     // create a file to write bitmap data
-    val file = context.getInternalStoragePathOrFile(fileName = fileName).also {
+    val file = context.internalFilesDir(fileName = fileName).also {
         if (!it.exists()) it.createNewFile() // This doesnt work on subdirectories for some reason even after granting storage read permission
     }
 
@@ -465,14 +464,27 @@ fun File?.customPath(directory: String?, fileName: String?): String {
 }
 
 /** /data/user/0/com.example.androidstoragemadness/files */
-fun Context.getInternalStoragePathOrFile(
+fun Context.internalFilesDir(
     directory: String? = null,
     fileName: String? = null,
 ): File = File(filesDir.customPath(directory, fileName))
 
 /** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
-fun Context.getExternalStoragePathOrFile(
+fun Context.externalFilesDir(
     rootDir: String = "",
     subDir: String? = null,
     fileName: String? = null,
 ): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))
+
+fun deleteAllFilesFrom(directory: File?, withName: String, onDone: () -> Unit = {}) {
+    CoroutineScope(IO).launch {
+        directory?.listFiles()?.forEach files@{ it: File? ->
+            it ?: return@files
+            if (it.name.contains(withName)) {
+                if (it.exists()) it.delete()
+            }
+        }
+
+        withContext(Main) { onDone.invoke() }
+    }
+}
