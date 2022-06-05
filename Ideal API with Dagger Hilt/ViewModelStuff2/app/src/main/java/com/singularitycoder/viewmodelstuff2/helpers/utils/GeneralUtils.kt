@@ -42,7 +42,6 @@ import com.singularitycoder.viewmodelstuff2.BuildConfig
 import com.singularitycoder.viewmodelstuff2.MainActivity
 import com.singularitycoder.viewmodelstuff2.R
 import com.singularitycoder.viewmodelstuff2.anime.model.AnimeErrorResponse
-import com.singularitycoder.viewmodelstuff2.anime.model.AnimeStatus
 import com.singularitycoder.viewmodelstuff2.databinding.LayoutCustomToastBinding
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.color
 import com.singularitycoder.viewmodelstuff2.helpers.extensions.dpToPx
@@ -425,3 +424,56 @@ fun Context.getCustomText(key: String?, value: String?): SpannableStringBuilder 
         .append(" ")
         .append(value)
 }
+
+// https://stackoverflow.com/questions/7769806/convert-bitmap-to-file
+fun Bitmap.toFile(
+    fileName: String,
+    directory: String?,
+    context: Context,
+): File {
+    // create a file to write bitmap data
+    val file = context.getInternalStoragePathOrFile(directory, fileName).also {
+        it.createNewFile()
+    }
+
+    // Convert bitmap to byte array
+    val bos = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
+    val bitmapByteArray: ByteArray = bos.toByteArray()
+
+    // write the bytes in file
+    FileOutputStream(file).run {
+        write(bitmapByteArray)
+        flush()
+        close()
+    }
+
+    return file
+}
+
+fun File?.customPath(directory: String?, fileName: String?): String {
+    var path = this?.absolutePath
+
+    if (directory != null) {
+        path += File.separator + directory
+    }
+
+    if (fileName != null) {
+        path += File.separator + fileName
+    }
+
+    return path ?: ""
+}
+
+/** /data/user/0/com.example.androidstoragemadness/files */
+fun Context.getInternalStoragePathOrFile(
+    directory: String? = null,
+    fileName: String? = null,
+): File = File(filesDir.customPath(directory, fileName))
+
+/** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
+fun Context.getExternalStoragePathOrFile(
+    rootDir: String = "",
+    subDir: String? = null,
+    fileName: String? = null,
+): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))

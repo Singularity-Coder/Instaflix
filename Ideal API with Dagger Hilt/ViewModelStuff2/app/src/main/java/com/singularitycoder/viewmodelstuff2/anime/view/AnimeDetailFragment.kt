@@ -14,6 +14,7 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -279,6 +280,21 @@ class AnimeDetailFragment : BaseFragment() {
                 withContext(Main) {
                     val dialogBinding = DialogGeneratedBarcodeBinding.inflate(LayoutInflater.from(context), binding.root, false).apply {
                         ivGeneratedBarcode.setImageBitmap(barcodeBitmap ?: return@withContext)
+                        btnShare.setOnClickListener {
+                            btnShare.text = "Please wait..."
+                            progressHorizontal.visible()
+                            btnShare.disable()
+                            val fileToShare = barcodeBitmap.toFile(fileName = "barcode_${System.currentTimeMillis()}", directory = "barcodes", context = nnContext)
+                            nnActivity.shareImageAndTextViaApps(
+                                uri = fileToShare.toUri(),
+                                title = getString(R.string.app_name),
+                                subtitle = "Scan this barcode to watch this anime!",
+                                intentTitle = "Share Barcode to..."
+                            )
+                            btnShare.text = "Share Barcode"
+                            progressHorizontal.gone()
+                            btnShare.enable()
+                        }
                     }
                     AlertDialog.Builder(nnContext).apply {
                         setTitle("Scan")

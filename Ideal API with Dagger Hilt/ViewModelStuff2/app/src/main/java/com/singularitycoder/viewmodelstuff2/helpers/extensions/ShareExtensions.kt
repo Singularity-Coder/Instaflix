@@ -4,24 +4,25 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.*
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.telephony.SmsManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.singularitycoder.viewmodelstuff2.helpers.utils.getLocalBitmapUri
 import com.singularitycoder.viewmodelstuff2.helpers.utils.wait
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+
 
 // FIXME: Other than whatsapp none of them are working properly on Android 12
 
@@ -64,7 +65,12 @@ fun Context.shareViaEmail(email: String, subject: String, desc: String) {
     startActivity(Intent.createChooser(intent, "Send email..."))
 }
 
-fun Activity.shareViaApps(imageDrawableOrUrl: Any?, imageView: ImageView?, title: String, subtitle: String) {
+fun Activity.shareViaApps(
+    imageDrawableOrUrl: Any?,
+    imageView: ImageView?,
+    title: String,
+    subtitle: String
+) {
     if (null != imageDrawableOrUrl && null != imageView) {
         // Ask external storage permission
         shareImageAndText(imageDrawableOrUrl, imageView, title, subtitle)
@@ -73,7 +79,29 @@ fun Activity.shareViaApps(imageDrawableOrUrl: Any?, imageView: ImageView?, title
     }
 }
 
-fun Activity.shareImageAndText(imageDrawableOrUrl: Any, imageView: ImageView, title: String, subtitle: String) {
+// https://stackoverflow.com/questions/33222918/sharing-bitmap-via-android-intent
+fun Activity.shareImageAndTextViaApps(
+    uri: Uri,
+    title: String,
+    subtitle: String,
+    intentTitle: String? = null
+) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "image/*"
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        putExtra(Intent.EXTRA_STREAM, uri)
+        putExtra(Intent.EXTRA_SUBJECT, title)
+        putExtra(Intent.EXTRA_TEXT, subtitle)
+    }
+    startActivity(Intent.createChooser(intent, intentTitle ?: "Share to..."))
+}
+
+fun Activity.shareImageAndText(
+    imageDrawableOrUrl: Any,
+    imageView: ImageView,
+    title: String,
+    subtitle: String
+) {
     Glide.with(this)
         .asBitmap()
         .load(imageDrawableOrUrl)
@@ -86,7 +114,7 @@ fun Activity.shareImageAndText(imageDrawableOrUrl: Any, imageView: ImageView, ti
     try {
         val bmpUri = getLocalBitmapUri(imageView) ?: Uri.EMPTY
         val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "image/.*"
+            type = "image/*"
             putExtra(Intent.EXTRA_STREAM, bmpUri)
             putExtra(Intent.EXTRA_SUBJECT, title)
             putExtra(Intent.EXTRA_TEXT, subtitle)

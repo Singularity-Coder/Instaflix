@@ -198,7 +198,7 @@ val animeQuoteList = listOf(
             I mean, doesn't it freak you out? They have no idea if they are being told the truth.
             But once the idea is in their heads, they do a complete 180. Weird right? Aren't wars waged in the same fashion.
             They tell us to hate each other by giving us a reason. So we fight. And then we die. It's the most pointless thing in the world.
-        """.trimIndent(),
+        """.trimIndentsAndNewLines(),
         author = "Spy X Family"
     ),
     AnimeQuote(

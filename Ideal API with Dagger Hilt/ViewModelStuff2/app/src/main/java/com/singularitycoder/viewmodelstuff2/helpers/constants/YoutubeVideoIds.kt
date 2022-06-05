@@ -44,6 +44,7 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Afro Samurai - first battle (massacre)", videoId = "HykZmVBylrc"),
     YoutubeVideo(title = "Afro Samurai: Resurrection - Bridge Scene", videoId = "RP0yOW6FpEM"),
     YoutubeVideo(title = "Kizumonogatari I: Tekketsu-hen - Koyomi Araragi vs Kiss Shot", videoId = "XCYWiGUXQ-I"),
+    YoutubeVideo(title = "Neon Genesis Evangelion - End Of Evangelion - Asuka's Death", videoId = "OO-1Yyi5KPY"),
 ).shuffled()
 
 // Absolutely every OST in Fate/Apocrypha is amazing. Kudos to Masaru Yokoyama

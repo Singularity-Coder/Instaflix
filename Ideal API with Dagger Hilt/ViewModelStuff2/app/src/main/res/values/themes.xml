@@ -22,6 +22,11 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
     <style name="AppThemeRatingBar" parent="Theme.AppCompat">
         <item name="colorAccent">#FFFFFF</item>
         <item name="height">16dp</item>
