@@ -428,12 +428,11 @@ fun Context.getCustomText(key: String?, value: String?): SpannableStringBuilder 
 // https://stackoverflow.com/questions/7769806/convert-bitmap-to-file
 fun Bitmap.toFile(
     fileName: String,
-    directory: String?,
     context: Context,
 ): File {
     // create a file to write bitmap data
-    val file = context.getInternalStoragePathOrFile(directory, fileName).also {
-        it.createNewFile()
+    val file = context.getInternalStoragePathOrFile(fileName = fileName).also {
+        if (!it.exists()) it.createNewFile() // This doesnt work on subdirectories for some reason even after granting storage read permission
     }
 
     // Convert bitmap to byte array

@@ -253,7 +253,9 @@ class AnimeDetailFragment : BaseFragment() {
             val encryptedIdOfAnime = encode(idOfAnime)
             CoroutineScope(Default).launch {
                 val barcodeBitmap = try {
-                    val bitMatrix = MultiFormatWriter().encode(encryptedIdOfAnime, BarcodeFormat.QR_CODE, 660, 660)
+                    val barcodeWidth = deviceWidth() - 130
+                    val barcodeHeight = barcodeWidth
+                    val bitMatrix = MultiFormatWriter().encode(encryptedIdOfAnime, BarcodeFormat.QR_CODE, barcodeWidth, barcodeHeight)
                     val width = bitMatrix.width
                     val height = bitMatrix.height
                     val pixels = IntArray(width * height)
@@ -281,19 +283,17 @@ class AnimeDetailFragment : BaseFragment() {
                     val dialogBinding = DialogGeneratedBarcodeBinding.inflate(LayoutInflater.from(context), binding.root, false).apply {
                         ivGeneratedBarcode.setImageBitmap(barcodeBitmap ?: return@withContext)
                         btnShare.setOnClickListener {
-                            btnShare.text = "Please wait..."
                             progressHorizontal.visible()
-                            btnShare.disable()
-                            val fileToShare = barcodeBitmap.toFile(fileName = "barcode_${System.currentTimeMillis()}", directory = "barcodes", context = nnContext)
+                            btnShare.gone()
+                            val fileToShare = barcodeBitmap.toFile(fileName = "barcode_${System.currentTimeMillis()}", context = nnContext)
                             nnActivity.shareImageAndTextViaApps(
                                 uri = fileToShare.toUri(),
                                 title = getString(R.string.app_name),
                                 subtitle = "Scan this barcode to watch this anime!",
                                 intentTitle = "Share Barcode to..."
                             )
-                            btnShare.text = "Share Barcode"
                             progressHorizontal.gone()
-                            btnShare.enable()
+                            btnShare.visible()
                         }
                     }
                     AlertDialog.Builder(nnContext).apply {
