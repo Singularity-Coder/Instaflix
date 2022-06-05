@@ -211,6 +211,7 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "James Brown - Gonna Have A Funky Good Time", videoId = "P6iSL1dsShc"),
     YoutubeVideo(title = "James Brown - Funky Drummer (Pt. 1 & 2)", videoId = "QXw6YZltKJk"),
     YoutubeVideo(title = "James Brown - Funky Drummer (Bonus Beat Reprise)", videoId = "7dtpj8qa1hQ"),
+    YoutubeVideo(title = "James Brown - Out of Sight", videoId = "7PtI_xVfuUM"),
     YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
     YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
     YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
