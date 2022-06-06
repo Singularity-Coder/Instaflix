@@ -17,8 +17,7 @@ import com.singularitycoder.viewmodelstuff2.helpers.extensions.toYoutubeThumbnai
 import com.singularitycoder.viewmodelstuff2.helpers.utils.deviceWidth
 import com.singularitycoder.viewmodelstuff2.more.model.YoutubeVideo
 
-// This is getting inconsistent in setting the list. I am facing same issue. https://stackoverflow.com/questions/31759171/recyclerview-and-java-lang-indexoutofboundsexception-inconsistency-detected-in
-// I think its because of Hilt doing injecting adapter in worker threads, for viewpagers it seems to be sending the adapter/list internally a bit late. Just a guess
+// TODO Hilt scoping
 class YoutubeVideoListAdapter(
     private val youtubeVideoList: List<YoutubeVideo>,
     private val youtubeVideoClickListener: (videoId: String) -> Unit = {}

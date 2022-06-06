@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable-v24/bottom_nav_color_states.xml" value="0.24375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3509259259259259" />
         <entry key="app/src/main/res/drawable/account_multiple_plus_outline.xml" value="0.1135" />
+        <entry key="app/src/main/res/drawable/alert_dialog_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_black_gradient_fade.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_round_view.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_rounded_bordered_share_icons.xml" value="0.1335" />

@@ -14,12 +14,14 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
@@ -251,9 +253,12 @@ class AnimeDetailFragment : BaseFragment() {
         // https://github.com/journeyapps/zxing-android-embedded
         /** Since any qr code scanner can read this, its good to encrypt [idOfAnime] and generate barcode */
         binding.ivGenerateBarcode.onSafeClick {
-            if (idOfAnime.isNullOrBlankOrNaOrNullString()) return@onSafeClick
-            val encryptedIdOfAnime = encode(idOfAnime)
             CoroutineScope(Default).launch {
+                if (idOfAnime.isNullOrBlankOrNaOrNullString()) {
+                    withContext(Main) { binding.root.showSnackBar(getString(R.string.something_is_wrong)) }
+                    return@launch
+                }
+                val encryptedIdOfAnime = encode(idOfAnime)
                 val barcodeBitmap = try {
                     val barcodeWidth = deviceWidth() - 130
                     val barcodeHeight = barcodeWidth
@@ -290,28 +295,26 @@ class AnimeDetailFragment : BaseFragment() {
                 }
 
                 withContext(Main) {
+                    var alertDialog: AlertDialog? = null
                     val dialogBinding = DialogGeneratedBarcodeBinding.inflate(LayoutInflater.from(context), binding.root, false).apply {
                         ivGeneratedBarcode.setImageBitmap(barcodeBitmap)
-                        btnShare.setOnClickListener {
-                            progressHorizontal.visible()
-                            btnShare.gone()
+                        btnShare.onSafeClick {
                             nnActivity.shareImageAndTextViaApps(
                                 uri = fileToShare.toUri(),
                                 title = getString(R.string.app_name),
                                 subtitle = "Scan this barcode to watch this anime!",
                                 intentTitle = "Share Barcode to..."
                             )
-                            progressHorizontal.gone()
-                            btnShare.visible()
+                        }
+                        btnDone.onSafeClick {
+                            CoroutineScope(IO).launch { if (fileToShare.exists()) fileToShare.delete() }
+                            if (null != alertDialog) alertDialog?.dismiss()
                         }
                     }
-                    AlertDialog.Builder(nnContext).apply {
-                        setTitle("Scan")
+                    alertDialog = MaterialAlertDialogBuilder(nnContext, R.style.ThemeOverlay_MaterialComponents_Dialog).run {
                         setCancelable(false)
+                        background = ContextCompat.getDrawable(nnContext, R.drawable.alert_dialog_bg)
                         setView(dialogBinding.root)
-                        setPositiveButton("Done") { dialog, which ->
-                            CoroutineScope(IO).launch { if (fileToShare.exists()) fileToShare.delete() }
-                        }
                         create()
                         show()
                     }
