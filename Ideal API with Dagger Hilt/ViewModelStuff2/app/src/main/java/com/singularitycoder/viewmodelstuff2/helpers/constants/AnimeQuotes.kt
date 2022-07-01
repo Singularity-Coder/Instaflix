@@ -229,4 +229,71 @@ val animeQuoteList = listOf(
         quote = "Decide first and act to make it happen.",
         author = "Peerless Dad"
     ),
+    AnimeQuote(
+        quote = "You know what they say. Fool me once, shame on you. Fool me twice, shame on me.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Don’t confuse movement with progress.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "It is satisfying to see a plan progress accordingly.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "Power results from self control.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "What doesn't kill you makes you stronger.",
+        author = "Kaguya-sama: Love Is War - Ultra Romantic"
+    ),
+    AnimeQuote(
+        quote = "We must use time wisely and forever realise that the time is always ripe to do right.",
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = """
+            You are weak. You try to manipulate things to show off your strength.
+            In this way, you cover your weakness by trampling down the others.
+        """.trimIndentsAndNewLines(),
+        author = "Skeleton Knight"
+    ),
+    AnimeQuote(
+        quote = "Weakness makes you desire superficial strength.",
+        author = "Skeleton Knight"
+    ),
+    AnimeQuote(
+        quote = """
+            The genuinely strong people won't be carried away by their strength and
+            will use their strength to protect the weak without hesitation.
+        """.trimIndentsAndNewLines(),
+        author = "Skeleton Knight"
+    ),
+    AnimeQuote(
+        quote = """
+            Don't view everything in terms of black or white.
+            Don't try to make everything fit into your preconceived notions and don't rationalize.
+            You must act based on objective reasoning
+        """.trimIndentsAndNewLines(),
+        author = "Spy X Family"
+    ),
+    AnimeQuote(
+        quote = "Nothing of import is ever accomplished in a day.",
+        author = "Spy X Family"
+    ),
+    AnimeQuote(
+        quote = """
+            Hard times create strong men.
+            Strong men create good times.
+            Good times create weak men.
+            Weak men create hard times.
+        """.trimIndentsAndNewLines(),
+        author = "Unknown"
+    ),
+    AnimeQuote(
+        quote = "If one's intentions are transparent, others will reciprocate. That's how you maintain peace.",
+        author = "Peerless Dad"
+    ),
 )
