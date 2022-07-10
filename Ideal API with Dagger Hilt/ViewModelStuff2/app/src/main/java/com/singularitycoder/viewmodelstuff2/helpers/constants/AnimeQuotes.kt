@@ -296,4 +296,41 @@ val animeQuoteList = listOf(
         quote = "If one's intentions are transparent, others will reciprocate. That's how you maintain peace.",
         author = "Peerless Dad"
     ),
+    AnimeQuote(
+        quote = "Hell may be before you. But you are still alive as long as you haven't set foot inside it.",
+        author = "Chronicles of heavenly demon"
+    ),
+    AnimeQuote(
+        quote = """
+            If you are a martial artist, you should know how meaningless it is to look for the easy way.
+            Look for the easy way and you might as well find the easy way to death.
+            This is common sense for a martial artist who lives with a weapon in their hand.
+        """.trimIndentsAndNewLines(),
+        author = "Chronicles of heavenly demon"
+    ),
+    AnimeQuote(
+        quote = "There is no such thing as easy training.",
+        author = "Chronicles of heavenly demon"
+    ),
+    AnimeQuote(
+        quote = "Wisdom only comes after continuously reviewing the knowledge and experience one has newly achieved.",
+        author = "Chronicles of heavenly demon"
+    ),
+    AnimeQuote(
+        quote = "Simply knowing and understanding are two very different things.",
+        author = "Chronicles of heavenly demon"
+    ),
+    AnimeQuote(
+        quote = "All human behaviour is determined by Goals.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = """
+            Being in a pinch is a an opportunity. That is my motto.
+            You can always turn the tables when you are in a dangerous situation.
+            That’s why no matter when or whom you are fighting,
+            not giving up and rising to the challenge is what matters most.
+        """.trimIndentsAndNewLines(),
+        author = "Isekai Ojisan"
+    ),
 )

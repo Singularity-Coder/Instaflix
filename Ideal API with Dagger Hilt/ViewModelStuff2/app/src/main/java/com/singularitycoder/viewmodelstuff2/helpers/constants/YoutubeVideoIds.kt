@@ -128,6 +128,9 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Aimer - StarRingChild", videoId = "cmXW3qfhT60"),
     YoutubeVideo(title = "Aimer - Higher Ground", videoId = "w_FeX0Z8JAo"),
     YoutubeVideo(title = "Aimer - Kyoukara Omoide", videoId = "ImRjy0vgYoI"),
+    YoutubeVideo(title = "Aimer - Koi wa Ameagari no You ni - Ref:rain", videoId = "7CG2qA_IbAs"),
+    YoutubeVideo(title = "Aimer - After Dark - Polaris", videoId = "NJkQzZOdOsI"),
+    YoutubeVideo(title = "Aimer - Natsume's Book of Friends - Akane Sasu", videoId = "tKUC6vqC1kw"),
     YoutubeVideo(title = "Aimer - Kataomoi(Unrequited Love)", videoId = "F_62fr-I3E4"),
     YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0"),
     YoutubeVideo(title = "Attack on Titan - Reiner and Bertholdt's Transformation Theme", videoId = "rdml5r6Y_g4"),
@@ -155,6 +158,9 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Mobile Suit Gundam 00 ED2 - Friends", videoId = "nD9LwQHc1ik"),
     YoutubeVideo(title = "Mobile Suit Gundam 00 ED4 - Trust You", videoId = "j8aecF5HXm4"),
     YoutubeVideo(title = "Mobile Suit Gundam 00 ED4 - Trust You - Video", videoId = "uORNCAyviK4"),
+    YoutubeVideo(title = "Tokyo Ghoul - White Silence", videoId = "BkrICLDQ3T4"),
+    YoutubeVideo(title = "Sayuri - Bake a Cake", videoId = "SLHHvR1Iss4"),
+    YoutubeVideo(title = "Erased : 01 - Only I am missing", videoId = "xc74Bm__cP8"),
 ).shuffled()
 
 val epicAnimeMomentsList = listOf(
@@ -178,7 +184,16 @@ val epicAnimeMomentsList = listOf(
 val otherMusicList = listOf(
     YoutubeVideo(title = "Pandit Jasraj - Vraje Vasantam", videoId = "ItAnTZjopAM"),
     YoutubeVideo(title = "Parur Sundaram Iyer & MSG_Manavyala", videoId = "823uFFoaLGc"),
-    YoutubeVideo(title = "MS Gopalakrishnan- Violin- Manavyalakinchara", videoId = "m7lKOttZR7g"),
+    YoutubeVideo(title = "MS Gopalakrishnan- Violin - Manavyalakinchara", videoId = "m7lKOttZR7g"),
+    YoutubeVideo(title = "Sanjay Subrahmanyan - Raga Nattakurinji", videoId = "3D6RjQAR1yU"),
+    YoutubeVideo(title = "Sahana - Pearls of compassion", videoId = "wKMqG8MYWL4"),
+    YoutubeVideo(title = "Ramnad Krishnan - RTP - bhairavi - Cetah Sri Raman Cintaya jimuta Syamam", videoId = "bqGa_hJBUNE"),
+    YoutubeVideo(title = "Ramnad Krishnan - Raghupate Rama - Sahana - Thyagaraja", videoId = "KenvJC9B5WU"),
+    YoutubeVideo(title = "E.S.Posthumus - Nasivern Pi", videoId = "NaKt6XXxcEo"), // Absolutely Incredible. Almost every sound track is great. Unfortunately instrumental for Cartographer is missing on official site. https://www.youtube.com/channel/UCvJKyvGIe7VpfBDpkHOMfOw
+    YoutubeVideo(title = "E.S.Posthumus - Pompeii", videoId = "1lwl9ZHklLY"),
+    YoutubeVideo(title = "E.S.Posthumus - Unstoppable", videoId = "uFZSh6MSXno"),
+    YoutubeVideo(title = "E.S.Posthumus - Arise", videoId = "NYcHp_3sfMs"),
+    YoutubeVideo(title = "Two steps from Hell - Heart of Courage", videoId = "K2iC1aCPbKA"), // Again lots of great stuff — https://www.youtube.com/channel/UC3swwxiALG5c0Tvom83tPGg
     YoutubeVideo(title = "King Arthur - The Devil and The Huntsman", videoId = "yGnfFW-vyzU"),
     YoutubeVideo(title = "King Arthur - The Devil & The Daughter Bonus Track", videoId = "XTLfmMyRKYo"),
     YoutubeVideo(title = "King Arthur - The Darklands", videoId = "WkNYkwMbl0U"),
@@ -232,6 +247,7 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "James Brown - Funky Drummer (Pt. 1 & 2)", videoId = "QXw6YZltKJk"),
     YoutubeVideo(title = "James Brown - Funky Drummer (Bonus Beat Reprise)", videoId = "7dtpj8qa1hQ"),
     YoutubeVideo(title = "James Brown - Out of Sight", videoId = "7PtI_xVfuUM"),
+    YoutubeVideo(title = "Lamb of God - Again We Rise", videoId = "Xe07zUkryeI"),
     YoutubeVideo(title = "Lamb of God - Walk with Me In Hell", videoId = "m4QyQk8vOCY"),
     YoutubeVideo(title = "Lamb of God - Ashes of the Wake", videoId = "PJcy3VQJA6o"),
     YoutubeVideo(title = "Lamb of God - Omerta", videoId = "-xYZM04JxnQ"),
