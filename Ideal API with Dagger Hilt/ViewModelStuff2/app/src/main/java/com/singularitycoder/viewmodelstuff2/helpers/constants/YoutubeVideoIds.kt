@@ -134,7 +134,7 @@ val animeMusicList = listOf(
     YoutubeVideo(title = "Aimer - Kataomoi(Unrequited Love)", videoId = "F_62fr-I3E4"),
     YoutubeVideo(title = "Attack on Titan - Best of Soundtracks", videoId = "ZUj6k5LQrJ0"),
     YoutubeVideo(title = "Attack on Titan - Reiner and Bertholdt's Transformation Theme", videoId = "rdml5r6Y_g4"),
-    YoutubeVideo(title = "The Seven Deadly Sins - Here Comes The Jikkai · KOHTA YAMAMOTO", videoId = "VMZTkvnRUPE"),
+    YoutubeVideo(title = "The Seven Deadly Sins - Here Comes The Jikkai · KOHTA YAMAMOTO", videoId = "VMZTkvnRUPE"), // Too many favorites - https://www.youtube.com/watch?v=HxlysqrFjHo&list=PLvXMARe51eebmg3Xf4wIeeLtFkafv0fh8
     YoutubeVideo(title = "Berserk - Son Cauchemar - Shiro Sagisu", videoId = "FNC-M9279jE"),
     YoutubeVideo(title = "Berserk Golden Age - Hundred Years War", videoId = "OG8GxzJTBck"),
     YoutubeVideo(title = "Kenji Kawai Cinema Symphony Ghost In The Shell", videoId = "WjOuEruzoh0"),
