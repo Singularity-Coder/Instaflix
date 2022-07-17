@@ -333,4 +333,16 @@ val animeQuoteList = listOf(
         """.trimIndentsAndNewLines(),
         author = "Isekai Ojisan"
     ),
+    AnimeQuote(
+        quote = "God only gives us what we can endure.",
+        author = "Other World Warrior"
+    ),
+    AnimeQuote(
+        quote = "Unless I have personally experienced it, I refuse to let rumors cloud my judgment of a person.",
+        author = "Other World Warrior"
+    ),
+    AnimeQuote(
+        quote = "Truth is mighty and it always prevails in the end.",
+        author = "Detective Conan"
+    ),
 )
