@@ -282,6 +282,7 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "Bijan Mortazavi 1994 Dance of Fire (Concert)", videoId = "HoCe3mmb4nc"),
     YoutubeVideo(title = "Craig David - Walking Away", videoId = "Dbb7xeZGR-U"),
     YoutubeVideo(title = "Craig David - Unbelievable", videoId = "oRGbxfTiEaE"),
+    YoutubeVideo(title = "Gold Trap - Mandelbrot Fractal Zoom", videoId = "-5OMHPd6Xpc"),
 ).shuffled()
 
 // King Arthur - Legend of The Sword is just super epic movie.
