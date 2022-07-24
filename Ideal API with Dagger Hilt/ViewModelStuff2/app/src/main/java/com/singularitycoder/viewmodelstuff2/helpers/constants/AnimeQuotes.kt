@@ -76,7 +76,7 @@ val animeQuoteList = listOf(
     ),
     AnimeQuote(
         quote = "Emotions are a luxury.",
-        author = "Unknown"
+        author = "Escort Warrior"
     ),
     AnimeQuote(
         quote = "Once words have been planted they cannot be removed. From those words, thoughts bloom like a flower and constantly linger.",
@@ -132,10 +132,6 @@ val animeQuoteList = listOf(
             Three days, the audience will know.
         """.trimIndentsAndNewLines(),
         author = "Dance Dance Danseur"
-    ),
-    AnimeQuote(
-        quote = "Time is what we want most, but what we use worst.",
-        author = "Unknown"
     ),
     AnimeQuote(
         quote = "The wise control others, while the strong get controlled by others.",
@@ -344,5 +340,9 @@ val animeQuoteList = listOf(
     AnimeQuote(
         quote = "Truth is mighty and it always prevails in the end.",
         author = "Detective Conan"
+    ),
+    AnimeQuote(
+        quote = "Know thyself and your enemy and you’d be ever-victorious.",
+        author = "Magic Emperor"
     ),
 )
