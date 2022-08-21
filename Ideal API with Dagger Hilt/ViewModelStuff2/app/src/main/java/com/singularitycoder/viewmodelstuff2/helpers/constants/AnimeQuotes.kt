@@ -345,4 +345,62 @@ val animeQuoteList = listOf(
         quote = "Know thyself and your enemy and you’d be ever-victorious.",
         author = "Magic Emperor"
     ),
+    // A great humble answer by the King IMO. He neither denies the praise nor takes it in arrogantly.
+    AnimeQuote(
+        quote = """
+            Witch: You are indeed a rare and extraordinary person.
+            King: Only because I stand on the predecessors shoulders.
+        """.trimIndentsAndNewLines(),
+        author = "Burn That Witch"
+    ),
+    AnimeQuote(
+        quote = "I will keep moving forward until I exterminate the enemy.",
+        author = "Eren Yeager"
+    ),
+    AnimeQuote(
+        quote = "I pursue perfection! The perfection which is alone sublime in its beauty.",
+        author = "The Boxer"
+    ),
+    AnimeQuote(
+        quote = """
+            I pursue perfection! The perfection which is alone sublime in its beauty.
+            There is no nervousness about the fight, desire to win, or fear of losing.
+            There is no past, present, or future. None of that exists.
+            It is to obtain full control of my muscles!
+            From the lightest and thickest muscles down to every minute muscle fibre from
+            the tips of my fingers down to the tips of my toes.
+        """.trimIndentsAndNewLines(),
+        author = "The Boxer"
+    ),
+    AnimeQuote(
+        quote = """
+            Q: What is boxing to you?
+            A: The pursuit of beauty.
+        """.trimIndentsAndNewLines(),
+        author = "The Boxer"
+    ),
+    AnimeQuote(
+        quote = """
+            There are limits to a battle in solitude.
+            There are limits to what one person can do alone.
+            There is a limit on how long you can fight alone.
+        """.trimIndentsAndNewLines(),
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Every failure is a step to success.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Doubting everything or believing everything are two equally convieient solutions, both of which exempt us from thinking.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Doing things before they are done to you is the basic tactic.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Humans are psychologically premature creatures, but that also means they also carry unknown potential.",
+        author = "Classroom of the Elite"
+    ),
 )

@@ -11,6 +11,8 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Fog Hill of the Five Elements", videoId = "0OoKXPUvVbo"),
     YoutubeVideo(title = "Fog Hill of the Five Elements (BRIDGE FIGHT SCENE)", videoId = "qZZLkmMeGRY"),
     YoutubeVideo(title = "Fog Hill of the Five Elements - Wu Shan Wu Xing", videoId = "l5k8GjTpa9I"),
+    YoutubeVideo(title = "Fog Hill of the Five Elements - Xuan vs Wrath", videoId = "OLo1MOy_6hU"),
+    YoutubeVideo(title = "Fog Hill of the Five Elements - Xuan vs Final Form Wrath", videoId = "E475vIKYvD4"),
     YoutubeVideo(title = "Attack on Titan - Eren vs The Armored Titan full fight", videoId = "hyEbggGnT0U"),
     YoutubeVideo(title = "Attack on Titan - Levi vs Kenny Squad - (Full Fight) HD", videoId = "MyJk2YWhfoU"),
     YoutubeVideo(title = "Attack on Titan - Levi vs. The Beast Titan", videoId = "ceQ4nhyuX2k"),
@@ -22,6 +24,8 @@ val animeFightsList = listOf(
     YoutubeVideo(title = "Saber Alter vs Rider - Fate/stay night: Heaven’s Feel lll", videoId = "8W7x_-mMOtU"),
     YoutubeVideo(title = "Saber Alter Excalibur Morgan [4K 60fps]", videoId = "f1JT8z-3cV0"),
     YoutubeVideo(title = "Demon Slayer - Tanjiro Kamado and Tengen Uzui vs Gyutaro", videoId = "GFLVTjAw7Zc"),
+    YoutubeVideo(title = "Demon Slayer - Tanjiro Vs Rui Lower Moon", videoId = "VjwU2Xevnx8"),
+    YoutubeVideo(title = "Demon Slayer - Rengoku vs Akaza", videoId = "p8uT9y4cPwY"),
     YoutubeVideo(title = "Boruto - Naruto, Sasuke, and Boruto vs Momoshiki", videoId = "CZJBkQQTiCo"),
     YoutubeVideo(title = "Meliodas vs Ten Commandments", videoId = "92Gvvh0UKjk"),
     YoutubeVideo(title = "Parasyte The Maxim - Fights from anime compilation", videoId = "r_JH_oOkhmk"),
@@ -195,10 +199,23 @@ val otherMusicList = listOf(
     YoutubeVideo(title = "GN Balasubramaniam - Brochevarevarura (Full 36 min version)", videoId = "VqVb0xmEGFQ"),
     YoutubeVideo(title = "GN Balasubramaniam - T Chowdiah - C S Murugabhoopathi - Bangalore 01 04 1957", videoId = "HdFbJip5Two"),
     YoutubeVideo(title = "GN Balasubramaniam - The Music Academy, Madras, 29.12.1964", videoId = "aecqfKBbEpo"),
+    YoutubeVideo(title = "GN Balasubramaniam - Sarasa sama dana - Raga Kapi Narayani", videoId = "kH8FzH-0LzA"),
+    YoutubeVideo(title = "GN Balasubramaniam - Sarasa sama dana - Followed by Thani - Palghat R Raghu", videoId = "Vc9se45wIaE"),  // A truly fun song
+    YoutubeVideo(title = "GN Balasubramaniam - Raga sudharasa panamu - AndolikA - Tyagaraja", videoId = "8vqgtNKQ4yg"),
+    YoutubeVideo(title = "GN Balasubramaniam - Pari Palayamam", videoId = "cV3P617hxQk"), // King of Carnatic. Period.
+    YoutubeVideo(title = "GN Balasubramaniam - Vasudevayani", videoId = "BmsIChomCTg"),
+    YoutubeVideo(title = "GN Balasubramaniam - Sama Gana Priye", videoId = "cQ6Am4Sv58I"),
+    YoutubeVideo(title = "GN Balasubramaniam - Vararagalaya - Chenchukamboji - Adi", videoId = "Lwfd4QeF1BY"),
+    YoutubeVideo(title = "GN Balasubramaniam - Swaminatha Paripalaya", videoId = "j1t8BYA7CvQ"),
+    YoutubeVideo(title = "GN Balasubramaniam - Madhyamavathi - Palinchu Kamakshi Parvati", videoId = "BgwDBJsgGuE"), // Not sure if anybody in the current generation can sing this the way GNB did. Simply super human.
+    YoutubeVideo(title = "GN Balasubramaniam - MSG, CSM, RTP, Nattakurinji - Koniyada Tharama Nee Mahima - Adi - Tisra Gathi", videoId = "zpT8NmpGgw8"), // Not sure if anybody in the current generation can sing this the way GNB did. Simply super human.
+    YoutubeVideo(title = "GN Balasubramaniam - Carnatic Vocal (1910 -1965) | Jukebox", videoId = "bgEpgmEitOs"),
+    YoutubeVideo(title = "GN Balasubramaniam - Nenarunchinanu - Malavi - Tyagaraja", videoId = "nJXVIotYJPI"), // One of my favs
     YoutubeVideo(title = "Madurai Mani Iyer - Brochevarevarura", videoId = "lgdwg2KmjN4"),
     YoutubeVideo(title = "TM Krishna - Ragam Neelambari", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Manavyalakinchara, Tyagaraja Smaranotsava Sabha Nellore", videoId = "ovgWK5aQcpM"),
     YoutubeVideo(title = "TM Krishna - Ragam Nalinakanthi", videoId = "5yZEsJDJ9yc"),
+    YoutubeVideo(title = "TM Krishna - Amba Neelayataakshi - Neelambari - Adi - Mutthuswamy Deekshitar", videoId = "Z6bGA61mOi4"),
     YoutubeVideo(title = "Sanjay Subrahmanyan - Raga Nattakurinji", videoId = "3D6RjQAR1yU"),
     YoutubeVideo(title = "Sahana - Pearls of compassion", videoId = "wKMqG8MYWL4"),
     YoutubeVideo(title = "Ramnad Krishnan - RTP - bhairavi - Cetah Sri Raman Cintaya jimuta Syamam", videoId = "bqGa_hJBUNE"),
@@ -295,4 +312,14 @@ val otherEpicMomentsList = listOf(
     YoutubeVideo(title = "Arcane: League of Legends - Powder's Monkey Bomb Explodes", videoId = "Tz1THyAhx8E"),
     YoutubeVideo(title = "Love, Death & Robots - Season 3 Episode 9 - JIBARO", videoId = "w140SKkoRDw"),
     YoutubeVideo(title = "Love, Death & Robots - Jibaro | Death Dance Opening Scene", videoId = "j6fRCupGH2Q"),
+    YoutubeVideo(title = "Bruce Lee - 1965 Color Interview", videoId = "Jv0qjWsXgP8"), // Proof that Bruce is super human or its a frame rate issue
+    YoutubeVideo(title = "The One (2001) - Opening fight scene with Jet Li vs Police", videoId = "slqIzuiqPwk"),
+    YoutubeVideo(title = "The Matrix Reloaded - Neo vs Smith Clones [Part 2]", videoId = "UvLQMMaVmzU"),
+    YoutubeVideo(title = "Kingsglaive: Final Fantasy XV - Nyx vs. Glauca. The Final Battle", videoId = "UVD7W7LvaQY"),
+    YoutubeVideo(title = "Kingsglaive: Final Fantasy XV - Battle Scene", videoId = "_58xdeWpeI4"),
+    YoutubeVideo(title = "Final Fantasy VII - Advent Children (2006) - Motorcycle Chase Scene", videoId = "y8MU0juAUUg"),
+    YoutubeVideo(title = "Final Fantasy Vll - Advent Children (2006) - Motorcycle Fight Scene", videoId = "B5LGDda3qC4"),
+    YoutubeVideo(title = "Kung-Fu Hustle (2004) - Kung-fu Masters vs The Beast", videoId = "XoTVze2vzkI"),
+    YoutubeVideo(title = "Kung Fu Hustle (2004) - Fight Scene 3 Masters vs The Harpists", videoId = "r8MbVjzgonA"),
+    YoutubeVideo(title = "Kung Fu Hustle (2004) - The Landlady and the Landlord vs the Beast", videoId = "tiFKml1IKII"),
 ).shuffled()
