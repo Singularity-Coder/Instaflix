@@ -403,4 +403,20 @@ val animeQuoteList = listOf(
         quote = "Humans are psychologically premature creatures, but that also means they also carry unknown potential.",
         author = "Classroom of the Elite"
     ),
+    AnimeQuote(
+        quote = "Truth. Its powerful but its a double-edged sword.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "When one is plunged into a crisis, they only see and hear what they want to.",
+        author = "Peerless Dad"
+    ),
+    AnimeQuote(
+        quote = "In war, the obvious path out is the more dangerous path.",
+        author = "Peerless Dad"
+    ),
+    AnimeQuote(
+        quote = "Why would I hate those who are weaker than myself? I only pity them.",
+        author = "Lion Sin - Escanor"
+    ),
 )
