@@ -419,4 +419,56 @@ val animeQuoteList = listOf(
         quote = "Why would I hate those who are weaker than myself? I only pity them.",
         author = "Lion Sin - Escanor"
     ),
+    AnimeQuote(
+        quote = "A man who cannot command himself always remains a slave.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Trauma is awakened more strongly by experience than by word.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Thoughtless power crumbles by its own mass.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "You reap what you sow.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Violence is the most powerful force in the world.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "This world is ruled by violence. True strength in this world is determined by the power of violence. There is nothing that can overrule that truth. Nothing, except death.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Fear and pleasure are two sides of the same coin. The difference is paper-thin in this world.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Pain turns into fear over time.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "As usual, you have mistaken isolation for independence.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Seek life when facing death.",
+        author = "Overlord"
+    ),
+    AnimeQuote(
+        quote = "The worst enemy you can meet will always be yourself.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Tyrants are only allowed to rule as long as their power makes sense.",
+        author = "Classroom of the Elite"
+    ),
+    AnimeQuote(
+        quote = "Smiling means letting your guard down in front of people even if just a little.",
+        author = "Classroom of the Elite"
+    ),
 )
