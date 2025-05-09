@@ -41,6 +41,7 @@ A video and audio streaming app like Netflix and Spotify.
 - [YouTube Data API](https://mvnrepository.com/artifact/com.google.apis/google-api-services-youtube): Provides YouTube data.
 - [zxing](https://github.com/zxing/zxing): ZXing ("Zebra Crossing") barcode scanning library for Java, Android.
 - [zxing-android-embedded](https://github.com/journeyapps/zxing-android-embedded): Barcode scanner library for Android, based on the ZXing decoder.
+- [Blurry](https://github.com/wasabeef/Blurry): Blurry is an easy blur library for Android.
 
 ## Architecture
 ![alt text](https://github.com/Singularity-Coder/Ideal-API-Call/blob/main/assets/arch.png)
